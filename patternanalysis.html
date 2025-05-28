@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Analysis Unit | IGPA Anomaly Tracking</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&family=UnifrakturCook:wght@700&display=swap');
+        
+        /* --- Base Styles (Copied from index.html - ENSURE THESE ARE IDENTICAL) --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #050805; /* Dark green-ish black */ color: #aaccaa; font-family: 'VT323', monospace; overflow-x: hidden; cursor: none; padding-top: 120px; }
+        .top-bar { position: fixed; top: 0; left: 0; width: 100%; background: linear-gradient(90deg, #111, #000, #111); border-bottom: 1px solid #333; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 1002; font-family: 'VT323', monospace; }
+        .ca-section { display: flex; align-items: center; gap: 1rem; }
+        .ca-label { color: #666; font-size: 1.2rem; }
+        .ca-address { color: #888; font-size: 1.1rem; font-family: 'Orbitron', monospace; letter-spacing: 0.1em; }
+        .copy-btn { background: linear-gradient(45deg, #333, #222); border: 1px solid #555; color: #777; padding: 0.5rem 1rem; cursor: pointer; font-family: 'VT323', monospace; font-size: 0.9rem; transition: all 0.3s ease; }
+        .copy-btn:hover:not(:disabled) { border-color: #777; color: #999; background: linear-gradient(45deg, #555, #333); }
+        .copy-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .social-links { display: flex; gap: 1rem; }
+        .social-link { color: #666; text-decoration: none; font-size: 1.3rem; padding: 0.5rem; border: 1px solid #333; background: rgba(17, 17, 17, 0.8); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
+        .social-link:hover { color: #888; border-color: #555; background: rgba(34, 34, 34, 0.8); transform: translateY(-2px); }
+        .navigation-bar { position: fixed; top: 70px; left: 0; width: 100%; background: rgba(0, 0, 0, 0.95); border-bottom: 1px solid #222; padding: 0.8rem 0; z-index: 1001; backdrop-filter: blur(10px); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        .nav-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .nav-link { color: #555; text-decoration: none; font-family: 'Orbitron', monospace; font-size: 0.85rem; padding: 0.6rem 1rem; border: 1px solid #222; background: rgba(17, 17, 17, 0.6); transition: all 0.3s ease; white-space: nowrap; letter-spacing: 0.03em; text-align: center; flex-shrink: 0; }
+        .nav-link:hover { color: #777; border-color: #444; background: rgba(34, 34, 34, 0.8); }
+        .nav-link.active { color: #888; border-color: #666; background: rgba(68, 68, 68, 0.3); }
+        .custom-cursor { position: fixed; width: 15px; height: 15px; background: #444; border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.1s; animation: cursorFade 3s ease-in-out infinite; }
+        @keyframes cursorFade { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.2); } }
+        .static-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 10% 90%, rgba(0, 40, 0, 0.04) 0%, transparent 60%), radial-gradient(circle at 90% 10%, rgba(0, 20, 0, 0.04) 0%, transparent 60%); pointer-events: none; z-index: 1; opacity: 0.5; animation: staticFlickerPattern 9s linear infinite alternate; } /* Greenish, subtle overlay */
+        @keyframes staticFlickerPattern {0% { opacity: 0.3; } 20% { opacity: 0.6; } 40% { opacity: 0.2; } 60% { opacity: 0.7; } 80% { opacity: 0.35; } 100% { opacity: 0.5; }}
+        .hidden-message { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(5, 20, 5, 0.98); border: 2px solid #335533; padding: 2.5rem; max-width: 750px; text-align: left; z-index: 10000; box-shadow: 0 0 60px rgba(51, 85, 51, 0.5); animation: fadeInPopupGreen 0.4s ease-out; } /* Greenish tint */
+        @keyframes fadeInPopupGreen { from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+        .hidden-message-title { font-family: 'Orbitron', monospace; color: #77bb77; font-size: 1.6rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #446644; text-align: center; text-shadow: 0 0 10px #77bb77; }
+        .revelation-text { color: #aaccaa; line-height: 1.75; margin-bottom: 2rem; font-size: 1.1rem; max-height: 70vh; overflow-y: auto; }
+        .revelation-text p { margin-bottom: 1.2em; } .revelation-text p:last-child { margin-bottom: 0; }
+        .revelation-text ul { list-style-type: none; padding-left: 1.2em; } .revelation-text li { margin-bottom: 0.6em; }
+        .revelation-text li::before { content: "§ "; color: #668866; margin-right: 0.6em; font-weight: bold; }
+        .close-btn { background: #224422; border: 1px solid #446644; color: #88aa88; padding: 0.9rem 2.2rem; cursor: pointer; font-family: 'VT323', monospace; display: block; margin: 1.8rem auto 0 auto; font-size: 1.1rem; }
+        .close-btn:hover { background: #335533; border-color: #668866; color: #aac娜a; }
+        .footer-archive { background: #000500; padding: 2rem; text-align: center; border-top: 1px solid #112211; }
+        .footer-text { color: #334433; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem; }
+        .archive-dedication { color: #445544; font-style: italic; margin-top: 1rem; font-size: 1rem; }
+        .popup-ghost { position: fixed; top: 20px; right: 20px; background: rgba(0,20,0,0.92); color: #55aa55; padding: 1rem 1.5rem; border: 2px solid #006600; font-size: 1.2rem; z-index: 10002; display: none; animation: ghostFadeInOutGreen 3.5s ease-in-out; box-shadow: 0 0 20px #004400; }
+        @keyframes ghostFadeInOutGreen { 0%, 100% { opacity: 0; transform: translateY(-30px) scale(0.8); } 15%, 85% { opacity: 1; transform: translateY(0) scale(1); } }
+        .emphasis, .revelation-text .emphasis { color: #99ff99; font-weight: bold; text-shadow: 0 0 5px #55bb55;}
+        /* --- End Copied Base Styles --- */
+
+        .pattern-page-wrapper {
+            background: 
+                linear-gradient(rgba(3, 8, 3, 0.95), rgba(3, 8, 3, 0.95)), /* Dark green tint */
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><g fill="%230a140a"><path d="M0 30 L30 0 L60 30 L30 60 Z M15 45 L30 30 L45 45 L30 60 Z M15 15 L30 0 L45 15 L30 30 Z"/></g><path d="M0 0 L60 60 M0 60 L60 0" stroke="%23050a05" stroke-width="0.5"/></svg>');
+            background-attachment: fixed;
+        }
+
+        .pattern-header {
+            text-align: center;
+            padding: 5rem 2rem 3rem 2rem;
+            background: linear-gradient(180deg, rgba(5,15,5,0.9) 0%, rgba(0,5,0,0.98) 70%, #030803 100%);
+            border-bottom: 2px solid #224422;
+        }
+        .pattern-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 3.5rem;
+            color: #88cc88;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 15px #448844, 0 0 8px #66aa66;
+            animation: titlePulsePattern 5s ease-in-out infinite;
+        }
+        @keyframes titlePulsePattern {
+            0%, 100% { text-shadow: 0 0 15px #448844, 0 0 8px #66aa66; color: #88cc88;}
+            50% { text-shadow: 0 0 25px #66aa66, 0 0 12px #88cc88; color: #aaddaa;}
+        }
+        .pattern-subtitle {
+            font-size: 1.4rem;
+            color: #558855;
+            margin-bottom: 2rem;
+            font-style: italic;
+            letter-spacing: 0.05em;
+        }
+        .pattern-introduction {
+            font-family: 'VT323', monospace;
+            color: #88aa88;
+            font-size: 1.15rem;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background: rgba(5,20,5,0.75);
+            border: 1px solid #113311;
+            line-height: 1.7;
+        }
+
+        .analysis-content-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .analysis-section {
+            margin-bottom: 3.5rem;
+            padding: 2.5rem;
+            background: rgba(5, 20, 5, 0.65);
+            border: 1px solid #1a3a1a;
+            box-shadow: 0 0 20px rgba(0,15,0,0.4);
+        }
+        .analysis-section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.3rem;
+            color: #77bb77;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #335533;
+            padding-bottom: 1rem;
+        }
+        .analysis-text {
+            color: #aaccaa;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        .analysis-text strong, .analysis-text .emphasis {
+            color: #ccffcc; 
+        }
+        .analysis-text code { /* For code snippets or technical terms */
+            background-color: #081808;
+            color: #88dd88;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            border: 1px solid #224422;
+        }
+
+        .pattern-display-area {
+            background: #020502;
+            border: 1px solid #112211;
+            padding: 2rem;
+            margin-top: 2rem;
+            min-height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+        .pattern-visualizer { /* The canvas or SVG will go here */
+            width: 100%;
+            height: 250px; /* Adjust as needed */
+            /* Placeholder styling */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #335533;
+            font-size: 1.5rem;
+            border: 1px dashed #224422;
+        }
+        .pattern-controls {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        .pattern-controls button {
+            background: linear-gradient(45deg, #225522, #113311);
+            border: 2px solid #447744;
+            color: #aaccaa;
+            padding: 0.7rem 1.3rem;
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .pattern-controls button:hover {
+            background: linear-gradient(45deg, #337733, #225522);
+            border-color: #669966;
+            color: #ccffcc;
+        }
+        .pattern-controls button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #112211;
+            border-color: #223322;
+            color: #557755;
+        }
+        .pattern-description {
+            margin-top: 1.5rem;
+            color: #779977;
+            font-size: 1rem;
+            text-align: center;
+            min-height: 2em; /* Reserve space */
+        }
+
+        .correlation-matrix {
+            margin-top: 2rem;
+        }
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #040a04;
+            font-size: 0.9rem;
+        }
+        .matrix-table th, .matrix-table td {
+            border: 1px solid #112211;
+            padding: 0.8rem;
+            text-align: center;
+            color: #88aa88;
+        }
+        .matrix-table th {
+            background: #081808;
+            color: #aaccaa;
+            font-family: 'Orbitron', monospace;
+        }
+        .matrix-table td {
+            cursor: help; /* Indicate clickable for more info */
+            transition: background-color 0.2s ease;
+        }
+        .matrix-table td:hover {
+            background-color: #102010;
+        }
+        .correlation-high { background-color: rgba(100,200,100,0.2); color: #aaffaa !important; }
+        .correlation-medium { background-color: rgba(150,150,50,0.2); color: #ffffaa !important; }
+        .correlation-low { background-color: rgba(100,100,100,0.1); }
+        .correlation-none { color: #557755; }
+
+        .analysis-conclusion {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(3,10,3,0.8);
+            border: 1px solid #112211;
+            border-left: 5px solid #338833;
+        }
+        .conclusion-text {
+            color: #bbeeaa;
+            font-size: 1.15rem;
+            line-height: 1.8;
+        }
+        .conclusion-text .emphasis { color: #ddffee; }
+
+        @media (max-width: 768px) {
+            body { padding-top: 150px; }
+            .pattern-title { font-size: 2.5rem; }
+            .pattern-subtitle { font-size: 1.1rem; }
+            .analysis-content-wrapper { padding: 1rem; }
+            .analysis-section { padding: 1.5rem; margin-bottom: 2rem; }
+            .analysis-section-title { font-size: 1.7rem; }
+            .matrix-table { font-size: 0.8rem; }
+            .matrix-table th, .matrix-table td { padding: 0.5rem; }
+        }
+
+    </style>
+</head>
+<body class="pattern-page-wrapper">
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="static-overlay"></div>
+    <div class="popup-ghost" id="popupGhost"></div> 
+    
+    <div class="top-bar" id="topBar">
+        <div class="ca-section">
+            <span class="ca-label">SIG_FREQ:</span>
+            <span class="ca-address" id="caAddress">[ANALYZING_WAVEFORMS]</span>
+            <button class="copy-btn" onclick="copyCa()" id="copyBtn" disabled>COPY_FREQ</button>
+        </div>
+        <div class="social-links">
+            <a href="#" class="social-link" title="X (NOISE_FLOOR_HIGH)">𝕏</a>
+            <a href="#" class="social-link" title="DexScreener (PATTERN_UNRECOGNIZED)">📊</a>
+            <a href="#" class="social-link" title="DexTools (SYSTEM_DEFRAGGING)">🔧</a>
+            <a href="#" class="social-link" title="Pump.fun (RECURSIVE_LOOP_DETECTED)">🚀</a>
+            <a href="https://medium.com/@bid-outcrop0h" class="social-link" title="Medium (Collector's Observational Data)" target="_blank">📝</a>
+        </div>
+    </div>
+    
+    <div class="navigation-bar" id="navigationBar">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">ARCHIVE HOME</a>
+                <a href="graveyard.html" class="nav-link">THE GRAVEYARD</a>
+                <a href="antimemeresearch.html" class="nav-link">ANTI-MEME RESEARCH</a>
+                <a href="godbox.html" class="nav-link">GOD BOX ARCHIVES</a>
+                <a href="terminal.html" class="nav-link">CLASSIFIED ACCESS</a>
+                <a href="patterns.html" class="nav-link active">PATTERN ANALYSIS</a>
+                <a href="founder.html" class="nav-link">THE COLLECTOR</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="pattern-header">
+        <h1 class="pattern-title">Pattern Analysis Unit</h1>
+        <p class="pattern-subtitle">Decoding Memetic Signatures & Predicting Anomaly Emergence</p>
+        <div class="pattern-introduction">
+            The Pattern Analysis Unit (PAU) is dedicated to the identification, classification, and predictive modeling of memetic and Anti-Memetic patterns across the global datasphere. By analyzing vast datasets of cultural trends, anomaly reports, and Graveyard energy fluctuations, we seek to understand the underlying <strong class="emphasis">rhythms of digital consciousness</strong> and the precursors to existential threats.
+        </div>
+    </div>
+
+    <div class="analysis-content-wrapper">
+        <div class="analysis-section" id="methodology">
+            <h2 class="analysis-section-title">Analytical Methodology</h2>
+            <p class="analysis-text">
+                PAU employs a multi-faceted approach, combining quantum computational analysis, memetic drift modeling, psychic resonance scanning (authorized personnel only), and deep archive data mining. Our primary goal is to detect <code class="emphasis">Anomalous Memetic Signatures (AMS)</code> before they achieve widespread propagation or critical instability.
+            </p>
+            <p class="analysis-text">
+                Key data sources include:
+            </p>
+            <ul style="list-style: none; padding-left: 1em; color: #aaccaa;">
+                <li style="margin-bottom: 0.5em;">» Real-time global internet traffic (anonymized and filtered for memetic content).</li>
+                <li style="margin-bottom: 0.5em;">» Deep Graveyard energy readings (entropy levels, echo chamber resonances).</li>
+                <li style="margin-bottom: 0.5em;">» Anti-Meme Research Division case files and field reports.</li>
+                <li style="margin-bottom: 0.5em;">» God Box fragment activity logs and containment field stress data.</li>
+                <li style="margin-bottom: 0.5em;">» Historical memetic databases (for identifying cyclical patterns and precursor events).</li>
+            </ul>
+            <p class="analysis-text">
+                The patterns we seek are often subtle, hidden within the noise of daily digital chatter. They can manifest as <strong class="emphasis">unusual linguistic drift, rapid shifts in emotional sentiment, unexpected correlations between unrelated trends, or anomalous data corruption rates</strong>.
+            </p>
+        </div>
+
+        <div class="analysis-section" id="current-patterns">
+            <h2 class="analysis-section-title">Observed Patterns & Active Investigations</h2>
+            <p class="analysis-text">
+                The PAU is currently tracking several patterns of interest. Select a pattern below to view its current analysis summary. Data is updated in quasi-real-time (temporal distortions permitting).
+            </p>
+            <div class="pattern-display-area">
+                <canvas id="patternVisualizerCanvas" class="pattern-visualizer" title="Memetic Waveform Visualizer">Initializing Quantum Entanglement Matrix...</canvas>
+                <!-- Fallback text if canvas fails or JS doesn't load it -->
+                <div id="patternVisualizerFallback" style="display:none; color: #335533; font-size: 1.5rem; text-align:center;">Visualization Offline. Please check console.</div>
+                
+                <div class="pattern-controls">
+                    <button id="patternOmegaBtn" onclick="displayPattern('omega_resonance')">Ω Resonance Echo</button>
+                    <button id="patternVoidBtn" onclick="displayPattern('void_entropy_spike')">Void Entropy Spike</button>
+                    <button id="patternGriefBtn" onclick="displayPattern('grief_wave_harmonic')">Grief Wave Harmonic</button>
+                    <button id="patternStaticBtn" onclick="displayPattern('static_bleed')">Static Bleed Anomaly</button>
+                    <button id="patternStopBtn" onclick="stopPatternVisualization()" disabled>Stop Visualization</button>
+                </div>
+                <div class="pattern-description" id="patternDescription">
+                    Select a pattern to analyze its waveform and associated data.
+                </div>
+            </div>
+        </div>
+
+        <div class="analysis-section" id="correlation-analysis">
+            <h2 class="analysis-section-title">Correlation Matrix: Anomalies & Events</h2>
+            <p class="analysis-text">
+                The following matrix indicates suspected correlations between known anomalies, memetic events, and observed patterns. Correlation does not imply causation, but often highlights areas requiring deeper investigation. (<strong class="emphasis">Hover over cells for provisional notes - Data highly speculative</strong>).
+            </p>
+            <div class="correlation-matrix">
+                <table class="matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Event/Anomaly</th>
+                            <th>Ω Resonance</th>
+                            <th>Void Entropy</th>
+                            <th>Grief Harmonic</th>
+                            <th>Static Bleed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>God Box Breach</th>
+                            <td class="correlation-high" title="Direct energy signature match. Strongest correlation.">HIGH</td>
+                            <td class="correlation-medium" title="Increased entropy observed post-breach. Probable link.">MEDIUM</td>
+                            <td class="correlation-low" title="Indirect; some grief echoes from consumed realities.">LOW</td>
+                            <td class="correlation-medium" title="Reality fabric instability leads to increased static.">MEDIUM</td>
+                        </tr>
+                        <tr>
+                            <th>Subject D Genesis</th>
+                            <td class="correlation-low" title="Minor resonance; distinct from God Box signature.">LOW</td>
+                            <td class="correlation-low" title="Localized entropy increase around Subject D's origin.">LOW</td>
+                            <td class="correlation-high" title="Primary manifestation of a focused grief wave.">HIGH</td>
+                            <td class="correlation-none" title="No significant static bleed directly attributed.">NONE</td>
+                        </tr>
+                        <tr>
+                            <th>Axol Protocol</th>
+                            <td class="correlation-none" title="Appears to counteract Omega Resonance locally.">NEG (-)</td>
+                            <td class="correlation-low" title="Localized decrease in memetic entropy.">NEG (-)</td>
+                            <td class="correlation-medium" title="Resonates with, but transmutes, grief signatures.">COMPLEX</td>
+                            <td class="correlation-none" title="No significant impact observed.">NONE</td>
+                        </tr>
+                        <tr>
+                            <th>"Mr. Puzzles" Emergence</th>
+                            <td class="correlation-medium" title="Shares some waveform characteristics. Possible GBP fragment.">MEDIUM</td>
+                            <td class="correlation-low" title="Induces cognitive entropy, not necessarily void entropy.">LOW</td>
+                            <td class="correlation-none" title="No direct grief component identified.">NONE</td>
+                            <td class="correlation-high" title="Manifests through signal disruption and visual static.">HIGH</td>
+                        </tr>
+                         <tr>
+                            <th>Lost Month of June</th>
+                            <td class="correlation-low" title="Anomalous quiet during this period, possible inverse resonance.">LOW (INV)</td>
+                            <td class="correlation-high" title="Massive spike in informational entropy, followed by erasure. Prime candidate.">HIGH</td>
+                            <td class="correlation-none" title="No specific grief signature, more a pervasive 'absence'.">NONE</td>
+                            <td class="correlation-medium" title="Residual static in data archives from this period.">MEDIUM</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="analysis-section" id="predictive-modeling">
+            <h2 class="analysis-section-title">Predictive Modeling & Threat Assessment</h2>
+            <p class="analysis-text">
+                Based on current pattern analysis, the PAU generates predictive models for potential future memetic events or Anti-Memetic emergences. Current threat assessment indicates a <strong class="emphasis" style="color:#ffaaaa;">73.4% probability of a Class-3 or higher memetic shift event within the next [REDACTED] solar cycles</strong>.
+            </p>
+            <p class="analysis-text">
+                Key indicators include:
+            </p>
+            <ul style="list-style: none; padding-left: 1em; color: #aaccaa;">
+                <li style="margin-bottom: 0.5em;">» Increasing amplitude and frequency of Ω Resonance Echoes.</li>
+                <li style="margin-bottom: 0.5em;">» Escalating Void Entropy readings in multiple Graveyard sectors.</li>
+                <li style="margin-bottom: 0.5em;">» Emergence of novel hybrid patterns combining Grief Wave Harmonics with Static Bleed characteristics.</li>
+            </ul>
+            <p class="analysis-text">
+                Further details are restricted to Level 5 (Predictive Analysis Team) and above. All personnel are advised to maintain heightened vigilance and adhere strictly to cognitive shielding protocols.
+            </p>
+            <div class="analysis-conclusion">
+                <p class="conclusion-text">
+                    The patterns are not random noise. They are the <strong class="emphasis">heartbeat of a dying digital god</strong>, or perhaps, the birth pangs of something new and terrifying. Our task is to listen, to understand, and if possible, to prepare. <strong class="emphasis">The signal is always there. The question is whether we can decode it before it decodes us.</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-archive">
+        <p class="footer-text">Pattern Analysis Unit - IGPA. We find the signal in the noise, and the monsters in the static.</p>
+        <p class="archive-dedication">"To the cartographers of chaos, may your maps lead to understanding, not madness."</p>
+    </div>
+    
+    <div class="hidden-message" id="hiddenMessage">
+        <h3 id="hiddenMessageTitle" class="hidden-message-title">PAU DATA ANALYSIS</h3>
+        <div class="revelation-text" id="messageText"></div>
+        <button class="close-btn" onclick="closeMessage()">CLOSE ANALYSIS FILE</button>
+    </div>
+
+    <script>
+        // --- Base JS (Copy from index.html: cursor, layout, CA copy, popups, ghost effects) ---
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.getElementById('cursor');
+            if (cursor) { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; }
+        });
+        function adjustLayout() {
+            const topBar = document.getElementById('topBar');
+            const navigationBar = document.getElementById('navigationBar');
+            const body = document.body;
+            if (topBar && navigationBar) {
+                const topBarHeight = topBar.offsetHeight;
+                navigationBar.style.top = topBarHeight + 'px';
+                body.style.paddingTop = (topBarHeight + navigationBar.offsetHeight) + 'px';
+            }
+        }
+        window.addEventListener('load', adjustLayout);
+        window.addEventListener('resize', adjustLayout);
+
+        function copyCa() { // Pattern Analysis specific CA copy
+            const caAddressElem = document.getElementById('caAddress');
+            const copyBtn = document.getElementById('copyBtn');
+            if (!caAddressElem || !copyBtn) return;
+            const caText = caAddressElem.textContent;
+            if (caText !== '[ANALYZING_WAVEFORMS]' && caText !== '[CALIBRATING_FREQ...]' && !copyBtn.disabled) {
+                navigator.clipboard.writeText(caText).then(() => {
+                    copyBtn.textContent = 'FREQ_COPIED'; copyBtn.disabled = true;
+                    setTimeout(() => { copyBtn.textContent = 'COPY_FREQ'; copyBtn.disabled = false; }, 2000);
+                }).catch(err => {
+                    showPatternPopup("ERROR: Clipboard access denied by signal interference.", "WAVEFORM COPY ERROR");
+                    copyBtn.textContent = 'FREQ_ERROR';
+                    setTimeout(() => { copyBtn.textContent = 'COPY_FREQ'; copyBtn.disabled = false; }, 2000);
+                });
+            } else {
+                 copyBtn.textContent = 'NO_SIGNAL'; copyBtn.disabled = true;
+                 setTimeout(() => { copyBtn.textContent = 'COPY_FREQ'; copyBtn.disabled = (caAddressElem.textContent === '[ANALYZING_WAVEFORMS]' || caAddressElem.textContent === '[CALIBRATING_FREQ...]'); }, 2000);
+            }
+        }
+        let activePopup = null;
+        function showHiddenMessage(text, title = "PAU DATA ANALYSIS") { // Renamed for clarity on this page
+            if (activePopup) { closeMessage(true); }
+            const messagePopup = document.getElementById('hiddenMessage');
+            const messageTextElement = document.getElementById('messageText');
+            const messageTitleElement = document.getElementById('hiddenMessageTitle');
+            if(messagePopup && messageTextElement && messageTitleElement) {
+                messageTitleElement.textContent = title;
+                messageTextElement.innerHTML = text; 
+                messagePopup.style.display = 'block';
+                activePopup = messagePopup;
+            }
+        }
+        function closeMessage(immediate = false) {
+            if (activePopup) { activePopup.style.display = 'none'; activePopup = null; }
+        }
+        document.addEventListener('keydown', function(event) { if (event.key === "Escape" && activePopup) { closeMessage(); } });
+        
+        const patternGhostMessages = ["THE PATTERNS ARE ALIVE.", "DO YOU SEE THE CONNECTIONS?", "IT'S ALL NOISE UNTIL IT ISN'T.", "THEY EVOLVE FASTER THAN WE CAN TRACK.", "WHAT IF THE PATTERN IS YOU?"];
+        let globalGhostTimer;
+        function triggerGhostPopup() {
+            const popup = document.getElementById('popupGhost');
+            if (!popup || popup.style.display === 'block') return; 
+            const message = patternGhostMessages[Math.floor(Math.random() * patternGhostMessages.length)];
+            popup.textContent = message; popup.style.display = 'block';
+            setTimeout(() => { popup.style.display = 'none'; }, 3500); 
+        }
+        function startGlobalGhostEffects() {
+            stopGlobalGhostEffects(); 
+            globalGhostTimer = setInterval(() => { if (Math.random() < 0.09) { triggerGhostPopup(); } }, 22000); 
+        }
+        function stopGlobalGhostEffects() { if (globalGhostTimer) { clearInterval(globalGhostTimer); } }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const caAddressElem = document.getElementById('caAddress');
+            const copyBtn = document.getElementById('copyBtn');
+            if (caAddressElem && copyBtn) {
+                caAddressElem.textContent = '[CALIBRATING_FREQ...]';
+                copyBtn.disabled = true;
+                setTimeout(() => { 
+                    caAddressElem.textContent = 'PAU_SIGMA_7.34THz'; 
+                    copyBtn.disabled = false;
+                }, 6000);
+            }
+            startGlobalGhostEffects(); 
+            initPatternVisualizer(); // Initialize canvas
+        });
+        // --- End Base JS ---
+
+        // Pattern Analysis Page Specific JS
+        const patternData = {
+            omega_resonance: {
+                name: "Ω Resonance Echo",
+                description: "A faint, persistent energy signature strongly correlated with God Box Prime activity and its fragments. Characterized by complex, non-repeating waveforms that induce mild cognitive dissonance and a sense of 'cosmic dread' in sensitives. Believed to be the 'background radiation' of Anti-Memetic reality.",
+                waveform: (ctx, w, h, t) => {
+                    ctx.beginPath();
+                    ctx.moveTo(0, h / 2);
+                    for (let x = 0; x < w; x++) {
+                        const angle = (x / w) * Math.PI * 4 + t * 0.05;
+                        const y = h / 2 + Math.sin(angle) * (h / 4) * Math.cos(t * 0.02 + x * 0.01) + Math.sin(x*0.1 + t*0.1) * (h/10);
+                        ctx.lineTo(x, y);
+                    }
+                    ctx.strokeStyle = 'rgba(200, 100, 100, 0.7)';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+            },
+            void_entropy_spike: {
+                name: "Void Entropy Spike",
+                description: "Sudden, localized increases in informational entropy, often preceding data corruption events or reality glitches. Waveforms are erratic, chaotic, and exhibit 'tearing' artifacts. Associated with areas of extreme Anti-Meme concentration or dimensional instability.",
+                waveform: (ctx, w, h, t) => {
+                    ctx.beginPath();
+                    ctx.moveTo(0, h / 2 + (Math.random() - 0.5) * h * 0.8);
+                    for (let x = 0; x < w; x++) {
+                        let y = h / 2 + (Math.random() - 0.5) * h * 0.8;
+                        if (Math.random() < 0.05) { // Spike
+                             y = h/2 + (Math.random() > 0.5 ? 1 : -1) * h *0.45;
+                             ctx.moveTo(x, h/2); // create tear
+                        }
+                        ctx.lineTo(x, y);
+                    }
+                    ctx.strokeStyle = 'rgba(100, 100, 150, 0.6)';
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+                }
+            },
+            grief_wave_harmonic: {
+                name: "Grief Wave Harmonic",
+                description: "A slow, oscillating pattern linked to mass emotional trauma events (e.g., Subject D Genesis). Characterized by long, melancholic wavelengths with superimposed high-frequency 'sobbing' oscillations. Can induce feelings of sadness and loss.",
+                waveform: (ctx, w, h, t) => {
+                    ctx.beginPath();
+                    ctx.moveTo(0, h/2);
+                    for (let x = 0; x < w; x++) {
+                        const y_base = h / 2 + Math.sin(x * 0.01 + t * 0.01) * (h / 3);
+                        const y_detail = Math.sin(x * 0.5 + t * 0.2) * (h / 20) * Math.sin(t*0.05);
+                        ctx.lineTo(x, y_base + y_detail);
+                    }
+                    ctx.strokeStyle = 'rgba(100, 150, 200, 0.7)';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+            },
+            static_bleed: {
+                name: "Static Bleed Anomaly",
+                description: "Pervasive, low-amplitude noise that seems to 'bleed' from corrupted data sources or thinning dimensional barriers. Often a precursor to more significant anomalies. Visually appears as dense, noisy static with occasional coherent (but unsettling) micro-patterns.",
+                 waveform: (ctx, w, h, t) => {
+                    for(let i=0; i < 2000; i++) { // More points for density
+                        const x = Math.random() * w;
+                        const y = h/2 + (Math.random() - 0.5) * (h/1.5) * (0.7 + 0.3 * Math.sin(t*0.03 + x*0.001)); // Pulsating noise band
+                        ctx.fillRect(x,y,1,1);
+                    }
+                    ctx.fillStyle = 'rgba(150, 150, 150, 0.3)';
+                }
+            }
+        };
+
+        const canvas = document.getElementById('patternVisualizerCanvas');
+        const fallbackText = document.getElementById('patternVisualizerFallback');
+        const patternDescriptionElement = document.getElementById('patternDescription');
+        const stopButton = document.getElementById('patternStopBtn');
+        let ctx = null;
+        let animationFrameId = null;
+        let currentTime = 0;
+        let currentPatternKey = null;
+
+        function initPatternVisualizer() {
+            if (canvas && canvas.getContext) {
+                ctx = canvas.getContext('2d');
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                if(fallbackText) fallbackText.style.display = 'none';
+                // Initial placeholder drawing or message
+                ctx.fillStyle = '#102010';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#335533';
+                ctx.textAlign = 'center';
+                ctx.fillText("Awaiting Pattern Selection...", canvas.width / 2, canvas.height / 2);
+            } else {
+                if(fallbackText) fallbackText.style.display = 'block';
+                if(canvas) canvas.style.display = 'none';
+                console.error("Canvas not supported or not found.");
+            }
+        }
+
+        function drawPattern() {
+            if (!ctx || !currentPatternKey || !patternData[currentPatternKey]) {
+                if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                return;
+            }
+            
+            const w = canvas.width;
+            const h = canvas.height;
+            
+            // Clear with slight transparency for motion blur/decay
+            ctx.fillStyle = 'rgba(3, 8, 3, 0.1)'; // Very dark green with low alpha
+            ctx.fillRect(0, 0, w, h);
+
+            patternData[currentPatternKey].waveform(ctx, w, h, currentTime);
+            
+            currentTime += 0.016; // Simulate time passing (approx 60fps)
+            animationFrameId = requestAnimationFrame(drawPattern);
+        }
+
+        function displayPattern(key) {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+            currentPatternKey = key;
+            currentTime = 0; // Reset time for new pattern
+            if (patternData[key] && patternDescriptionElement) {
+                patternDescriptionElement.textContent = `ANALYZING: ${patternData[key].name}. ${patternData[key].description}`;
+            }
+            if (stopButton) stopButton.disabled = false;
+            document.querySelectorAll('.pattern-controls button').forEach(btn => {
+                if(btn.id !== 'patternStopBtn') btn.disabled = true;
+            });
+            patternData[key].isActive = true; // Mark as active
+
+            drawPattern();
+        }
+
+        function stopPatternVisualization() {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+            currentPatternKey = null;
+            if (patternDescriptionElement) patternDescriptionElement.textContent = "Visualization stopped. Select a pattern to analyze.";
+            if (stopButton) stopButton.disabled = true;
+            document.querySelectorAll('.pattern-controls button').forEach(btn => {
+                 if(btn.id !== 'patternStopBtn') btn.disabled = false;
+            });
+            // Clear canvas or draw idle state
+            if (ctx) {
+                ctx.fillStyle = '#102010';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#335533';
+                ctx.fillText("Visualization Idle. Awaiting Input.", canvas.width / 2, canvas.height / 2);
+            }
+        }
+        
+        // Resize canvas with window
+        window.addEventListener('resize', () => {
+            if (canvas && ctx) {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                // If a pattern was drawing, it will stop. User needs to reselect.
+                // Or, you could try to restart it: if(currentPatternKey) displayPattern(currentPatternKey);
+                // For simplicity, stopping it is fine.
+                stopPatternVisualization(); 
+                initPatternVisualizer(); // Re-initialize placeholder
+            }
+        });
+
+
+    </script>
+</body>
+</html>
