@@ -473,7 +473,7 @@
             const copyBtn = document.getElementById('copyBtn');
             if (!caAddressElem || !copyBtn) return;
             const caText = caAddressElem.textContent;
-            if (caText !== '[NULL_POINTER_EXCEPTION]' && caText !== '[SCANNING_VOID...]' && !copyBtn.disabled) {
+            if (caText !== '[NULL_POINTER_EXCEPTION]' && caText !== 'COMING SOON' && !copyBtn.disabled) {
                 navigator.clipboard.writeText(caText).then(() => {
                     copyBtn.textContent = 'COPIED_Ω!'; copyBtn.disabled = true;
                     setTimeout(() => { copyBtn.textContent = 'COPY_Ω'; copyBtn.disabled = false; }, 2000);
@@ -484,7 +484,7 @@
                 });
             } else {
                  copyBtn.textContent = 'NO_SIGNAL'; copyBtn.disabled = true;
-                 setTimeout(() => { copyBtn.textContent = 'COPY_Ω'; copyBtn.disabled = (caAddressElem.textContent === '[NULL_POINTER_EXCEPTION]' || caAddressElem.textContent === '[SCANNING_VOID...]'); }, 2000);
+                 setTimeout(() => { copyBtn.textContent = 'COPY_Ω'; copyBtn.disabled = (caAddressElem.textContent === '[NULL_POINTER_EXCEPTION]' || caAddressElem.textContent === 'COMING SOON'); }, 2000);
             }
         }
         let activePopup = null;
