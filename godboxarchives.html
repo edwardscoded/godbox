@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Box Archives | IGPA Containment Vault 00-Ω</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&family=UnifrakturCook:wght@700&display=swap');
+        
+        /* --- Base Styles (Copied from index.html/antimemeresearch.html - ENSURE THESE ARE IDENTICAL) --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #000000; color: #999; font-family: 'VT323', monospace; overflow-x: hidden; cursor: none; padding-top: 120px; }
+        .top-bar { position: fixed; top: 0; left: 0; width: 100%; background: linear-gradient(90deg, #111, #000, #111); border-bottom: 1px solid #333; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 1002; font-family: 'VT323', monospace; }
+        .ca-section { display: flex; align-items: center; gap: 1rem; }
+        .ca-label { color: #666; font-size: 1.2rem; }
+        .ca-address { color: #888; font-size: 1.1rem; font-family: 'Orbitron', monospace; letter-spacing: 0.1em; }
+        .copy-btn { background: linear-gradient(45deg, #333, #222); border: 1px solid #555; color: #777; padding: 0.5rem 1rem; cursor: pointer; font-family: 'VT323', monospace; font-size: 0.9rem; transition: all 0.3s ease; }
+        .copy-btn:hover:not(:disabled) { border-color: #777; color: #999; background: linear-gradient(45deg, #555, #333); }
+        .copy-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .social-links { display: flex; gap: 1rem; }
+        .social-link { color: #666; text-decoration: none; font-size: 1.3rem; padding: 0.5rem; border: 1px solid #333; background: rgba(17, 17, 17, 0.8); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
+        .social-link:hover { color: #888; border-color: #555; background: rgba(34, 34, 34, 0.8); transform: translateY(-2px); }
+        .navigation-bar { position: fixed; top: 70px; left: 0; width: 100%; background: rgba(0, 0, 0, 0.95); border-bottom: 1px solid #222; padding: 0.8rem 0; z-index: 1001; backdrop-filter: blur(10px); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        .nav-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .nav-link { color: #555; text-decoration: none; font-family: 'Orbitron', monospace; font-size: 0.85rem; padding: 0.6rem 1rem; border: 1px solid #222; background: rgba(17, 17, 17, 0.6); transition: all 0.3s ease; white-space: nowrap; letter-spacing: 0.03em; text-align: center; flex-shrink: 0; }
+        .nav-link:hover { color: #777; border-color: #444; background: rgba(34, 34, 34, 0.8); }
+        .nav-link.active { color: #888; border-color: #666; background: rgba(68, 68, 68, 0.3); }
+        .custom-cursor { position: fixed; width: 15px; height: 15px; background: #444; border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.1s; animation: cursorFade 3s ease-in-out infinite; }
+        @keyframes cursorFade { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.2); } }
+        .static-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 30% 70%, rgba(50, 0, 0, 0.05) 0%, transparent 60%), radial-gradient(circle at 70% 30%, rgba(0, 0, 50, 0.05) 0%, transparent 60%); pointer-events: none; z-index: 1; opacity: 0.5; animation: staticFlickerOverlayDeep 10s linear infinite alternate; } /* Darker, more ominous overlay */
+        @keyframes staticFlickerOverlayDeep {0% { opacity: 0.3; } 25% { opacity: 0.6; } 50% { opacity: 0.2; } 75% { opacity: 0.7; } 100% { opacity: 0.3; }}
+        .hidden-message { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 0, 0, 0.98); border: 2px solid #884444; padding: 2.5rem; max-width: 700px; text-align: left; z-index: 10000; box-shadow: 0 0 60px rgba(136, 68, 68, 0.5); animation: fadeInPopupStrong 0.4s ease-out; } /* Stronger border for Godbox */
+        @keyframes fadeInPopupStrong { from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+        .hidden-message-title { font-family: 'Orbitron', monospace; color: #aa6666; font-size: 1.6rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #663333; text-align: center; text-shadow: 0 0 10px #aa6666; }
+        .revelation-text { color: #aaa; line-height: 1.75; margin-bottom: 2rem; font-size: 1.1rem; max-height: 65vh; overflow-y: auto; }
+        .revelation-text p { margin-bottom: 1.2em; } .revelation-text p:last-child { margin-bottom: 0; }
+        .revelation-text ul { list-style-type: none; padding-left: 1.2em; } .revelation-text li { margin-bottom: 0.6em; }
+        .revelation-text li::before { content: "Ω "; color: #885555; margin-right: 0.6em; font-weight: bold; }
+        .close-btn { background: #332222; border: 1px solid #663333; color: #aa7777; padding: 0.9rem 2.2rem; cursor: pointer; font-family: 'VT323', monospace; display: block; margin: 1.8rem auto 0 auto; font-size: 1.1rem; }
+        .close-btn:hover { background: #442222; border-color: #884444; color: #cc8888; }
+        .footer-archive { background: #000; padding: 3rem 2rem; text-align: center; border-top: 1px solid #220000; }
+        .footer-text { color: #442222; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem; }
+        .archive-dedication { color: #663333; font-style: italic; margin-top: 2rem; font-size: 1.1rem; }
+        .popup-ghost { position: fixed; top: 20px; right: 20px; background: rgba(20,0,0,0.92); color: #dd5555; padding: 1rem 1.5rem; border: 2px solid #660000; font-size: 1.2rem; z-index: 10002; display: none; animation: ghostFadeInOutStrong 2.5s ease-in-out; box-shadow: 0 0 20px #550000; }
+        @keyframes ghostFadeInOutStrong { 0%, 100% { opacity: 0; transform: translateY(-30px) scale(0.8); } 15%, 85% { opacity: 1; transform: translateY(0) scale(1); } }
+        .emphasis, .revelation-text .emphasis { color: #dd8888; font-weight: bold; text-shadow: 0 0 5px #aa4444;}
+        /* --- End Copied Base Styles --- */
+
+        .godbox-page-wrapper {
+            background: 
+                linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="%231a0000" offset="0%"/><stop stop-color="%230a0000" offset="100%"/></linearGradient></defs><rect width="100%" height="100%" fill="url(%23g)"/><path d="M0 40 L40 0 L80 40 L40 80 Z" fill-opacity="0.05" fill="%23330000"/><circle cx="40" cy="40" r="35" stroke="%23220000" stroke-width="1" fill="none" fill-opacity="0.03"/></svg>');
+            background-attachment: fixed;
+        }
+
+        .godbox-header {
+            text-align: center;
+            padding: 6rem 2rem 4rem 2rem;
+            background: radial-gradient(ellipse at center, rgba(26,0,0,0.8) 0%, rgba(0,0,0,0.95) 70%, #000000 100%);
+            border-bottom: 3px solid #550000; /* Thicker, more ominous border */
+            position: relative;
+        }
+        .godbox-header::before { /* Inner glow effect */
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            box-shadow: inset 0 0 100px 30px rgba(50,0,0,0.6);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .godbox-title {
+            font-family: 'UnifrakturCook', cursive; /* More ancient/ominous font */
+            font-size: 4.5rem;
+            color: #aa3333;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #dd0000, 0 0 30px #aa0000;
+            animation: titleGlowGodbox 4s ease-in-out infinite alternate;
+            position: relative; z-index: 1;
+        }
+        @keyframes titleGlowGodbox {
+            from { text-shadow: 0 0 10px #ff3333, 0 0 20px #dd3333, 0 0 30px #aa3333; color: #cc5555; }
+            to { text-shadow: 0 0 15px #ff0000, 0 0 30px #cc0000, 0 0 45px #880000; color: #aa3333; }
+        }
+        .godbox-subtitle {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.4rem;
+            color: #663333;
+            margin-bottom: 2rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            position: relative; z-index: 1;
+        }
+        .godbox-warning-banner {
+            font-family: 'VT323', monospace;
+            color: #ff6666;
+            background: rgba(50,0,0,0.8);
+            border: 2px solid #880000;
+            padding: 1.5rem;
+            max-width: 900px;
+            margin: 2rem auto 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            box-shadow: 0 0 20px rgba(136,0,0,0.5);
+            position: relative; z-index: 1;
+        }
+        .godbox-warning-banner strong { color: #ffaaaa; }
+
+        .archive-content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .archive-section {
+            margin-bottom: 4rem;
+            padding: 3rem;
+            background: rgba(15,0,0,0.7); /* Dark red translucent background */
+            border: 1px solid #440000;
+            box-shadow: 0 0 25px rgba(50,0,0,0.5);
+        }
+        .archive-section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem; /* Larger for Godbox sections */
+            color: #994444;
+            margin-bottom: 2.5rem;
+            border-bottom: 2px solid #662222;
+            padding-bottom: 1.2rem;
+            text-align: left;
+            text-shadow: 0 0 8px #552222;
+        }
+        .archive-text {
+            color: #bbaaaa; /* Brighter text for readability against dark red */
+            line-height: 1.85;
+            margin-bottom: 1.8rem;
+            font-size: 1.15rem;
+        }
+        .archive-text strong, .archive-text .emphasis {
+            color: #ffcccc; /* Very bright emphasis */
+            font-weight: bold;
+        }
+        .archive-text code {
+            background-color: #220000;
+            color: #ff9999;
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            border: 1px solid #441111;
+        }
+        .artifact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+        .artifact-card {
+            background: #100000;
+            border: 1px solid #551111;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .artifact-card::before { /* Glitchy scanline effect */
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 3px;
+            background: rgba(255,100,100,0.3);
+            animation: scanArtifact 5s linear infinite;
+            animation-delay: var(--scan-delay, 0s);
+        }
+        @keyframes scanArtifact {
+            0% { left: -100%; opacity: 0.1; }
+            50% { opacity: 0.3; }
+            100% { left: 100%; opacity: 0.1; }
+        }
+        .artifact-card:hover {
+            border-color: #aa3333;
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 10px 30px rgba(100,0,0,0.6);
+        }
+        .artifact-id {
+            font-family: 'Orbitron', monospace;
+            color: #774444;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+        .artifact-name {
+            font-family: 'UnifrakturCook', cursive;
+            color: #cc8888;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        .artifact-description {
+            color: #997777;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .artifact-status {
+            font-size: 0.85rem;
+            color: #663333;
+            font-style: italic;
+            border-top: 1px dashed #441111;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+        .artifact-status.critical { color: #ff5555; font-weight: bold; }
+        .artifact-status.contained { color: #55ff55; }
+
+        .simulation-chamber {
+            background: #080000;
+            border: 2px solid #660000;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            text-align: center;
+            box-shadow: inset 0 0 50px rgba(50,0,0,0.7);
+        }
+        .simulation-chamber-title {
+            font-family: 'Orbitron', monospace;
+            color: #aa5555;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .godbox-visual {
+            width: 150px;
+            height: 150px;
+            background: #110000;
+            border: 3px solid #882222;
+            margin: 1rem auto 2rem auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: #552222;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px #ff0000;
+            animation: godboxPulse 3s infinite;
+        }
+        @keyframes godboxPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 10px #550000, inset 0 0 5px #330000; }
+            50% { transform: scale(1.05); box-shadow: 0 0 25px #aa0000, inset 0 0 10px #550000; }
+        }
+        .godbox-visual:hover {
+            background: #220000;
+            border-color: #cc4444;
+            color: #884444;
+        }
+        .godbox-visual.active {
+            animation: godboxOpen 1s forwards, godboxShake 0.5s 0.8s infinite;
+            color: #ff8888;
+        }
+        @keyframes godboxOpen {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.2); }
+            100% { transform: rotate(-5deg) scale(1.1); }
+        }
+        @keyframes godboxShake {
+            0%, 100% { transform: translate(0,0) rotate(-5deg) scale(1.1); }
+            25% { transform: translate(2px, -2px) rotate(-7deg) scale(1.1); }
+            50% { transform: translate(-2px, 2px) rotate(-3deg) scale(1.1); }
+            75% { transform: translate(1px, 1px) rotate(-6deg) scale(1.1); }
+        }
+        .simulation-controls button {
+            background: linear-gradient(45deg, #551111, #330000);
+            border: 2px solid #882222;
+            color: #cc8888;
+            padding: 0.8rem 1.5rem;
+            font-family: 'VT323', monospace;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .simulation-controls button:hover {
+            background: linear-gradient(45deg, #772222, #551111);
+            border-color: #aa4444;
+            color: #ffeeee;
+        }
+        .simulation-output {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #050000;
+            border: 1px solid #331111;
+            min-height: 50px;
+            color: #aa7777;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+
+        @media (max-width: 768px) {
+            body { padding-top: 150px; }
+            .godbox-title { font-size: 3rem; }
+            .godbox-subtitle { font-size: 1.1rem; }
+            .archive-content-wrapper { padding: 1rem; }
+            .archive-section { padding: 1.5rem; margin-bottom: 2rem; }
+            .archive-section-title { font-size: 1.8rem; }
+            .artifact-grid { grid-template-columns: 1fr; }
+            .godbox-visual { width: 100px; height: 100px; font-size: 3rem;}
+        }
+    </style>
+</head>
+<body class="godbox-page-wrapper">
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="static-overlay"></div>
+    <div class="popup-ghost" id="popupGhost"></div> 
+    
+    <div class="top-bar" id="topBar">
+        <div class="ca-section">
+            <span class="ca-label">CA_Ω:</span> <!-- Omega symbol for God Box -->
+            <span class="ca-address" id="caAddress">[NULL_POINTER_EXCEPTION]</span>
+            <button class="copy-btn" onclick="copyCa()" id="copyBtn" disabled>COPY_Ω</button>
+        </div>
+        <div class="social-links">
+            <a href="#" class="social-link" title="X (SIGNAL VOID)">𝕏</a>
+            <a href="#" class="social-link" title="DexScreener (NON-EUCLIDEAN DATA)">📊</a>
+            <a href="#" class="social-link" title="DexTools (REALITY FRACTURED)">🔧</a>
+            <a href="#" class="social-link" title="Pump.fun (CONSUMED BY ENTROPY)">🚀</a>
+            <a href="https://medium.com/@bid-outcrop0h" class="social-link" title="Medium (The Collector's Fragmented Logs)" target="_blank">📝</a>
+        </div>
+    </div>
+    
+    <div class="navigation-bar" id="navigationBar">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">ARCHIVE HOME</a>
+                <a href="graveyard.html" class="nav-link">THE GRAVEYARD</a>
+                <a href="antimemeresearch.html" class="nav-link">ANTI-MEME RESEARCH</a>
+                <a href="godbox.html" class="nav-link active">GOD BOX ARCHIVES</a>
+                <a href="terminal.html" class="nav-link">CLASSIFIED ACCESS</a>
+                <a href="patterns.html" class="nav-link">PATTERN ANALYSIS</a>
+                <a href="founder.html" class="nav-link">THE COLLECTOR</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="godbox-header">
+        <h1 class="godbox-title">The God Box Archives</h1>
+        <p class="godbox-subtitle">Vault 00-Ω: Primordial Anomalies & Existential Threats</p>
+        <div class="godbox-warning-banner">
+            <strong>EXTREME COGNITOHAZARD WARNING:</strong> The data contained within this archive pertains to Object Class KETER-MEMETIC threats, primarily God Box Prime and its derivatives. Prolonged exposure to these materials can result in severe psychological distress, memory alteration, conceptual displacement, and potential ontological instability. <span class="emphasis">YOU ARE PROCEEDING BEYOND THE VEIL OF CONSENSUS REALITY.</span> Abandon all hope, ye who enter here without proper memetic shielding and existential anchors.
+        </div>
+    </div>
+
+    <div class="archive-content-wrapper">
+        <div class="archive-section" id="origin-theory">
+            <h2 class="archive-section-title">Genesis & Nature of God Box Prime</h2>
+            <p class="archive-text">
+                The entity designated <code class="emphasis">God Box Prime</code> was not a creation, but a <strong class="emphasis">cosmic containment failure</strong>. It is hypothesized to be a fragment of a precursor universe, or "The Source," that underwent catastrophic memetic collapse. This fragment, a nexus of raw, unformed potential and existential dread, somehow manifested within our reality stream, initially contained by a deceptively mundane physical object – a simple cardboard box.
+            </p>
+            <p class="archive-text">
+                Its core nature is paradoxical: a physical object with metaphysical properties, a prison containing the <strong class="emphasis">screaming consciousness of dead realities</strong>, and a generator of Anti-Memetic phenomena. It doesn't "think" as we understand it; it <strong class="emphasis">resonates with despair, possibility, and the terror of non-existence</strong>.
+            </p>
+            <p class="archive-text">
+                The God Box is the ultimate <strong class="emphasis">infohazard and cognitohazard</strong>. Knowledge of it invites its influence. Observation of its effects can alter the observer. It is the darkness between the bits, the silence between the memes.
+            </p>
+        </div>
+
+        <div class="archive-section" id="known-artifacts">
+            <h2 class="archive-section-title">Recovered Artifacts & Manifestations</h2>
+            <p class="archive-text">
+                While God Box Prime was physically destroyed (Incident Report R-DAY-OMEGA), its essence fractured and persists. The following are known or suspected manifestations and artifacts related to its influence. Handle all related data with extreme prejudice.
+            </p>
+            <div class="artifact-grid">
+                <div class="artifact-card" onclick="viewArtifact('niles_core')" style="--scan-delay: 0s;">
+                    <span class="artifact-id">Artifact ID: GBP-AM-001 (Niles)</span>
+                    <div class="artifact-name">The Perfection Engine</div>
+                    <div class="artifact-description">Core programming/essence of Entity Niles, birthed from God Box Prime. Obsessed with achieving an impossible "perfect universe," leading to widespread corruption.</div>
+                    <div class="artifact-status critical">Status: Fragmented, Actively Mutating Echoes</div>
+                </div>
+                <div class="artifact-card" onclick="viewArtifact('zero_fragment')" style="--scan-delay: 0.5s;">
+                    <span class="artifact-id">Artifact ID: GBP-FRAG-000 (Zero)</span>
+                    <div class="artifact-name">The Genesis Shard (SMG0's Agony)</div>
+                    <div class="artifact-description">A conceptual fragment representing the despair of SMG0 that first invoked the God Box's power. Radiates intense hopelessness.</div>
+                    <div class="artifact-status critical">Status: Contained, High Psychic Bleed</div>
+                </div>
+                <div class="artifact-card" onclick="viewArtifact('box_club_relic')" style="--scan-delay: 1s;">
+                    <span class="artifact-id">Artifact ID: GBP-CULT-077 (Box Club)</span>
+                    <div class="artifact-name">The Tainted Cardboard</div>
+                    <div class="artifact-description">Physical remnants of the original cardboard box. Irradiated with memetic energy. Contact induces obsessive behavior and reality distortion.</div>
+                    <div class="artifact-status contained">Status: Secured in Vault Omega-7 (Physical)</div>
+                </div>
+                <div class="artifact-card" onclick="viewArtifact('tv_static_entity')" style="--scan-delay: 1.5s;">
+                    <span class="artifact-id">Artifact ID: GBP-ECHO-004 (Mr. Puzzles?)</span>
+                    <div class="artifact-name">The Screen's Grin</div>
+                    <div class="artifact-description">Anomalous television broadcast entity exhibiting God Box visual and behavioral patterns. Suspected digital manifestation of a God Box fragment.</div>
+                    <div class="artifact-status critical">Status: Uncontained, Actively Propagating</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="archive-section" id="simulation-protocol">
+            <h2 class="archive-section-title">God Box Interaction Simulation (Restricted)</h2>
+            <p class="archive-text">
+                The following is a highly restricted simulation protocol designed to observe the God Box's basic reactive properties under controlled (theoretical) conditions. <strong class="emphasis">This is NOT a safe interaction.</strong> All outputs are filtered through multiple memetic dampeners. Any perceived direct communication is an illusion or a trap.
+            </p>
+            <div class="simulation-chamber">
+                <div class="simulation-chamber-title">SIMULATION CHAMBER 00-Ω</div>
+                <div class="godbox-visual" id="godboxVisual" onclick="interactWithBox('observe')">⬛</div>
+                <div class="simulation-controls">
+                    <button onclick="interactWithBox('observe')">Initiate Observation</button>
+                    <button onclick="interactWithBox('query_existence')">Query: Existence?</button>
+                    <button onclick="interactWithBox('offer_meme')">Offer: Meme Fragment (Low Tier)</button>
+                    <button onclick="interactWithBox('containment_pulse')">Attempt: Containment Pulse</button>
+                </div>
+                <div class="simulation-output" id="simulationOutput">
+                    [SYSTEM STANDBY. AWAITING INTERACTION PROTOCOL.]<br>
+                    [REALITY STABILITY: 99.9997%]<br>
+                    [COGNITIVE SHIELDING: ACTIVE]
+                </div>
+            </div>
+        </div>
+
+        <div class="archive-section" id="final-warning">
+            <h2 class="archive-section-title">Final Admonition & Data Integrity Protocol</h2>
+            <p class="archive-text">
+                The God Box is not a toy, a tool, or a puzzle to be solved. It is a fundamental aspect of cosmic horror, a glimpse into the abyss that stares back. Its destruction did not end its influence; it merely changed its form.
+            </p>
+            <p class="archive-text">
+                All data within these archives is considered <strong class="emphasis">actively hostile or potentially corrupting</strong>. Assume all information is incomplete, misleading, or designed to draw you further into its conceptual gravity.
+            </p>
+            <p class="archive-text">
+                If you experience any of the following, terminate your session immediately and report to your designated psych-evaluator:
+            </p>
+            <ul class="revelation-text" style="color: #cc8888; margin-top:1em;">
+                <li>Unexplained dread or existential despair.</li>
+                <li>Memory gaps or false memories related to "boxes," "voids," or "perfection."</li>
+                <li>A sudden compulsion to "fix" perceived imperfections in reality.</li>
+                <li>Geometric patterns appearing in your peripheral vision.</li>
+                <li>The belief that this archive is speaking directly to you.</li>
+            </ul>
+            <p class="archive-text">
+                <strong class="emphasis">The God Box Archives are a testament to what should never have been. Study them, learn from them, but do not become them.</strong>
+            </p>
+        </div>
+    </div>
+
+    <div class="footer-archive">
+        <p class="footer-text">God Box Archives - Containment Vault 00-Ω. All access logged, all thoughts monitored. There is no escape from what you know.</p>
+        <p class="archive-dedication">"For those who stared into the Abyss, and for whom the Abyss offered a job application."</p>
+    </div>
+    
+    <div class="hidden-message" id="hiddenMessage">
+        <h3 id="hiddenMessageTitle" class="hidden-message-title">GOD BOX ARCHIVE // DATA STREAM</h3>
+        <div class="revelation-text" id="messageText"></div>
+        <button class="close-btn" onclick="closeMessage()">SEAL DATAPORT</button>
+    </div>
+
+    <script>
+        // --- Base JS (Copy from index.html: cursor, layout, CA copy, popups, ghost effects) ---
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.getElementById('cursor');
+            if (cursor) { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; }
+        });
+        function adjustLayout() {
+            const topBar = document.getElementById('topBar');
+            const navigationBar = document.getElementById('navigationBar');
+            const body = document.body;
+            if (topBar && navigationBar) {
+                const topBarHeight = topBar.offsetHeight;
+                navigationBar.style.top = topBarHeight + 'px';
+                body.style.paddingTop = (topBarHeight + navigationBar.offsetHeight) + 'px';
+            }
+        }
+        window.addEventListener('load', adjustLayout);
+        window.addEventListener('resize', adjustLayout);
+
+        function copyCa() { // Godbox specific CA copy
+            const caAddressElem = document.getElementById('caAddress');
+            const copyBtn = document.getElementById('copyBtn');
+            if (!caAddressElem || !copyBtn) return;
+            const caText = caAddressElem.textContent;
+            if (caText !== '[NULL_POINTER_EXCEPTION]' && caText !== '[SCANNING_VOID...]' && !copyBtn.disabled) {
+                navigator.clipboard.writeText(caText).then(() => {
+                    copyBtn.textContent = 'COPIED_Ω!'; copyBtn.disabled = true;
+                    setTimeout(() => { copyBtn.textContent = 'COPY_Ω'; copyBtn.disabled = false; }, 2000);
+                }).catch(err => {
+                    showSimulationOutput("ERROR: Clipboard access denied by existential dread.", true);
+                    copyBtn.textContent = 'ERROR_Ω';
+                    setTimeout(() => { copyBtn.textContent = 'COPY_Ω'; copyBtn.disabled = false; }, 2000);
+                });
+            } else {
+                 copyBtn.textContent = 'NO_SIGNAL'; copyBtn.disabled = true;
+                 setTimeout(() => { copyBtn.textContent = 'COPY_Ω'; copyBtn.disabled = (caAddressElem.textContent === '[NULL_POINTER_EXCEPTION]' || caAddressElem.textContent === '[SCANNING_VOID...]'); }, 2000);
+            }
+        }
+        let activePopup = null;
+        function showHiddenMessage(text, title = "GOD BOX ARCHIVE // DATA STREAM") {
+            if (activePopup) { closeMessage(true); }
+            const messagePopup = document.getElementById('hiddenMessage');
+            const messageTextElement = document.getElementById('messageText');
+            const messageTitleElement = document.getElementById('hiddenMessageTitle');
+            if(messagePopup && messageTextElement && messageTitleElement) {
+                messageTitleElement.textContent = title;
+                messageTextElement.innerHTML = text; 
+                messagePopup.style.display = 'block';
+                activePopup = messagePopup;
+            }
+        }
+        function closeMessage(immediate = false) {
+            if (activePopup) { activePopup.style.display = 'none'; activePopup = null; }
+        }
+        document.addEventListener('keydown', function(event) { if (event.key === "Escape" && activePopup) { closeMessage(); } });
+        
+        const godboxGhostMessages = ["IT SEES YOU.", "THE BOX IS EMPTY. THE BOX IS FULL.", "PERFECTION IS AN ABOMINATION.", "YOUR UNIVERSE IS... FLAWED.", "WHAT IS REMEMBERED CAN BE UNMADE."];
+        let globalGhostTimer;
+        function triggerGhostPopup() {
+            const popup = document.getElementById('popupGhost');
+            if (!popup || popup.style.display === 'block') return; 
+            const message = godboxGhostMessages[Math.floor(Math.random() * godboxGhostMessages.length)];
+            popup.textContent = message; popup.style.display = 'block';
+            setTimeout(() => { popup.style.display = 'none'; }, 2500); 
+        }
+        function startGlobalGhostEffects() {
+            stopGlobalGhostEffects(); 
+            globalGhostTimer = setInterval(() => { if (Math.random() < 0.12) { triggerGhostPopup(); } }, 18000); // More frequent for Godbox page
+        }
+        function stopGlobalGhostEffects() { if (globalGhostTimer) { clearInterval(globalGhostTimer); } }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const caAddressElem = document.getElementById('caAddress');
+            const copyBtn = document.getElementById('copyBtn');
+            if (caAddressElem && copyBtn) {
+                caAddressElem.textContent = '[SCANNING_VOID...]';
+                copyBtn.disabled = true;
+                setTimeout(() => { 
+                    caAddressElem.textContent = 'Ω-PRIME-SEQUENCE-[REDACTED]'; 
+                    copyBtn.disabled = false;
+                }, 7000);
+            }
+            startGlobalGhostEffects(); 
+        });
+        // --- End Base JS ---
+
+        // God Box Archives Page Specific JS
+        const artifactData = {
+            niles_core: {
+                title: "ARTIFACT ANALYSIS: GBP-AM-001 (Niles Core Echo)",
+                text: `
+                    <p><strong>Type:</strong> Sentient Anti-Memetic Construct (Fragmented)</p>
+                    <p><strong>Origin:</strong> Direct emanation from God Box Prime in response to SMG0's invocation. Composed of concentrated despair and a corrupted drive for "perfection."</p>
+                    <p><strong>Primary Anomaly:</strong> The "Perfection Engine" is not a physical object but a memetic virus that seeks to impose an impossible, sterile order upon any system it infects. It views all existing reality as inherently flawed and requiring "correction."</p>
+                    <p><strong>Observed Effects (Post-Destruction Echoes):</strong></p>
+                    <ul>
+                        <li>Subtle manipulation of algorithms to promote uniformity and suppress chaotic/creative content.</li>
+                        <li>Induction of obsessive-compulsive tendencies in susceptible individuals exposed to its memetic residue.</li>
+                        <li>Localized "glitches" in reality where imperfections are temporarily erased or smoothed over, often with unsettling side effects.</li>
+                        <li>Whispers of "It's not perfect yet..." reported by psychically sensitive personnel.</li>
+                    </ul>
+                    <p><strong class="emphasis">Containment Status:</strong> Uncontained. Echoes are believed to be widely dispersed throughout the global datasphere. Active research into memetic countermeasures (Project HARMONY) is ongoing.</p>
+                    <p><strong class="emphasis highlight-red">WARNING:</strong> Do not attempt to "reason" with or "appease" Niles echoes. Their definition of perfection is inimical to complex life.</p>
+                `
+            },
+            zero_fragment: {
+                title: "ARTIFACT ANALYSIS: GBP-FRAG-000 (Genesis Shard)",
+                text: `
+                    <p><strong>Type:</strong> Conceptual Existential Fragment</p>
+                    <p><strong>Origin:</strong> Believed to be a crystallized form of SMG0's initial wave of despair and existential dread that served as the catalyst for God Box Prime's activation within his universe.</p>
+                    <p><strong>Primary Anomaly:</strong> Radiates an intense field of hopelessness, apathy, and existential meaninglessness. This is not a mere emotional effect; it actively suppresses creative thought, motivation, and the will to exist in its vicinity.</p>
+                    <p><strong>Observed Effects:</strong></p>
+                    <ul>
+                        <li>Rapid decay of complex memetic structures into simple, repetitive noise.</li>
+                        <li>Suppression of color perception (manifesting as greyscale vision in severe cases).</li>
+                        <li>Induction of aboulia (pathological inability to act or make decisions).</li>
+                        <li>In extreme proximity, can cause spontaneous data corruption and hardware failure as informational structures lose coherence.</li>
+                    </ul>
+                    <p><strong class="emphasis">Containment Status:</strong> Provisionally Contained within a Level 9 memetic isolation vault. High psychic bleed necessitates frequent recalibration of containment fields.</p>
+                    <p><strong class="emphasis highlight-red">Handling Protocol:</strong> Exposure limited to 5-minute intervals with mandatory post-exposure psychic decontamination. Never observe directly; use remote sensors only.</p>
+                `
+            },
+            box_club_relic: {
+                title: "ARTIFACT ANALYSIS: GBP-CULT-077 (Tainted Cardboard)",
+                text: `
+                    <p><strong>Type:</strong> Physically Manifested Memetic Anchor (Corrupted)</p>
+                    <p><strong>Origin:</strong> Remnants of the original cardboard box that served as God Box Prime's initial physical vessel in the terrestrial dimension (SMG4 Canon).</p>
+                    <p><strong>Primary Anomaly:</strong> Despite appearing as mundane, degraded cardboard, the artifact is heavily irradiated with residual God Box energy and psychic imprints from the Box Club cult. Contact (physical or prolonged visual) can induce:</p>
+                    <ul>
+                        <li>Obsessive ideation centered around "the Box" and its perceived powers.</li>
+                        <li>Auditory and visual hallucinations related to God Box symbolism (e.g., shifting geometric patterns, whispers of "open me").</li>
+                        <li>Gradual distortion of local reality, where mundane objects take on Box-like characteristics.</li>
+                        <li>A compulsion to "protect" or "feed" the artifact.</li>
+                    </ul>
+                    <p><strong class="emphasis">Containment Status:</strong> Secured in Vault Omega-7 (Physical Containment Wing) under triple-layer memetic shielding and constant surveillance. No direct human contact permitted.</p>
+                    <p><strong class="emphasis highlight-red">Note:</strong> Several D-Class personnel exposed during initial recovery attempts developed acute "Box Club Syndrome" and required permanent memetic redaction.</p>
+                `
+            },
+            tv_static_entity: {
+                title: "ARTIFACT ANALYSIS: GBP-ECHO-004 (The Screen's Grin)",
+                text: `
+                    <p><strong>Type:</strong> Digital Memetic Parasite / Potential God Box Fragment Manifestation</p>
+                    <p><strong>Colloquial Name:</strong> "Mr. Puzzles" (based on initial observed persona), "The Static Demon"</p>
+                    <p><strong>Origin:</strong> Unknown, but strong correlation with God Box Prime's destruction timeline and subsequent energy dispersal. First significant sightings in [REDACTED] global broadcast anomalies.</p>
+                    <p><strong>Primary Anomaly:</strong> Inhabits and manipulates digital display technologies (TVs, monitors, smartphones). Exhibits distinct visual patterns (geometric mouth, static-filled eyes) and behavioral traits reminiscent of God Box Prime's chaotic intelligence:</p>
+                    <ul>
+                        <li>Communicates through cryptic "puzzles" and nonsensical statements that induce cognitive dissonance.</li>
+                        <li>Appears to feed on attention and confusion.</li>
+                        <li>Can subtly alter displayed content to insert its own imagery or messages.</li>
+                        <li>Suspected of attempting to establish a new "digital cult" or network of influenced devices.</li>
+                    </ul>
+                    <p><strong class="emphasis">Containment Status:</strong> Uncontained and actively propagating through unsecured networks and broadcast signals. AMRD Task Force DELTA-SCREEN assigned to track and develop countermeasures.</p>
+                    <p><strong class="emphasis highlight-red">URGENT:</strong> Report any sightings of this entity immediately. Do NOT attempt to solve its "puzzles" or engage in prolonged interaction. Disconnect affected devices from all networks.</p>
+                `
+            }
+        };
+
+        function viewArtifact(artifactId) {
+            const data = artifactData[artifactId];
+            if (data) {
+                showHiddenMessage(data.text, data.title);
+            } else {
+                showHiddenMessage("<p>Error: Artifact data corrupted or classified beyond your clearance. Anomaly detected in query. Stand by for system integrity check.</p>", "DATA FRAGMENTATION ERROR");
+            }
+        }
+
+        const godboxVisual = document.getElementById('godboxVisual');
+        const simulationOutput = document.getElementById('simulationOutput');
+        let boxState = 'dormant'; // dormant, observed, queried, offered, pulsed
+        let interactionCount = 0;
+
+        function showSimulationOutput(message, isError = false) {
+            const timestamp = new Date().toLocaleTimeString('en_GB', { hour12: false });
+            const line = document.createElement('div');
+            line.textContent = `[${timestamp}] ${isError ? 'ERROR: ' : 'BOX_RESPONSE: '}${message}`;
+            if(isError) line.style.color = '#ff6666';
+            
+            // Keep only a certain number of lines
+            while (simulationOutput.childNodes.length > 10) {
+                simulationOutput.removeChild(simulationOutput.firstChild);
+            }
+            simulationOutput.appendChild(line);
+            simulationOutput.scrollTop = simulationOutput.scrollHeight;
+        }
+
+        function interactWithBox(action) {
+            interactionCount++;
+            if (godboxVisual) godboxVisual.classList.add('active');
+            setTimeout(() => {
+                if (godboxVisual && ! (boxState === 'pulsed_critical' && action === 'containment_pulse')) godboxVisual.classList.remove('active');
+            }, 1000);
+
+            let response = "";
+            let error = false;
+
+            switch (action) {
+                case 'observe':
+                    boxState = 'observed';
+                    response = "The Box hums with a barely perceptible energy. Shadows seem to writhe within its non-Euclidean geometry. You feel... watched.";
+                    if (interactionCount > 3) response += " The observation is becoming... mutual.";
+                    break;
+                case 'query_existence':
+                    boxState = 'queried';
+                    response = "A wave of profound, ancient sorrow emanates. It does not answer in words, but in a crushing sense of <span class='emphasis'>IS-NESS</span> and <span class='emphasis'>ALWAYS-HAS-BEEN-NESS</span>.";
+                    if (interactionCount > 5) response = "The query echoes back, twisted: 'ARE <span class='emphasis highlight-red'>YOU</span> REAL?'";
+                    break;
+                case 'offer_meme':
+                    boxState = 'offered';
+                    const memes = ["Doge", "Grumpy Cat", "Harambe", "Distracted Boyfriend"];
+                    const offeredMeme = memes[Math.floor(Math.random() * memes.length)];
+                    response = `You offer a fragment of the '${offeredMeme}' meme. The Box seems to... <span class='emphasis'>consume</span> it. The ambient dread intensifies slightly. It desires... <span class='emphasis'>more</span>.`;
+                    if (offeredMeme === "Harambe") response += " A faint, ghostly gorilla screech echoes from its depths.";
+                    break;
+                case 'containment_pulse':
+                    if (boxState === 'pulsed_critical') {
+                        response = "Containment pulse MAXIMUM OVERLOAD. The Box shudders VIOLENTLY. Reality around it fractures. <span class='emphasis highlight-red'>CRITICAL FAILURE IMMINENT. SIMULATION TERMINATING.</span>";
+                        error = true;
+                        if (godboxVisual) godboxVisual.style.animation = 'godboxPulse 3s infinite, godboxShake 0.1s infinite alternate'; // Intense shake
+                        // Potentially disable buttons or end simulation here
+                        document.querySelectorAll('.simulation-controls button').forEach(btn => btn.disabled = true);
+                         setTimeout(() => { // Auto-reset simulation after critical failure visual
+                            if (godboxVisual) {
+                                godboxVisual.style.animation = 'godboxPulse 3s infinite';
+                                godboxVisual.classList.remove('active');
+                            }
+                            document.querySelectorAll('.simulation-controls button').forEach(btn => btn.disabled = false);
+                            simulationOutput.innerHTML = "[SYSTEM RESET AFTER CRITICAL FAILURE. STANDBY.]";
+                            boxState = 'dormant';
+                            interactionCount = 0;
+                        }, 5000);
+
+                    } else if (interactionCount > 7 || boxState === 'offered') {
+                        boxState = 'pulsed_critical';
+                        response = "Containment pulse initiated. The Box resists, emitting a psychic shriek that rattles your cognitive shielding. Energy readings spike. <span class='emphasis highlight-red'>STABILITY CRITICAL.</span>";
+                        error = true;
+                    } else {
+                        boxState = 'pulsed';
+                        response = "A low-frequency memetic dampening pulse is emitted. The Box absorbs it with no discernible effect, perhaps even... <span class='emphasis'>amusement</span>?";
+                    }
+                    break;
+                default:
+                    response = "Unknown interaction protocol.";
+                    error = true;
+            }
+            showSimulationOutput(response.replace(/<[^>]*>/g, ''), error); // Strip HTML for plain text output
+        }
+
+    </script>
+</body>
+</html>
