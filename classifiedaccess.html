@@ -224,7 +224,7 @@
     
     <div class="top-bar" id="topBar">
         <div class="ca-section">
-            <span class="ca-label">NODE_ID:</span>
+            <span class="ca-label">CA:</span>
             <span class="ca-address" id="caAddress">[TERMINAL_7B_AUTH]</span>
             <button class="copy-btn" onclick="copyCa()" id="copyBtn" disabled>COPY_AUTH</button>
         </div>
@@ -432,10 +432,10 @@
             const caAddressElem = document.getElementById('caAddress');
             const copyBtn = document.getElementById('copyBtn');
             if (caAddressElem && copyBtn) {
-                caAddressElem.textContent = '[SCANNING_NODE...]';
+                caAddressElem.textContent = 'COMING SOON';
                 copyBtn.disabled = true;
                 setTimeout(() => { 
-                    caAddressElem.textContent = 'NODE_7B_SIG_AlphaSierraCharlie'; 
+                    caAddressElem.textContent = 'COMING SOON'; 
                     copyBtn.disabled = false;
                 }, 4000);
             }
