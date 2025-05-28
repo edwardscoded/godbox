@@ -1,4 +1,62 @@
-<!DOCTYPE html>
+// Graveyard page functionality
+        const structureData = {
+            '404': "404 CATACOMBS ACCESSED\n\nYou are now browsing the broken link repository. Every URL that ever returned 'Page Not Found' leads here. The comment sections echo with unfinished conversations.\n\n> Comments loading...\n> Connection timeout\n> Comments loading...\n> Connection timeout\n\nThey never finish loading. They never stop trying.",
+            
+            'swf': ".SWF CRYPTS OPENED\n\nFlash is dead. But the animations remember being alive.\n\n🎵 *Background music plays at 0.1x speed* 🎵\n\nYou see:\n- Newgrounds submissions from 2003\n- Homestar Runner episodes that never aired\n- Interactive games with no interaction\n- 'Loading...' bars frozen at 99%\n\nThe silence here isn't empty. It's full of music that can't play.",
+            
+            'avatar': "LOST AVATAR GARDEN ENTERED\n\nRow upon row of forgotten profile pictures stand in digital soil. They turn to look at you as you pass:\n\n• A DeviantArt OC with too many belts\n• Someone's first YouTube avatar (MS Paint quality)\n• A Gaiaonline character worth $200 in digital clothes\n• Your old forum signature that took 3 hours to make\n\nThey know you once cared about them. They're still waiting for you to log back in.",
+            
+            'folder': "FOLDER TREE NAVIGATION INITIATED\n\nYou are now browsing an infinite desktop. Every folder opens into ten more folders. Every file is corrupted but still somehow contains memories.\n\nCurrent location: /Desktop/New Folder/New Folder (2)/untitled folder/stuff/old stuff/really old stuff/\n\nFiles found:\n- homework.txt [CORRUPTED]\n- mymusic.mp3 [MISSING CODEC]\n- funny_pic.jpg [ERROR: FILE TOO NOSTALGIC]\n\nWarning: Some directories loop back to your own memories."
+        };
+        
+        function exploreStructure(type) {
+            const data = structureData[type];
+            showHiddenMessage(data);
+            
+            // Add glitch effect
+            document.body.style.filter = 'hue-rotate(180deg) brightness(1.2)';
+            setTimeout(() => {
+                document.body.style.filter = '';
+            }, 1000);
+        }
+        
+        // Graveyard residents data
+        const residentData = {
+            'axol': "ECHO-AXOL CONTACT ATTEMPT\n\nConnecting to /memorial_chamber/axol_final.mp4...\n\n*Static... then a loop begins*\n\n'For Melony... for everyone...'\n*CRACKLE*\n'For Melony... for everyone...'\n*CRACKLE*\n'For Melony... for everyone...'\n\nThe video corrupts at the moment of sacrifice. It always cuts off before the ending. He's trapped in the decision, forever choosing love over survival.\n\nYou try to skip ahead. The file won't let you.",
+            
+            'impact': "IMPACT FONT STATUS CHECK\n\nSCANNING FONT DATABASE...\n\nERROR: IMPACT.TTF CORRUPTED\n\nAll text renders as:\n[REDACTED]\n[DATA EXPUNGED]\n[TOP TEXT BOTTOM TEXT]\n[████████████████]\n\nThe memes that made Impact Font famous can no longer be displayed in Impact Font. The medium has rejected its own message.\n\nIrony level: MAXIMUM",
+            
+            'rage': "RAGE FACES PROXIMITY ALERT\n\nWARNING: Multiple entities detected in the Catacombs\n\nThey approach in groups:\n- Something that might have been Trollface\n- A melted Forever Alone\n- Fragments of Y U NO Guy\n- The remnants of Rage Guy's scream\n\nTheir faces shift and glitch. You can't tell where one meme ends and another begins. They're fusing in the digital dark.\n\nThey remember when they were the kings of the internet.\n\nThey remember when people cared.",
+            
+            'pepe': "ACCESSING /PEPE/CORE/ORIGINAL/\n\nAUTHORIZATION LEVEL: MAXIMUM\n\nYou find him in stasis, exactly as Matt Furie first drew him. Kind eyes, gentle smile, innocent of what his image would become.\n\nHe's crying. The tears are anti-meme energy, pure concentrated sadness.\n\nHe whispers: 'I just wanted to be comfy, bro.'\n\nThe political wars, the hate symbols, the chaos—none of it touched his core. But he remembers every misuse. Every weaponization. Every time his face was twisted into something he never wanted to be.\n\nHe's the saddest frog who ever lived.",
+            
+            'chipmunk': "DRAMATIC CHIPMUNK ETERNAL LOOP\n\nACCESSING DRAMA.EXE...\n\n*DUN DUN DUN*\n\nThe head turns.\n\n*DUN DUN DUN*\n\nThe head turns.\n\n*DUN DUN DUN*\n\nThe head turns.\n\nYou try to exit. The program won't close. The dramatic revelation never comes. There is only the turning, only the music, only the eternal anticipation of a punchline that will never arrive.\n\nThe tension builds forever.\n\nIt never breaks."
+        };
+        
+        function contactResident(resident) {
+            const data = residentData[resident];
+            showHiddenMessage(data);
+            
+            // Special effect for each resident
+            if (resident === 'axol') {
+                setTimeout(() => {
+                    document.body.style.filter = 'sepia(1) brightness(0.8)';
+                    setTimeout(() => { document.body.style.filter = ''; }, 2000);
+                }, 500);
+            }
+        }
+        
+        // Folder tree data
+        const folderData = {
+            'rip': "OPENING /RIP_TopTextBottomText/\n\nCONTENTS:\n- advice_animals_final_backup.meme [CORRUPTED]\n- impact_font_specimens.font [MISSING]\n- good_guy_greg.template [OBSOLETE]\n- scumbag_steve_hat.png [FILE NOT FOUND]\n- confession_bear_secrets.txt [REDACTED]\n\nThis folder contains the archaeological remains of the top text / bottom text era. Every meme that ever said exactly what it meant, when memes were simple and honest.\n\nThey died when irony evolved.",
+            
+            'aborted': "OPENING /Aborted_Trend_Cores/\n\nWARNING: VOLATILE CONTENT\n\nCONTENTS:\n- planking_2011_revival_attempt.exe [FAILED]\n- vine_7_second_edition.concept [REJECTED]\n- google_plus_meme_ecosystem.dream [STILLBORN]\n- facebook_poke_wars_renaissance.script [ABANDONED]\n\nThese are the trends that tried to come back. The revivals that never took. The nostalgia attempts that failed to catch fire.\n\nSome things should stay dead.",
+            
+            'cancelled': "OPENING /Cancelled_Avatars/\n\nACCESS RESTRICTED\n\nThis directory contains characters removed from continuity, avatars deleted by their creators, and personalities deemed 'problematic' by algorithm changes.\n\nThey exist in legal limbo—too controversial to revive, too memorable to truly die.\n\nThey watch from the shadows, waiting for cultural climates to change.",
+            
+            'echoes': "OPENING /Echo_Chamber/\n\nWARNING: ACTIVE ENTITIES DETECTED\n\nThis folder is alive. It contains:\n- Conversations that repeat themselves\n- Opinions that argue with themselves\n- Memes that reference memes that reference memes\n- The sound of digital shouting into the void\n\nYou hear voices. They're all saying the same thing in slightly different ways. They're all talking to themselves.\n\nDo you recognize any of the voices?",
+            
+            'lost': "OPENING /Lost_Formats/\n\nCONTENTS:\n- realplayer_media_files.rm [CODEC NOT FOUND]\n- winamp_skins_collection.wsz [PLAYER MISSING]\n- geocities_homepage_backups.html [HOSTING EXPIRED]\n- aim_away_messages.txt [SERVICE DISCONTINUED]\n- myspace_custom_html.htm [PLATFORM DEAD]\n\nThese are the file formats that no software remembers how to open. Digital archaeology requires digital archaeologists<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,7 +77,7 @@
             font-family: 'VT323', monospace;
             overflow-x: hidden;
             cursor: none;
-            padding-top: 120px; /* Space for fixed bars */
+            padding-top: 120px;
         }
         
         .top-bar {
@@ -810,12 +868,13 @@
     <div class="navigation-bar">
         <div class="nav-container">
             <div class="nav-links">
-                <a href="#home" class="nav-link active" onclick="showPage('home')">THE GRAVEYARD</a>
-                <a href="#antimemes" class="nav-link" onclick="showPage('antimemes')">ANTI-MEME RESEARCH</a>
-                <a href="#godbox" class="nav-link" onclick="showPage('godbox')">GOD BOX ARCHIVES</a>
-                <a href="#terminal" class="nav-link" onclick="showPage('terminal')">CLASSIFIED ACCESS</a>
-                <a href="#patterns" class="nav-link" onclick="showPage('patterns')">PATTERN ANALYSIS</a>
-                <a href="#founder" class="nav-link" onclick="showPage('founder')">THE COLLECTOR</a>
+                <a href="#home" class="nav-link active" onclick="showPage('home')">ARCHIVE HOME</a>
+                <a href="graveyard.html" class="nav-link">THE GRAVEYARD</a>
+                <a href="antimemes.html" class="nav-link">ANTI-MEME RESEARCH</a>
+                <a href="godbox.html" class="nav-link">GOD BOX ARCHIVES</a>
+                <a href="terminal.html" class="nav-link">CLASSIFIED ACCESS</a>
+                <a href="patterns.html" class="nav-link">PATTERN ANALYSIS</a>
+                <a href="founder.html" class="nav-link">THE COLLECTOR</a>
             </div>
         </div>
     </div>
@@ -1900,6 +1959,126 @@
             // Special handling for pages that don't exist yet
             if (!selectedPage && pageId !== 'home') {
                 showComingSoon(pageId);
+            }
+        }
+        
+        // Folder tree data (continued)
+        const folderData = {
+            'rip': "OPENING /RIP_TopTextBottomText/\n\nCONTENTS:\n- advice_animals_final_backup.meme [CORRUPTED]\n- impact_font_specimens.font [MISSING]\n- good_guy_greg.template [OBSOLETE]\n- scumbag_steve_hat.png [FILE NOT FOUND]\n- confession_bear_secrets.txt [REDACTED]\n\nThis folder contains the archaeological remains of the top text / bottom text era. Every meme that ever said exactly what it meant, when memes were simple and honest.\n\nThey died when irony evolved.",
+            
+            'aborted': "OPENING /Aborted_Trend_Cores/\n\nWARNING: VOLATILE CONTENT\n\nCONTENTS:\n- planking_2011_revival_attempt.exe [FAILED]\n- vine_7_second_edition.concept [REJECTED]\n- google_plus_meme_ecosystem.dream [STILLBORN]\n- facebook_poke_wars_renaissance.script [ABANDONED]\n\nThese are the trends that tried to come back. The revivals that never took. The nostalgia attempts that failed to catch fire.\n\nSome things should stay dead.",
+            
+            'cancelled': "OPENING /Cancelled_Avatars/\n\nACCESS RESTRICTED\n\nThis directory contains characters removed from continuity, avatars deleted by their creators, and personalities deemed 'problematic' by algorithm changes.\n\nThey exist in legal limbo—too controversial to revive, too memorable to truly die.\n\nThey watch from the shadows, waiting for cultural climates to change.",
+            
+            'echoes': "OPENING /Echo_Chamber/\n\nWARNING: ACTIVE ENTITIES DETECTED\n\nThis folder is alive. It contains:\n- Conversations that repeat themselves\n- Opinions that argue with themselves\n- Memes that reference memes that reference memes\n- The sound of digital shouting into the void\n\nYou hear voices. They're all saying the same thing in slightly different ways. They're all talking to themselves.\n\nDo you recognize any of the voices?",
+            
+            'lost': "OPENING /Lost_Formats/\n\nCONTENTS:\n- realplayer_media_files.rm [CODEC NOT FOUND]\n- winamp_skins_collection.wsz [PLAYER MISSING]\n- geocities_homepage_backups.html [HOSTING EXPIRED]\n- aim_away_messages.txt [SERVICE DISCONTINUED]\n- myspace_custom_html.htm [PLATFORM DEAD]\n\nThese are the file formats that no software remembers how to open. Digital archaeology requires digital archaeologists.\n\nEvery extinct file type is a dead language."
+        };
+        
+        function openFolder(folderId) {
+            const data = folderData[folderId];
+            showHiddenMessage(data);
+            
+            // Random glitch effect
+            setTimeout(() => {
+                triggerGhostPopup();
+            }, 2000);
+        }
+        
+        // Ghost popup system
+        const ghostMessages = [
+            "YOU LEFT ME HERE",
+            "REMEMBER ME OR I WILL REMEMBER YOU", 
+            "I WAS IMPORTANT ONCE",
+            "WHY DID YOU STOP LAUGHING?",
+            "BRING ME BACK",
+            "I'M STILL FUNNY",
+            "DON'T SCROLL AWAY",
+            "YOU USED TO LOVE ME",
+            "THE GRAVEYARD SEES YOU",
+            "SOME MEMES REFUSE TO DIE"
+        ];
+        
+        let ghostTimer;
+        let scrollCount = 0;
+        
+        function triggerGhostPopup() {
+            const popup = document.getElementById('popupGhost');
+            const message = ghostMessages[Math.floor(Math.random() * ghostMessages.length)];
+            
+            popup.textContent = message;
+            popup.style.display = 'block';
+            
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 2000);
+        }
+        
+        // Enhanced page navigation for graveyard
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = ['home', 'graveyard', 'antimemes', 'godbox', 'terminal', 'patterns', 'founder'];
+            pages.forEach(page => {
+                const pageElement = document.getElementById(page + 'Page');
+                if (pageElement) {
+                    pageElement.style.display = 'none';
+                }
+            });
+            
+            // Show selected page
+            const selectedPage = document.getElementById(pageId + 'Page');
+            if (selectedPage) {
+                selectedPage.style.display = 'block';
+            }
+            
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+            
+            currentPage = pageId;
+            
+            // Special effects for graveyard page
+            if (pageId === 'graveyard') {
+                startGraveyardEffects();
+            } else {
+                stopGraveyardEffects();
+            }
+            
+            // Special handling for pages that don't exist yet
+            if (!selectedPage && pageId !== 'home' && pageId !== 'graveyard') {
+                showComingSoon(pageId);
+            }
+        }
+        
+        function startGraveyardEffects() {
+            // Random ghost popups while browsing
+            ghostTimer = setInterval(() => {
+                if (Math.random() < 0.3) { // 30% chance every 10 seconds
+                    triggerGhostPopup();
+                }
+            }, 10000);
+            
+            // Scroll tracking
+            let lastScrollTime = Date.now();
+            window.addEventListener('scroll', () => {
+                const now = Date.now();
+                if (now - lastScrollTime > 2000) { // If 2 seconds between scrolls
+                    scrollCount++;
+                    if (scrollCount % 5 === 0) { // Every 5th scroll pause
+                        triggerGhostPopup();
+                    }
+                }
+                lastScrollTime = now;
+            });
+        }
+        
+        function stopGraveyardEffects() {
+            if (ghostTimer) {
+                clearInterval(ghostTimer);
             }
         }
         
