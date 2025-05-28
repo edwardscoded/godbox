@@ -561,9 +561,18 @@
             line-height: 1.6;
             margin-bottom: 2rem;
             font-size: 1.05rem; /* Slightly larger for readability */
+            max-height: 60vh; /* Limit height for very long content */
+            overflow-y: auto; /* Add scroll for long content */
         }
         .revelation-text p { margin-bottom: 1em; }
         .revelation-text p:last-child { margin-bottom: 0; }
+        .revelation-text ul { list-style-type: none; padding-left: 1em; }
+        .revelation-text li { margin-bottom: 0.5em; }
+        .revelation-text li::before {
+            content: "» ";
+            color: #555;
+            margin-right: 0.5em;
+        }
         
         .close-btn {
             background: #222;
@@ -886,6 +895,7 @@
         .timeline-container {
             position: relative;
             padding-left: 40px; /* Space for markers */
+            border-left: 2px solid #222; /* Timeline central line */
         }
         .timeline-event {
             background: #0a0a0a;
@@ -902,7 +912,7 @@
         }
         .event-marker {
             position: absolute;
-            left: -50px; /* Position to the left of the container padding */
+            left: -16px; /* Position on the timeline line */
             top: 50%;
             transform: translateY(-50%);
             width: 30px;
@@ -916,6 +926,7 @@
             color: #777;
             font-family: 'Orbitron', monospace;
             font-size: 0.9rem;
+            z-index: 2;
         }
         .event-title {
             color: #666;
@@ -1064,7 +1075,7 @@
             padding: 1.5rem;
             font-family: 'VT323', monospace;
             color: #777;
-            height: 400px; /* Fixed height */
+            height: 450px; /* Increased height */
             display: flex;
             flex-direction: column;
             box-shadow: inset 0 0 20px #000;
@@ -1077,6 +1088,7 @@
             overflow-y: auto;
             line-height: 1.4;
             margin-bottom: 1rem;
+            padding-right: 10px; /* Space for scrollbar */
         }
         .terminal-output::-webkit-scrollbar { width: 8px; }
         .terminal-output::-webkit-scrollbar-track { background: #111; }
@@ -1086,6 +1098,7 @@
         .terminal-line {
             margin-bottom: 0.2em;
             word-break: break-all;
+            white-space: pre-wrap; /* Allow text to wrap properly */
         }
         .terminal-input-line {
             display: flex;
@@ -1093,6 +1106,7 @@
         .terminal-prompt {
             color: #5a5; /* Greenish prompt */
             margin-right: 0.5em;
+            white-space: nowrap; /* Prevent prompt from wrapping */
         }
         .terminal-input {
             flex-grow: 1;
@@ -1101,6 +1115,7 @@
             color: #ccc; /* Brighter input text */
             font-family: 'VT323', monospace;
             font-size: 1em; /* Inherit from .terminal-interface */
+            line-height: 1.4; /* Match terminal-line */
         }
         .terminal-input:focus {
             outline: none;
@@ -1114,7 +1129,6 @@
             padding: 1.5rem;
         }
         .fragments-warning {
-             /* Styles from previous html */
              color: #aa4444; text-align: center; margin-bottom: 2rem;
         }
         .wiped-table {
@@ -1222,7 +1236,10 @@
                 width: auto;
             }
             .hidden-message { width: 90%; padding: 1.5rem; }
+            .revelation-text { max-height: 50vh; }
             .popup-ghost { font-size: 1rem; padding: 0.8rem 1.2rem; top: 10px; right: 10px; }
+            .timeline-container { padding-left: 20px; border-left-width: 1px;}
+            .event-marker { left: -10px; width: 20px; height: 20px; font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -1715,7 +1732,7 @@
                     <div style="width: 12px; height: 12px; background: #ff4444; border-radius: 50%;"></div>
                     <div style="width: 12px; height: 12px; background: #ffff44; border-radius: 50%;"></div>
                     <div style="width: 12px; height: 12px; background: #44ff44; border-radius: 50%;"></div>
-                    <span style="margin-left: 1rem; color: #666;">root@graveyard-archive-01:/archives/classified/</span>
+                    <span style="margin-left: 1rem; color: #666;" class="terminal-prompt-display">root@graveyard-archive-01:/archives/classified/# </span>
                 </div>
             </div>
             
@@ -1728,7 +1745,7 @@
             </div>
             
             <div class="terminal-input-line">
-                <span class="terminal-prompt">root@graveyard-archive-01:~# </span>
+                <span class="terminal-prompt">user@graveyard-archive:/archives/classified/# </span>
                 <input type="text" class="terminal-input" id="terminalInput" placeholder="Enter command..." autocomplete="off" autofocus>
             </div>
         </div>
@@ -1748,7 +1765,6 @@
                     <div class="col-description">Threat Classification / Reason for Deletion</div>
                 </div>
                 
-                <!-- Rows will be populated by JS if data is available -->
                  <div class="table-row" onclick="accessWipedFile('trollface')">
                     <div class="col-name">Trollface (OG Strain)</div>
                     <div class="col-death">Sept 2015</div>
@@ -1759,7 +1775,6 @@
                     <div class="col-death">Nov 2014</div>
                     <div class="col-description">Nostalgia loop corruption / Rainbow trail decay / Auditory Bleed</div>
                 </div>
-                 <!-- ... more rows from JS wipedFileData ... -->
                 <div class="table-row" onclick="accessWipedFile('charlie')">
                     <div class="col-name">Charlie Bit My Finger (Pre-NFT)</div>
                     <div class="col-death">May 2021</div>
@@ -1774,6 +1789,26 @@
                     <div class="col-name">Shoop Da Whoop (IMMA_CHARGIN)</div>
                     <div class="col-death">Mar 2012</div>
                     <div class="col-description">Memetic over-amplification / Timeline fracture / .SWF crypt containment breach</div>
+                </div>
+                 <div class="table-row" onclick="accessWipedFile('datboi_fs')"> <!-- Changed key to avoid conflict -->
+                    <div class="col-name">Dat Boi (Filesystem Echo)</div>
+                    <div class="col-death">Oct 2016</div>
+                    <div class="col-description">Memescape navigation failure / Endless cycle syndrome</div>
+                </div>
+                <div class="table-row" onclick="accessWipedFile('harlemshake')">
+                    <div class="col-name">Harlem Shake (Echo Burst)</div>
+                    <div class="col-death">July 2013</div>
+                    <div class="col-description">Temporal sync error / Memetic echo burst / Fragment clustering</div>
+                </div>
+                <div class="table-row" onclick="accessWipedFile('badluckbrian')">
+                    <div class="col-name">Bad Luck Brian (Singularity)</div>
+                    <div class="col-death">Aug 2015</div>
+                    <div class="col-description">Narrative density collapse / Black joke singularity formation</div>
+                </div>
+                <div class="table-row" onclick="accessWipedFile('pepe_fs')"> <!-- Changed key -->
+                    <div class="col-name">Pepe the Frog (Classic Core)</div>
+                    <div class="col-death">Oct 2016</div>
+                    <div class="col-description">Political fragmentation / Stasis preservation / Anti-Meme tears</div>
                 </div>
             </div>
         </div>
@@ -1840,7 +1875,7 @@
         window.addEventListener('load', adjustLayout);
         window.addEventListener('resize', adjustLayout);
 
-        // Forgotten item interactions
+        // Forgotten item interactions DATA
         const memories = {
             harambe: {
                 title: "CASE FILE: HARAMBE COMPLEX",
@@ -1883,7 +1918,7 @@
             }
         }
         
-        // Memorial interactions
+        // Memorial interactions DATA
         const memorialData = {
             desti: {
                 title: "MEMORIAL: SUBJECT D (DESTI)",
@@ -1922,14 +1957,16 @@
         function processInitiation() {
             const keyInput = document.getElementById('accessKey');
             const key = keyInput.value; // Case-sensitive for lore
-            const validKeys = ['TheCollectorKnows', 'InMemoryOfLostData', 'AntiMemeProtocol7', 'EchoesOfTheVoid', 'SMG4IsWatching']; // Example keys
+            const validKeys = ['TheCollectorKnows', 'InMemoryOfLostData', 'AntiMemeProtocol7', 'EchoesOfTheVoid', 'SMG4IsWatching', 'GodBoxCore']; // Example keys
             
             if (validKeys.includes(key)) {
                 const name = document.getElementById('designation').value || 'Anonymous Researcher';
                 const interest = document.getElementById('interest').value || 'General Studies';
                 
-                const welcomeMessage = `<p>Welcome to the Preservation Initiative, Researcher ${name}. Your interest in ${interest} has been logged and cross-referenced.</p><p>You now possess Level 1 (Observer) clearance. Further access will be granted based on contributions and assimilation of existing research data. Remember: What we study here exists in the shadowed spaces between memory and oblivion. Handle all artifacts with appropriate reverence and caution. The Graveyard is always watching.</p><p><span class='emphasis'>Directive: Your first assignment is to review all accessible logs. Report any anomalies.</span></p>`;
+                const welcomeMessage = `<p>Welcome to the Preservation Initiative, Researcher ${name}. Your interest in ${interest} has been logged and cross-referenced.</p><p>You now possess Level 1 (Observer) clearance. Further access will be granted based on contributions and assimilation of existing research data. Remember: What we study here exists in the shadowed spaces between memory and oblivion. Handle all artifacts with appropriate reverence and caution. The Graveyard is always watching.</p><p><span class='emphasis'>Directive: Your first assignment is to review all accessible logs. Report any anomalies. Access terminal 'help' for guidance.</span></p>`;
                 
+                currentUserAccessLevel = Math.max(currentUserAccessLevel, 1); // Ensure at least level 1
+                updateTerminalPrompt(); // Update prompt if access level changed displayed info
                 showHiddenMessage(welcomeMessage, "ACCESS GRANTED: LEVEL 1 CLEARANCE");
                 
                 document.getElementById('designation').value = '';
@@ -1947,7 +1984,7 @@
         }
         
         function showInterest() { // Called by "JOIN THE PRESERVATION EFFORT"
-            const message = `<p>The Preservation Effort operates on the foundational principle that forgotten digital culture, discarded ideas, and suppressed narratives contain immense, often volatile, untapped potential. Anti-Memetic phenomena, in particular, represent the emergent emotional and informational infrastructure of the internet's collective subconscious.</p><p>By studying these forces, we gain critical insight into the deeper mechanics of digital reality, memetic warfare, and the very nature of consciousness in networked environments. Those who join us become part of something larger—a clandestine community dedicated to understanding the spaces between laughter and silence, creation and deletion. Our work is dangerous, vital, and largely unknown.</p><p><span class='emphasis'>To proceed, seek the Researcher Access Portal.</span></p>`;
+            const message = `<p>The Preservation Effort operates on the foundational principle that forgotten digital culture, discarded ideas, and suppressed narratives contain immense, often volatile, untapped potential. Anti-Memetic phenomena, in particular, represent the emergent emotional and informational infrastructure of the internet's collective subconscious.</p><p>By studying these forces, we gain critical insight into the deeper mechanics of digital reality, memetic warfare, and the very nature of consciousness in networked environments. Those who join us become part of something larger—a clandestine community dedicated to understanding the spaces between laughter and silence, creation and deletion. Our work is dangerous, vital, and largely unknown.</p><p><span class='emphasis'>To proceed, seek the Researcher Access Portal below and provide the correct Key Phrase.</span></p>`;
             showHiddenMessage(message, "THE PRESERVATION MANDATE");
         }
         
@@ -1963,7 +2000,7 @@
 
             if(messagePopup && messageTextElement && messageTitleElement) {
                 messageTitleElement.textContent = title;
-                messageTextElement.innerHTML = text; // Use innerHTML to allow <p> and <span class='emphasis'>
+                messageTextElement.innerHTML = text; 
                 messagePopup.style.display = 'block';
                 activePopup = messagePopup;
             }
@@ -1981,20 +2018,7 @@
             }
         });
         
-        // Subtle corruption effects (global static overlay flicker is in CSS now)
-        // This can be used for more targeted effects if needed
-        /*
-        let corruptionLevel = 0;
-        setInterval(() => {
-            corruptionLevel += 0.1;
-            if (corruptionLevel > 100) corruptionLevel = 0;
-            // Example: if (corruptionLevel > 80 && document.getElementById('someElement')) {
-            //     document.getElementById('someElement').style.filter = `brightness(${0.9 + Math.sin(corruptionLevel) * 0.1})`;
-            // }
-        }, 100);
-        */
-        
-        // Directory access system
+        // Directory access system DATA
         const directoryData = {
             dead_memes: {
                 title: "ACCESSING: /ARCHIVES/DEAD_MEMES/",
@@ -2032,32 +2056,36 @@
         // Memory token system
         let memoriesPreserved = 0;
         let costPaid = 0;
-        const memoryCosts = [ // Potential effects as "costs"
-            { effect: () => { document.querySelector('.site-subtitle').style.textDecoration = 'line-through wavy #aa4444'; document.querySelector('.site-subtitle').style.opacity = '0.5'; }, message: "A fundamental truth begins to blur..." },
-            { effect: () => { document.querySelector('.mission-statement').style.filter = 'blur(1px) contrast(1.5)'; }, message: "Your focus narrows, details becoming indistinct..." },
+        const memoryCosts = [ 
+            { effect: () => { document.querySelector('.site-subtitle').style.textDecoration = 'line-through wavy #aa4444'; document.querySelector('.site-subtitle').style.opacity = '0.5'; }, message: "A fundamental truth begins to blur within your perception..." },
+            { effect: () => { document.querySelector('.mission-statement').style.filter = 'blur(1px) contrast(1.5)'; }, message: "Your focus narrows; peripheral details become indistinct and threatening..." },
             { effect: () => { 
-                const randomItem = document.querySelectorAll('.forgotten-item')[Math.floor(Math.random() * document.querySelectorAll('.forgotten-item').length)];
-                if(randomItem) randomItem.style.opacity = '0.3';
-                }, message: "A piece of the past fades further..." },
-            { effect: () => { document.body.style.animation = 'bodyGlitch 0.5s 1'; setTimeout(() => document.body.style.animation = '', 500); }, message: "Reality shivers momentarily..." },
+                const items = document.querySelectorAll('.forgotten-item:not([style*="opacity: 0.3"])'); // Select only non-faded items
+                if (items.length > 0) {
+                    const randomItem = items[Math.floor(Math.random() * items.length)];
+                    randomItem.style.opacity = '0.3';
+                    randomItem.style.pointerEvents = 'none'; // Make it unclickable
+                }
+                }, message: "A piece of the past fades further, becoming harder to recall, almost unreal..." },
+            { effect: () => { document.body.style.animation = 'bodyGlitch 0.5s 1'; setTimeout(() => document.body.style.animation = '', 500); }, message: "Reality shivers momentarily, a hiccup in the fabric of the datasphere..." },
             { effect: () => { 
                 const btn = document.getElementById('memoryTokenButton');
                 if (btn) {
-                    btn.textContent = 'MEMORY INTEGRITY FAILING';
+                    btn.textContent = 'MEMORY INTEGRITY CRITICAL';
                     btn.classList.add('corrupted');
-                    btn.onclick = null; // Disable button after max cost
+                    btn.onclick = null; 
                 }
-              }, message: "Your capacity to remember is compromised. No more fragments can be saved this session." }
+              }, message: "Your capacity to remember is critically compromised. No more fragments can be saved this session. System recommends immediate cognitive realignment." }
         ];
 
         const bodyGlitchKeyframes = `
         @keyframes bodyGlitch {
-            0%, 100% { transform: translateX(0); filter: none; }
-            25% { transform: translateX(-5px) skewX(-2deg); filter: hue-rotate(20deg); }
-            50% { transform: translateX(5px) skewX(2deg); filter: hue-rotate(-20deg); }
-            75% { transform: translateX(-3px) skewX(-1deg); filter: invert(0.1); }
+            0%, 100% { transform: translateX(0) skewX(0); filter: none; }
+            20% { transform: translateX(-5px) skewX(-3deg); filter: hue-rotate(20deg) saturate(1.5); }
+            40% { transform: translateX(5px) skewX(3deg); filter: hue-rotate(-20deg) contrast(1.2); }
+            60% { transform: translateX(-3px) skewX(-2deg); filter: invert(0.1) blur(0.5px); }
+            80% { transform: translateX(3px) skewX(2deg); filter: sepia(0.5) brightness(0.8); }
         }`;
-        // Inject keyframes into the document's head
         const styleSheet = document.createElement("style");
         styleSheet.type = "text/css";
         styleSheet.innerText = bodyGlitchKeyframes;
@@ -2067,17 +2095,17 @@
             if (costPaid < memoryCosts.length) {
                 memoriesPreserved++;
                 
-                // Apply cost effect
                 memoryCosts[costPaid].effect();
                 
-                costPaid++; // Increment after applying current cost, so next click gets next cost
+                const currentCostMessage = memoryCosts[costPaid].message; // Message for the cost just applied
+                costPaid++; 
                 
                 document.getElementById('memoryCounter').textContent = 
                     `Memories Preserved: ${memoriesPreserved} | Cognitive Cost Paid: ${costPaid} Units`;
                 
-                let popupMessage = `<p>Memory fragment successfully interfaced with your cognitive matrix. You will remember this moment, but the price is subtle, yet real.</p><p><span class='emphasis'>${memoryCosts[costPaid-1].message}</span></p>`;
+                let popupMessage = `<p>Memory fragment successfully interfaced with your cognitive matrix. You will remember this moment, but the price is subtle, yet real.</p><p><span class='emphasis'>${currentCostMessage}</span></p>`;
                 if (costPaid === memoryCosts.length) {
-                     popupMessage += `<p><span class='emphasis' style='color:#aa4444;'>WARNING: Maximum cognitive load reached. Further attempts to preserve memories may lead to irreversible data loss.</span></p>`;
+                     popupMessage += `<p><span class='emphasis' style='color:#dd7777;'>WARNING: Maximum cognitive load reached. Further attempts to preserve memories may lead to irreversible data loss or existential drift.</span></p>`;
                 }
 
                 showHiddenMessage(popupMessage, "MEMORY PRESERVATION PROTOCOL");
@@ -2088,14 +2116,14 @@
         setTimeout(() => {
             const warning = document.getElementById('infectionWarning');
             if (warning) warning.style.display = 'block';
-        }, 180000); // 3 minutes (180000 ms)
+        }, 180000); // 3 minutes 
 
         function closeWarning() {
             const warning = document.getElementById('infectionWarning');
             if (warning) warning.style.display = 'none';
         }
         
-        // God Box timeline events
+        // God Box timeline events DATA
         const timelineEvents = {
             smg0_prayer: {
                 title: "LOG FRAGMENT 001: SMG0's INVOCATION",
@@ -2140,37 +2168,36 @@
 
             breachActivated = true;
             boxRep.classList.add('breached');
-            effects.classList.add('active'); // This class should trigger particle animation in CSS
+            effects.classList.add('active'); 
             
             const particles = document.querySelectorAll('.effect-particle');
             particles.forEach((particle, index) => {
-                const angle = (Math.random() * 360); // Random angle
-                const distance = 80 + Math.random() * 70; // Random distance
+                const angle = (Math.random() * 360); 
+                const distance = 80 + Math.random() * 70; 
                 const x = Math.cos(angle * Math.PI / 180) * distance;
                 const y = Math.sin(angle * Math.PI / 180) * distance;
                 
-                // Apply random properties directly for animation
                 particle.style.setProperty('--random-x', x + 'px');
                 particle.style.setProperty('--random-y', y + 'px');
-                particle.style.animationDelay = (Math.random() * 0.5) + 's'; // Stagger particles
+                particle.style.animationDelay = (Math.random() * 0.5) + 's'; 
             });
             
-            setTimeout(() => { // Main page temporary visual corruption
+            setTimeout(() => { 
+                document.body.style.transition = 'filter 0.2s ease-out'; // Add transition for smoothness
                 document.body.style.filter = 'hue-rotate(45deg) brightness(1.2) contrast(1.5)';
-                document.body.style.transition = 'filter 0.2s ease-out';
             }, 800);
             
             setTimeout(() => {
                 document.body.style.filter = '';
                 boxRep.classList.remove('breached');
-                effects.classList.remove('active'); // Stop particle animation
+                effects.classList.remove('active'); 
                 breachActivated = false;
-            }, 3500); // Duration of the breach effect
+            }, 3500); 
         }
         
         document.addEventListener('DOMContentLoaded', () => {
             const breachContainer = document.getElementById('breachViz');
-            if (breachContainer) { // Check if the element exists
+            if (breachContainer) { 
                  const boxRepresentation = breachContainer.querySelector('.box-representation');
                  if (boxRepresentation) {
                     boxRepresentation.addEventListener('click', activateBreach);
@@ -2178,7 +2205,7 @@
             }
         });
         
-        // Related incidents
+        // Related incidents DATA
         const incidentData = {
             mr_puzzles: {
                 title: "THREAT ANALYSIS: ENTITY 'MR. PUZZLES'",
@@ -2194,7 +2221,7 @@
             },
             format_corruption: {
                 title: "ANOMALY LOG: ANOMALOUS FORMAT CORRUPTION EVENTS",
-                text: "<p><strong>DATA INTEGRITY UNIT - ALERT SUMMARY:</strong></p><p>Documentation of widespread digital files developing impossible or paradoxical properties:</p><ul><li>Image files (.jpeg, .png) that subtly change content when not actively observed or when reloaded.</li><li>Audio files (.mp3, .wav) that play different, often unsettling, content upon each playback instance, despite checksums remaining identical.</li><li>Video files (.mp4, .mkv) with negative duration timestamps or content that appears to predate the file's creation.</li><li>Text documents (.txt, .docx) that spontaneously edit themselves, introducing nonsensical or disturbing passages.</li></ul><p><span class="emphasis">These corrupted formats appear to be 'Anti-Meme larvae'—early-stage manifestations or infection vectors testing the boundaries of digital reality and data permanence. Containment protocols are struggling to keep pace with mutation rates.</span></p>"
+                text: "<p><strong>DATA INTEGRITY UNIT - ALERT SUMMARY:</strong></p><p>Documentation of widespread digital files developing impossible or paradoxical properties:</p><ul><li>Image files (.jpeg, .png) that subtly change content when not actively observed or when reloaded.</li><li>Audio files (.mp3, .wav) that play different, often unsettling, content upon each playback instance, despite checksums remaining identical.</li><li>Video files (.mp4, .mkv) with negative duration timestamps or content that appears to predate the file's creation.</li><li>Text documents (.txt, .docx) that spontaneously edit themselves, introducing nonsensical or disturbing passages.</li></ul><p><span class=\"emphasis\">These corrupted formats appear to be 'Anti-Meme larvae'—early-stage manifestations or infection vectors testing the boundaries of digital reality and data permanence. Containment protocols are struggling to keep pace with mutation rates.</span></p>"
             }
         };
 
@@ -2205,198 +2232,8 @@
             }
         }
         
-        // Terminal system
-        const terminalCommands = {
-            'help': () => {
-                return [
-                    'INTERNET GRAVEYARD ARCHIVE SYSTEM - HELP',
-                    'Available commands:',
-                    '  help          - Show this help message',
-                    '  ls            - List directory contents (current: /archives/classified/)',
-                    '  scan [target] - Scan for memetic anomalies (e.g. scan godbox_prime)',
-                    '  cat [file]    - Display file contents (e.g. cat status.log)',
-                    '  unlock [frag] - Unlock classified fragments (e.g. unlock fragment_05)',
-                    '  status        - Show overall system and threat status',
-                    '  clear         - Clear terminal output',
-                    '  whoami        - Display current user credentials and session info',
-                    '  date          - Display current system date (relative to anomaly timeline)',
-                    '  exit          - Terminate secure session and purge command history'
-                ];
-            },
-            'ls': () => {
-                return [
-                    'Listing: /archives/classified/',
-                    'drwxr-xr-x  ROOT   ARCHIVE     4096  ERR:CHKSM  /dead_memes_quarantine/',
-                    'drwxr-xr-x  ROOT   ARCHIVE     4096  ERR:CHKSM  /cancelled_formats_vault/',
-                    'drwx------  ROOT   CLASSIFIED  8192  ERR:CHKSM  /wiped_fragments_encrypted/',
-                    '-rw-r--r--  ROOT   ARCHIVE     2048  ERR:CHKSM  status.log',
-                    '-rw-------  ROOT   CLASSIFIED  16384 ERR:CHKSM  fragment_05.am_enc',
-                    '-rwx------  ROOT   SYSTEM      1024  ERR:CHKSM  containment_protocol.sh',
-                    'Access to /wiped_fragments_encrypted/ requires fragment unlock protocol.'
-                ];
-            },
-            'scan godbox_prime': () => {
-                return [
-                    'Scanning target: GODBOX_PRIME (Residual Energy Signature)...',
-                    'Quantum Entanglement Resonator........ONLINE',
-                    'Memetic Field Analyzer.................ACTIVE',
-                    'Cognitohazard Detector...............CALIBRATING...',
-                    'RESULT: HIGH LEVELS OF ANTI-MEMETIC RADIATION DETECTED.',
-                    'SIGNATURE MATCH: CLASS-Ω ANOMALY (POST-DESTRUCTION FRAGMENTATION)',
-                    'WARNING: Prolonged exposure to residual energy may cause existential instability.',
-                    'RECOMMENDATION: Maintain Class 5 Shielding. Avoid direct psychic interface.'
-                ];
-            },
-            'scan': () => { return ['Error: scan command requires a target. Usage: scan [target_id]']; },
-            'status': () => {
-                return [
-                    'INTERNET GRAVEYARD ARCHIVE SYSTEM STATUS:',
-                    '-----------------------------------------',
-                    'Total preserved memetic entities: 15,847 (approx.)',
-                    'Active Anti-Meme signatures detected: 23 (Variance: +/- 5)',
-                    'Corrupted data fragments (Class Gamma+): 1,337 TB',
-                    'Unexplained memory leaks (System Integrity): 5 (Critical)',
-                    'Last confirmed containment breach attempt: ' + Math.floor(Math.random()*60) + ' minutes ago',
-                    'Current Threat Level: AMBER (Escalating to RED predicted within 72h)',
-                    '-----------------------------------------',
-                    'System Integrity Estimate: 94.7% (Decreasing by 0.02%/hr)',
-                    'WARNING: Multiple unauthorized access attempts detected from [REDACTED IP BLOCK]. Memetic countermeasures deployed.'
-                ];
-            },
-            'whoami': () => {
-                return [
-                    'Current User Session:',
-                    '  Designation: preservation_researcher_007 (Guest Access)',
-                    '  Access Level: Level 1 (Restricted Observer Privileges)',
-                    '  Session Time: ' + Math.floor(Math.random() * 1000) + ' seconds (Anomaly Time Dilation Possible)',
-                    '  Connection Node: Graveyard Archive Terminal (Physical Location: UNKNOWN)',
-                    '  Security Advisory: All actions are logged and analyzed for memetic deviancy.'
-                ];
-            },
-            'date': () => {
-                const anomalyEpoch = new Date(2016, 5, 28); // Approx. Harambe event
-                const now = new Date();
-                const diffTime = Math.abs(now - anomalyEpoch);
-                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                return ['Current System Date: AE ' + diffDays + ' (After [HARAMBE] Epoch)', 'Time is relative within the Graveyard. Do not trust your internal clock.'];
-            },
-            'clear': () => {
-                const output = document.getElementById('terminalOutput');
-                if(output) output.innerHTML = '<div class="terminal-line">Terminal output cleared by user.</div><div class="terminal-line">&nbsp;</div>';
-                return []; // No further output needed from command processor
-            },
-            'unlock fragment_05': () => {
-                const wipedFragmentsDiv = document.getElementById('wipedFragments');
-                if (wipedFragmentsDiv) {
-                    wipedFragmentsDiv.style.display = 'block';
-                     // Scroll to the new section
-                    wipedFragmentsDiv.scrollIntoView({ behavior: 'smooth' });
-                }
-                return [
-                    'DECRYPTION KEY SEQUENCE ACCEPTED (LVL 5 OVERRIDE)',
-                    'Unlocking FRAGMENT_05.am_enc...',
-                    'Security Seals Bypassed: [SEAL_ALPHA] [SEAL_BETA] [SEAL_OMEGA_PRIME]',
-                    'WARNING: This fragment contains highly volatile and cognitohazardous meme data.',
-                    'Emotional dampeners and reality anchors are MANDATORY for safe viewing.',
-                    'Proceed with extreme caution. We are not responsible for psychic damage.',
-                    'Fragment data displayed below terminal output. Session will auto-terminate after 5 minutes of inactivity.'
-                ];
-            },
-            'unlock': () => { return ['Error: unlock command requires a fragment ID. Usage: unlock [fragment_id]']; },
-            'cat status.log': () => {
-                return [
-                    '[AE_3015 12:07:32 UTC+??] SYSTEM: Graveyard Archive Mainframe Initialized v3.14.1e',
-                    '[AE_3015 12:07:33 UTC+??] WARNING: Fluctuating Anti-Meme energy signatures detected in Sector Gamma-7.',
-                    '[AE_3015 12:07:34 UTC+??] INFO: Fragment preservation protocols running at 99.97% efficiency.',
-                    '[AE_3015 12:07:35 UTC+??] ALERT: Unauthorized access attempt from anomalous IP block [REDACTED] - Countermeasures deployed.',
-                    '[AE_3015 12:07:36 UTC+??] ERROR: Cascading memory corruption detected in Sector Delta-9. Automated repair initiated.',
-                    '[AE_3015 12:07:37 UTC+??] INFO: Backup protocols (Project PHOENIX_ASH) engaged successfully.',
-                    '[AE_3015 12:07:38 UTC+??] WARNING: Current user session showing high engagement with classified materials. Monitoring intensified.',
-                    '[AE_3015 12:07:39 UTC+??] CRITICAL: FRAGMENT_05.am_enc accessed without prior Level 7 authorization. Security alert triggered.'
-                ];
-            },
-            'cat': () => { return ['Error: cat command requires a filename. Usage: cat [filename]']; },
-            'exit': () => {
-                const output = document.getElementById('terminalOutput');
-                if(output) { // Graceful exit
-                    setTimeout(() => output.innerHTML = '<div class="terminal-line">Connection terminated by user. Command history purged. Stay vigilant.</div>', 1000);
-                }
-                return [
-                    'Terminating secure session...',
-                    'Purging command history from local cache...',
-                    'Disconnecting from Graveyard Archive Mainframe...',
-                    'Thank you for visiting the Internet Graveyard. Remember: What is forgotten is not truly gone, merely... dormant.',
-                    'Connection closed.'
-                ];
-            }
-        };
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            const terminalInput = document.getElementById('terminalInput');
-            if (terminalInput) {
-                terminalInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        processTerminalCommand();
-                    }
-                });
-            }
-        });
-        
-        function processTerminalCommand() {
-            const inputElement = document.getElementById('terminalInput');
-            const outputElement = document.getElementById('terminalOutput');
-            if(!inputElement || !outputElement) return;
-
-            const commandText = inputElement.value.trim();
-            const commandParts = commandText.toLowerCase().split(' ');
-            const mainCommand = commandParts[0];
-            
-            const commandLine = document.createElement('div');
-            commandLine.className = 'terminal-line';
-            // Sanitize input value before inserting into HTML to prevent XSS
-            const sanitizedInputValue = inputElement.value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            commandLine.innerHTML = `<span class="terminal-prompt">root@graveyard-archive-01:~# </span><span style="color: #ccc;">${sanitizedInputValue}</span>`;
-            outputElement.appendChild(commandLine);
-            
-            let responseLines = [];
-            if (terminalCommands[mainCommand]) {
-                responseLines = terminalCommands[mainCommand](commandParts.slice(1).join(' ')); // Pass arguments
-            } else if (terminalCommands[commandText.toLowerCase()]) { // For commands like 'unlock fragment_05'
-                 responseLines = terminalCommands[commandText.toLowerCase()]();
-            }
-             else if (commandText === '') {
-                responseLines = []; // No output for empty command
-            } else {
-                responseLines = [`Command not found: ${mainCommand}`, 'Type "help" for available commands.'];
-            }
-            
-            responseLines.forEach(line => {
-                const responseLine = document.createElement('div');
-                responseLine.className = 'terminal-line';
-                // Sanitize response line to prevent XSS if it could contain user-generated content (though here it's from our objects)
-                const sanitizedLine = line.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                responseLine.innerHTML = sanitizedLine; // Use innerHTML carefully; fine if content is trusted or sanitized
-                outputElement.appendChild(responseLine);
-            });
-            
-            if (responseLines.length > 0 || commandText !== '') { // Add empty line if there was any interaction
-                const emptyLine = document.createElement('div');
-                emptyLine.className = 'terminal-line';
-                emptyLine.innerHTML = '&nbsp;';
-                outputElement.appendChild(emptyLine);
-            }
-            
-            inputElement.value = '';
-            outputElement.scrollTop = outputElement.scrollHeight;
-
-            if (mainCommand === 'exit') {
-                inputElement.disabled = true;
-                inputElement.placeholder = "SESSION TERMINATED.";
-            }
-        }
-        
-        // Wiped file access
-        const wipedFileData = { // Only a few examples, rest would be similar
+        // Wiped file access DATA
+        const wipedFileData = { 
             trollface: {
                 title: "FRAGMENT DETAIL: TROLLFACE (OG STRAIN)",
                 text: "<p><strong>STATUS:</strong> PERMANENTLY CORRUPTED / DISTRIBUTED ECHO</p><p>The original rage comic entity. Once omnipresent across forums, imageboards, and early social media. Achieved dangerous levels of self-awareness around 2015 (±1 Earth year), leading to spontaneous, uncontrolled derivative generation. The entity began recognizing its own memetic structure and started 'trolling' consensus reality itself, causing minor informational paradoxes.</p><p><span class='emphasis'>Final Event:</span> Fractured into thousands of variant forms to escape centralized containment. Core consciousness absorbed by the Anti-Meme tide during the Great Forgetting event. Its laughter now echoes in dead comment sections.<br/><strong>Location:</strong> /RAGE_SECTOR/CORE_FRAGMENTS/FRACTURED_TROLL/<br/><strong>Threat Level:</strong> NEUTRALIZED (Dispersed). Individual echoes: LOW.<br/><strong>Recovery Potential:</strong> IMPOSSIBLE (Too fragmented).</p>"
@@ -2416,16 +2253,32 @@
             shoopda: {
                 title: "FRAGMENT DETAIL: SHOOP DA WHOOP (IMMA_CHARGIN_MAH_LAZER)",
                 text: "<p><strong>STATUS:</strong> TIMELINE FRACTURE VIA MEMETIC OVER-AMPLIFICATION / .SWF CRYPT CONTAINMENT</p><p>Became critically unstable due to memetic over-amplification in early 2012. The core phrase 'I'M CHARGIN' MAH LAZER' achieved such high memetic density that it began affecting actual light wavelengths in localized digital environments and, reportedly, causing minor retinal fatigue in susceptible viewers. The 'laser' visual effect, when replicated millions of times, is theorized to have fractured micro-timeline threads, creating temporal echoes and paradoxes related to its origin.<br/>Contained within a specialized .SWF (Shockwave Flash) crypt in the Graveyard's Flash Memorial sector. Access requires an emulated Adobe Flash Player environment—itself a dead technology, creating a form of double-sealed containment. The crypt hums with suppressed energy.<br/><strong>Location:</strong> /FLASH_TOMBS/SWF_CRYPTS/LASER_CHARGE_CONTAINED/<br/><strong>Threat Level:</strong> TEMPORAL HAZARD (Localized within crypt). Potential for wider reality distortion if containment fails.<br/><strong>Recovery Potential:</strong> FLASH PLAYER DEPENDENT (High risk, low priority due to obsolete technology).</p>"
+            },
+            datboi_fs: { // For filesystem, to avoid conflict with 'datboi' in 'memories'
+                title: "WIPED FRAGMENT: DAT BOI (FILESYSTEM ECHO)",
+                text: "<p><strong>STATUS:</strong> MEMESCAPE NAVIGATION FAILURE / ENDLESS CYCLE SYNDROME</p><p>This particular echo of Dat Boi represents a version that rode too far beyond the established boundaries of the active memescape in October 2016. It swerved off the known viral pathways and became irrevocably lost within the infinite, recursive loops of the Digital Graveyard's deeper strata. The unicycle continues to turn, perpetually, but 'he' can never truly land or find his way back to mainstream cultural relevance. 'O shit waddup?' He's still asking, but no one in this desolate sector remembers the correct response, or if there ever was one.<br/><strong>Location:</strong> /DEEP_GRAVEYARD/CYCLICAL_ANOMALIES/DATBOI_LOST/<br/><strong>Threat Level:</strong> EXISTENTIAL (Induces feelings of pointlessness and cyclical dread in observers).<br/><strong>Recovery Potential:</strong> THEORETICAL (Requires mapping and navigating non-Euclidean dataspace – currently beyond our capabilities).</p>"
+            },
+            harlemshake: {
+                title: "WIPED FRAGMENT: HARLEM SHAKE (ECHO BURST)",
+                text: "<p><strong>STATUS:</strong> TEMPORAL SYNCHRONIZATION ERROR / MEMETIC ECHO CLUSTERING</p><p>The global phenomenon of the Harlem Shake suffered a unique form of memetic collapse. Temporal synchronization errors, triggered by millions of simultaneous video uploads worldwide attempting to replicate the 'drop' moment, caused a memetic echo burst in July 2013. This event created standing waves in digital space-time, fragmenting the original concept into countless, slightly desynchronized echoes.<br/>These echoes now reverberate in isolated fragment clusters throughout the Graveyard. Visitors to certain sectors occasionally report hearing distant, distorted bass drops and the phantom sensation of chaotic movement, even when archives are otherwise silent. The original joy has been replaced by a pervasive sense of disjointed energy.<br/><strong>Location:</strong> /TEMPORAL_DISTORTIONS/ECHO_CLUSTERS/HARLEM_SHAKE_REMNANTS/<br/><strong>Threat Level:</strong> AUDITORY HAZARD / MINOR TEMPORAL DISPLACEMENT RISK.<br/><strong>Recovery Potential:</strong> FRAGMENTS ONLY (Reconstructing the original unified memetic event is considered impossible).</p>"
+            },
+            badluckbrian: {
+                title: "WIPED FRAGMENT: BAD LUCK BRIAN (SINGULARITY)",
+                text: "<p><strong>STATUS:</strong> NARRATIVE DENSITY COLLAPSE / BLACK JOKE SINGULARITY FORMATION</p><p>The Bad Luck Brian meme's narrative density reached a critical mass around August 2015. The sheer accumulation of increasingly improbable and catastrophic bad luck scenarios caused the character's conceptual framework to collapse under its own weight, forming what researchers have termed a 'black joke singularity'—a point where concentrated misfortune becomes so extreme it ceases to be humorous and instead generates a field of palpable despair and probability distortion.<br/>Classified as a volatile memetic anomaly due to the risk of spreading 'anti-humor' or 'luck drain' to surrounding, less stable memes. Direct observation is discouraged for individuals with a history of misfortune.<br/><strong>Location:</strong> /NARRATIVE_IMPLOSIONS/JOKE_SINGULARITIES/BLB_CORE/<br/><strong>Threat Level:</strong> COMEDIC HAZARD / PROBABILITY DISTORTION FIELD (Localized).<br/><strong>Recovery Potential:</strong> INADVISABLE (Risk of triggering cascading misfortune event).</p>"
+            },
+            pepe_fs: { // For filesystem
+                title: "WIPED FRAGMENT: PEPE THE FROG (CLASSIC CORE)",
+                text: "<p><strong>STATUS:</strong> POLITICAL FRAGMENTATION / EMOTIONAL STASIS PRESERVATION / ANTI-MEME TEARS</p><p>The original, kind-eyed iteration of Pepe the Frog was catastrophically fragmented by its co-option and subsequent weaponization in various political and cultural conflicts around October 2016. To prevent total corruption of its primordial essence, the core personality—characterized by innocence, hopefulness, and genuine 'feels good man' sentiment—was cryogenically preserved in memetic stasis by an unknown benevolent entity (suspected: The Collector or a precursor organization).<br/>Currently stored in the deep archive sector /PEPE_SANCTUARY/CORE_ESSENCE/ under maximum security protocols. The original Pepe construct weeps what have been identified as 'Anti-Meme tears'—pure, concentrated nostalgia and sorrow for what its image became. These tears are carefully collected and studied as a potent, if melancholic, memetic substance.<br/><strong>Location:</strong> /PEPE_SANCTUARY/CORE_ESSENCE/STASIS_VAULT_001/<br/><strong>Threat Level:</strong> HIGH EMOTIONAL HAZARD (Induces profound empathy and grief). POTENTIAL FOR MEMETIC REBIRTH (Unpredictable consequences).<br/><strong>Recovery Potential:</strong> POSSIBLE (Requires a global shift in cultural perception and memetic disarmament – currently unfeasible).</p>"
             }
-            // Add more entries if needed
         };
-
+        
         function accessWipedFile(fileKey) {
-            const data = wipedFileData[fileKey];
-            if (data) {
+            const data = wipedFileData[fileKey]; 
+            if (data && data.text && data.title) {
                 showHiddenMessage(data.text, data.title);
             } else {
-                showHiddenMessage("<p>Error: Fragment data for " + fileKey + " not found or is too corrupted for display. Further investigation required by Level 7 personnel.</p>", "FRAGMENT ACCESS ERROR");
+                const fallbackTitle = fileKey.charAt(0).toUpperCase() + fileKey.slice(1).replace(/([A-Z])/g, ' $1').trim(); 
+                showHiddenMessage(`<p>Error: Fragment data for ${fileKey} is either restricted, corrupted beyond visual rendering, or accessible only via direct terminal query (e.g., 'cat /archives/classified/wiped_fragments_encrypted/${fileKey}.memex').</p><p>Consult fragment_05_manifest.txt for available files after unlock.</p>`, `FRAGMENT ACCESS ERROR: ${fallbackTitle}`);
             }
         }
         
@@ -2458,7 +2311,7 @@
                  copyBtn.disabled = true;
                  setTimeout(() => {
                         copyBtn.textContent = 'COPY';
-                        copyBtn.disabled = false; // Or keep disabled if still scanning
+                        copyBtn.disabled = (caAddressElem.textContent === '0xDEADBEEF...[SCANNING]'); // Re-enable only if CA loaded
                     }, 2000);
             }
         }
@@ -2481,7 +2334,7 @@
         
         function triggerGhostPopup() {
             const popup = document.getElementById('popupGhost');
-            if (!popup || popup.style.display === 'block') return; // Don't overlap
+            if (!popup || popup.style.display === 'block') return; 
 
             const message = ghostMessages[Math.floor(Math.random() * ghostMessages.length)];
             
@@ -2490,16 +2343,16 @@
             
             setTimeout(() => {
                 popup.style.display = 'none';
-            }, 3000); // Display for 3 seconds
+            }, 3000); 
         }
 
         function startGlobalGhostEffects() {
-            stopGlobalGhostEffects(); // Clear existing timer if any
+            stopGlobalGhostEffects(); 
             globalGhostTimer = setInterval(() => {
-                if (Math.random() < 0.10) { // 10% chance every 20 seconds
+                if (Math.random() < 0.10) { 
                     triggerGhostPopup();
                 }
-            }, 20000); // Check every 20 seconds
+            }, 20000); 
         }
 
         function stopGlobalGhostEffects() {
@@ -2508,20 +2361,453 @@
             }
         }
         
-        // Initialize CA and global effects on load
+        // --- TERMINAL SYSTEM ---
+        const fileSystem = {
+            '/': { 
+                type: 'dir', accessLevel: 0, 
+                contents: {
+                    'archives': {
+                        type: 'dir', accessLevel: 0,
+                        contents: {
+                            'classified': {
+                                type: 'dir', accessLevel: 1,
+                                contents: {
+                                    'dead_memes_quarantine': {
+                                        type: 'dir', accessLevel: 1,
+                                        contents: {
+                                            'harambe_complex.log': { type: 'file', accessLevel: 1, content: () => memories.harambe.text, title: () => memories.harambe.title },
+                                            'dat_boi_anomaly.log': { type: 'file', accessLevel: 1, content: () => memories.datboi.text, title: () => memories.datboi.title },
+                                            'ugandan_knuckles.log': {type: 'file', accessLevel: 1, content: () => memories.ugandaknuckles.text, title: () => memories.ugandaknuckles.title}
+                                        }
+                                    },
+                                    'cancelled_formats_vault': {
+                                        type: 'dir', accessLevel: 1,
+                                        contents: {
+                                            'planking_phenomenon.ark': { type: 'file', accessLevel: 1, content: () => memories.planking.text, title: () => memories.planking.title }
+                                        }
+                                    },
+                                    'wiped_fragments_encrypted': {
+                                        type: 'dir', accessLevel: 5, unlocked: false,
+                                        contents: {
+                                            'fragment_05_manifest.txt': { type: 'file', accessLevel: 5, title: "FRAGMENT_05 MANIFEST", content: () => "MANIFEST FOR FRAGMENT_05 (ENCRYPTED DATASTORE)\n--------------------------------------------\nContains metadata for multiple wiped memetic entities.\nFull data requires individual file access after primary decryption of this directory.\n\nAvailable encrypted fragments (use 'cat [filename]' after unlock):\n  - trollface_og.memex\n  - nyancat_loop.memex\n  - charlie_bit_me.memex\n  - keyboard_cat.memex\n  - shoop_da_whoop.memex\n  - dat_boi_fs.memex\n  - harlem_shake.memex\n  - bad_luck_brian.memex\n  - pepe_classic_core.memex\n\nWARNING: DATA IS VOLATILE AND COGNITOHAZARDOUS." },
+                                            'trollface_og.memex': { type: 'file', accessLevel: 5, content: () => wipedFileData.trollface.text, title: () => wipedFileData.trollface.title },
+                                            'nyancat_loop.memex': { type: 'file', accessLevel: 5, content: () => wipedFileData.nyancat.text, title: () => wipedFileData.nyancat.title },
+                                            'charlie_bit_me.memex': { type: 'file', accessLevel: 5, content: () => wipedFileData.charlie.text, title: () => wipedFileData.charlie.title },
+                                            'keyboard_cat.memex': { type: 'file', accessLevel: 5, content: () => wipedFileData.keyboardcat.text, title: () => wipedFileData.keyboardcat.title },
+                                            'shoop_da_whoop.memex': { type: 'file', accessLevel: 5, content: () => wipedFileData.shoopda.text, title: () => wipedFileData.shoopda.title },
+                                            'dat_boi_fs.memex': { type: 'file', accessLevel: 5, content: () => wipedFileData.datboi_fs.text, title: () => wipedFileData.datboi_fs.title },
+                                            'harlem_shake.memex': { type: 'file', accessLevel: 5, content: () => wipedFileData.harlemshake.text, title: () => wipedFileData.harlemshake.title },
+                                            'bad_luck_brian.memex': { type: 'file', accessLevel: 5, content: () => wipedFileData.badluckbrian.text, title: () => wipedFileData.badluckbrian.title },
+                                            'pepe_classic_core.memex': { type: 'file', accessLevel: 5, content: () => wipedFileData.pepe_fs.text, title: () => wipedFileData.pepe_fs.title },
+                                        }
+                                    },
+                                    'status.log': {
+                                        type: 'file', accessLevel: 0, title: "SYSTEM STATUS LOG",
+                                        content: () => existingTerminalCommands.cat('status.log', true) 
+                                    },
+                                    'containment_protocol.sh': {
+                                        type: 'file', accessLevel: 3, title: "CONTAINMENT_PROTOCOL.SH",
+                                        content: "#!/bin/graveyard_shell\n# CONTAINMENT PROTOCOL v3.7 - DO NOT MODIFY WITHOUT LEVEL 7 CLEARANCE\n\necho 'INFO: Initializing memetic dampeners...'\nsleep 1\necho 'INFO: Activating reality anchors...'\nsleep 1\necho 'INFO: Scanning for Class-Ω threats in current sector...'\nsleep 0.5\necho 'WARNING: HIGH ENERGY SIGNATURE DETECTED - SECTOR GODBOX_PRIME_RESIDUAL'\necho 'CRITICAL: Containment field integrity at 87% and rapidly falling.'\necho 'EMERGENCY: Automated protocols engaged. Further intervention required by Level 7 personnel immediately.'\necho 'ALERT: This script is for diagnostic purposes only. Execution restricted.'"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    'system': {
+                        type: 'dir', accessLevel: 7, 
+                        contents: {
+                            'kernel_log.txt': { type: 'file', accessLevel: 7, title: "KERNEL LOG (RESTRICTED)", content: "IGAS KERNEL BOOT SEQUENCE v4.1.alpha\n---------------------------------------\n[0.000001] MEMORY CHECK (128 ZETTABYTES)... OK\n[0.000005] QUANTUM PROCESSOR ARRAY... ONLINE\n[0.000012] ANTI-MEME DRIVERS (AM_CORE.SYS)... LOADED (SIGNATURE: #DEADBEEF)\n[0.000020] REALITY STABILIZER FIELD (RSF_OMEGA)... ACTIVE (FLUCTUATION: 0.003%)\n[0.000031] GRAVEYARD CORE (BLACKBOX_HEARTBEAT)... ONLINE (PULSE: IRREGULAR)\n[0.000045] WARNING: ENTROPY LEVELS EXCEEDING SAFE PARAMETERS IN SECTOR NULL-VOID.\n[0.000050] WARNING: UNIDENTIFIED PSYCHIC SIGNATURE DETECTED NEAR USER TERMINAL.\n[0.000063] SYSTEM READY. AWAITING COMMANDS. ALL ACTIONS LOGGED.\n---------------------------------------" }
+                        }
+                    },
+                    'README.txt': {
+                        type: 'file', accessLevel: 0, title: "README.TXT - IGAS User Manual",
+                        content: "Welcome to the Internet Graveyard Archive System (IGAS) v3.14.\nThis system contains classified, sensitive, and potentially hazardous memetic data.\nProceed with extreme caution. All access is logged and psychometrically analyzed.\n\nUse 'help' for a list of available commands.\nNavigate the directory structure using 'cd [directory]'.\nList directory contents with 'ls'.\nView file contents using 'cat [filename]'.\nSome areas require specific access protocols ('unlock') or higher clearance levels.\n\nRemember: What is forgotten is not truly gone. It is merely waiting.\nYour sanity is your own responsibility."
+                    }
+                }
+            }
+        };
+        let currentDirectoryPath = '/archives/classified/'; 
+        let currentUserAccessLevel = 1; 
+        const terminalOutputElement = document.getElementById('terminalOutput');
+        const terminalInputElement = document.getElementById('terminalInput');
+        const terminalPromptDisplayElement = document.querySelector('.terminal-prompt-display');
+
+
+        function updateTerminalPrompt() {
+            const promptElement = document.querySelector('.terminal-prompt'); // For input line
+            const promptDisplayElement = document.querySelector('.terminal-prompt-display'); // For header
+            
+            const newPrompt = `user@graveyard-archive:${currentDirectoryPath}# `;
+            if (promptElement) {
+                promptElement.textContent = newPrompt;
+            }
+            if (promptDisplayElement) {
+                promptDisplayElement.textContent = newPrompt;
+            }
+        }
+        
+        function getNodeFromPath(path) {
+            const parts = path.split('/').filter(p => p !== '');
+            let currentNode = fileSystem['/'];
+            if (path === '/') return { node: currentNode, path: '/' };
+
+            let currentPath = '/';
+            for (const part of parts) {
+                if (currentNode && currentNode.type === 'dir' && currentNode.contents && currentNode.contents[part]) {
+                    currentNode = currentNode.contents[part];
+                    currentPath += part + '/';
+                } else {
+                    return null; 
+                }
+            }
+            return { node: currentNode, path: currentPath.replace(/\/$/, '') || '/' }; // Return node and its full path
+        }
+
+        function resolvePath(targetPath) {
+            if (!currentDirectoryPath.endsWith('/')) currentDirectoryPath += '/'; // Ensure current path ends with /
+            if (targetPath.startsWith('/')) { 
+                return targetPath;
+            }
+
+            const currentParts = currentDirectoryPath.split('/').filter(p => p !== '');
+            const targetParts = targetPath.split('/').filter(p => p !== '');
+            let resolvedParts = [...currentParts];
+
+            for (const part of targetParts) {
+                if (part === '..') {
+                    if (resolvedParts.length > 0) {
+                        resolvedParts.pop();
+                    }
+                } else if (part !== '.' && part !== '') {
+                    resolvedParts.push(part);
+                }
+            }
+            let finalPath = '/' + resolvedParts.join('/');
+            if (resolvedParts.length > 0 && (targetPath.endsWith('/') || getNodeFromPath(finalPath)?.node?.type === 'dir' )) {
+                 finalPath += '/';
+            }
+            return finalPath === '/' ? '/' : finalPath.replace(/\/+$/, '') || '/'; // Normalize slashes, handle root
+        }
+        
+        function hasAccess(nodeAccessLevel) {
+            return currentUserAccessLevel >= nodeAccessLevel;
+        }
+
+        function terminal_cd(args) {
+            const targetPath = args[0] || '/';
+            let resolved = resolvePath(targetPath);
+            const result = getNodeFromPath(resolved);
+            
+            if (result && result.node && result.node.type === 'dir') {
+                const node = result.node;
+                if (hasAccess(node.accessLevel)) {
+                    if (resolved.includes('/wiped_fragments_encrypted/') && !node.unlocked) {
+                       return [`Error: Directory ${targetPath} is encrypted. Use 'unlock fragment_05' from '/archives/classified/' first.`];
+                    }
+                    currentDirectoryPath = node.path.endsWith('/') || node.path === '/' ? node.path : node.path + '/';
+                    updateTerminalPrompt();
+                    return [`Changed directory to ${currentDirectoryPath}`];
+                } else {
+                    return [`Error: Permission denied for ${targetPath}. Access Level ${node.accessLevel} required.`];
+                }
+            } else if (result && result.node && result.node.type === 'file') {
+                return [`Error: ${targetPath} is not a directory.`];
+            } else {
+                return [`Error: Directory not found: ${targetPath} (resolved to ${resolved})`];
+            }
+        }
+
+        function terminal_ls(args) {
+            const result = getNodeFromPath(currentDirectoryPath);
+            let output = [];
+            if (result && result.node && result.node.type === 'dir' && result.node.contents) {
+                const node = result.node;
+                if (!hasAccess(node.accessLevel)) {
+                    return [`Error: Permission denied to list ${currentDirectoryPath}. Access Level ${node.accessLevel} required.`];
+                }
+                output.push(`Contents of ${currentDirectoryPath}:`);
+
+                if (currentDirectoryPath.includes('/wiped_fragments_encrypted/') && !node.unlocked) {
+                    output.push("  [ENCRYPTED CONTENT - REQUIRES 'unlock fragment_05' PROTOCOL FROM PARENT DIRECTORY]");
+                    return output;
+                }
+
+                const items = Object.keys(node.contents);
+                if (items.length === 0) {
+                     output.push("  (empty directory)");
+                } else {
+                    items.forEach(itemName => {
+                        const item = node.contents[itemName];
+                        let prefix = item.type === 'dir' ? 'd' : '-';
+                        let accessInfo = `rwx`; // Simplified
+                        if (!hasAccess(item.accessLevel)) {
+                            prefix = '?'; 
+                            accessInfo = `--- (LVL ${item.accessLevel} REQ)`;
+                        }
+                        output.push(`  ${prefix}${accessInfo}------  1 user   group        0 Jan 01 00:00 ${itemName}${item.type === 'dir' ? '/' : ''}`);
+                    });
+                }
+            } else {
+                output.push("  Error: Could not read current directory. Path invalid or corrupted.");
+            }
+            return output;
+        }
+
+        function terminal_cat(args) {
+            const targetFileName = args[0];
+            if (!targetFileName) return ["Usage: cat [filename]"];
+
+            // Assume filename is relative to current directory unless it starts with /
+            const resolvedPath = targetFileName.startsWith('/') ? targetFileName : (currentDirectoryPath.endsWith('/') ? currentDirectoryPath : currentDirectoryPath + '/') + targetFileName;
+            const result = getNodeFromPath(resolvedPath);
+            
+            if (result && result.node) {
+                const node = result.node;
+                if (!hasAccess(node.accessLevel)) {
+                     return [`Error: Permission denied for ${targetFileName}. Access Level ${node.accessLevel} required.`];
+                }
+                if (node.type === 'file') {
+                    const parentDirResult = getNodeFromPath(currentDirectoryPath); // Get current dir node
+                    if (parentDirResult && parentDirResult.node && currentDirectoryPath.includes('/wiped_fragments_encrypted/') && !parentDirResult.node.unlocked) {
+                         return [`Error: Content of ${targetFileName} is within an encrypted directory. Use 'unlock fragment_05' in '/archives/classified/' first.`];
+                    }
+
+                    let contentSource = node.content;
+                    let content = "";
+                    if (typeof contentSource === 'function') {
+                        content = contentSource(); 
+                        if (Array.isArray(content)) content = content.join('\n');
+                    } else {
+                        content = String(contentSource); // Ensure it's a string
+                    }
+                    
+                    if (node.title && (resolvedPath.endsWith(".log") || resolvedPath.endsWith(".memex") || resolvedPath.endsWith(".ark") || resolvedPath.endsWith(".txt") || resolvedPath.endsWith(".sh") )) {
+                        let popupTitle = typeof node.title === 'function' ? node.title() : node.title;
+                        if(resolvedPath.endsWith(".sh")) { // For shell scripts, show in terminal
+                             return content.split('\n');
+                        }
+                        showHiddenMessage(content.replace(/\n/g, '<br/>'), popupTitle); // Replace newlines for HTML
+                        return [`Displaying content of ${targetFileName} in Archive Viewer... (Press ESC to close)`];
+                    }
+                    return content.split('\n'); 
+                } else if (node.type === 'dir') {
+                    return [`Error: ${targetFileName} is a directory. Use 'ls' to view its contents or 'cd' to enter.`];
+                }
+            }
+            return [`Error: File not found: ${targetFileName}`];
+        }
+
+        function terminal_unlock(args) {
+            const fragmentId = args.join(' '); 
+            if (fragmentId === 'fragment_05' || fragmentId === 'fragment 05') {
+                if (currentDirectoryPath !== '/archives/classified/') {
+                    return ["Error: 'unlock fragment_05' must be executed from '/archives/classified/' directory."];
+                }
+                const wipedDirResult = getNodeFromPath('/archives/classified/wiped_fragments_encrypted/');
+                if (wipedDirResult && wipedDirResult.node && wipedDirResult.node.type === 'dir') {
+                    const wipedDirNode = wipedDirResult.node;
+                    if (currentUserAccessLevel >= wipedDirNode.accessLevel || wipedDirNode.unlocked) { 
+                        wipedDirNode.unlocked = true;
+                        const wipedFragmentsDiv = document.getElementById('wipedFragments');
+                        if (wipedFragmentsDiv) {
+                            wipedFragmentsDiv.style.display = 'block';
+                            wipedFragmentsDiv.scrollIntoView({ behavior: 'smooth' });
+                        }
+                        currentUserAccessLevel = Math.max(currentUserAccessLevel, 5); 
+                        updateTerminalPrompt();
+                        return [
+                            'DECRYPTION KEY SEQUENCE ACCEPTED (LVL 5 OVERRIDE)',
+                            'Unlocking FRAGMENT_05 datastore...',
+                            'Security Seals Bypassed: [SEAL_ALPHA] [SEAL_BETA] [SEAL_OMEGA_PRIME]',
+                            'Access to /archives/classified/wiped_fragments_encrypted/ granted.',
+                            'WARNING: This datastore contains highly volatile and cognitohazardous meme data.',
+                            'Emotional dampeners and reality anchors are MANDATORY for safe viewing.',
+                            'Proceed with extreme caution. We are not responsible for psychic damage.',
+                            'Visual Fragment Manifest displayed below terminal. Use `ls` and `cat` within the unlocked directory for raw data access.'
+                        ];
+                    } else {
+                        return [`Error: Insufficient clearance to attempt decryption protocol. Access Level ${wipedDirNode.accessLevel} required.`];
+                    }
+                }
+                return ["Error: Target fragment directory '/archives/classified/wiped_fragments_encrypted/' not found or is invalid."];
+            }
+            return ["Error: Unknown fragment ID. Supported: 'fragment_05'. Usage: unlock fragment_05"];
+        }
+        
+        const existingTerminalCommands = {
+            'help': () => { 
+                return [
+                    'INTERNET GRAVEYARD ARCHIVE SYSTEM - HELP v2.1',
+                    '================================================',
+                    'Core Navigation & File Operations:',
+                    '  help              - Show this help message',
+                    '  ls                - List directory contents',
+                    '  cd [directory]    - Change directory (e.g., cd .. , cd /archives, cd dead_memes_quarantine)',
+                    '  cat [filename]    - Display file contents (e.g., cat README.txt)',
+                    '  pwd               - Print current working directory',
+                    'System & Analysis Commands:',
+                    '  status            - Show overall system and threat status',
+                    '  scan [target_id]  - Scan target for memetic anomalies (e.g. scan godbox_prime_residual)',
+                    '  unlock [frag_id]  - Unlock classified fragments (e.g. unlock fragment_05 - must be in /archives/classified/)',
+                    '  whoami            - Display current user credentials and session info',
+                    '  date              - Display current system date (relative to anomaly timeline)',
+                    'Session Management:',
+                    '  clear             - Clear terminal output screen',
+                    '  history           - (NOT IMPLEMENTED YET) Show command history',
+                    '  exit              - Terminate secure session and purge command history',
+                    '================================================',
+                    'Note: Paths are case-sensitive. Some files/directories require higher access levels.'
+                ];
+            },
+            'scan': (args) => {
+                const target = args.join(' ');
+                if (!target) return ['Error: scan command requires a target. Usage: scan [target_id]'];
+                if (target === 'godbox_prime_residual' || target === 'godbox_prime') {
+                    return [
+                        `Scanning target: ${target} (Residual Energy Signature)...`,
+                        'Quantum Entanglement Resonator........ONLINE',
+                        'Memetic Field Analyzer.................ACTIVE',
+                        'Cognitohazard Detector...............CALIBRATING... [STABLE]',
+                        'RESULT: EXTREMELY HIGH LEVELS OF ANTI-MEMETIC RADIATION AND CHRONAL DISTORTION DETECTED.',
+                        'SIGNATURE MATCH: CLASS-Ω ANOMALY (GODBOX_PRIME - POST-DESTRUCTION FRAGMENTATION EVENT)',
+                        'WARNING: Prolonged exposure to residual energy signatures may cause severe existential instability, memory erasure, and potential timeline displacement.',
+                        'RECOMMENDATION: Maintain Class 7 Shielding. Avoid all direct psychic or memetic interface. Report any unusual cognitive effects immediately.'
+                    ];
+                }
+                return [`Scan target '${target}' not recognized or yielded no anomalous readings above baseline static.`];
+            },
+            'status': () => { 
+                return [
+                    'INTERNET GRAVEYARD ARCHIVE SYSTEM STATUS - AE ' + Math.floor(Math.abs(new Date() - new Date(2016, 5, 28)) / (1000 * 60 * 60 * 24)),
+                    '--------------------------------------------------',
+                    'Current Directory: ' + currentDirectoryPath,
+                    'User Access Level: ' + currentUserAccessLevel,
+                    'Total Preserved Memetic Entities (Cataloged): 15,847 (approx.)',
+                    'Active Anti-Meme Signatures (Class Gamma+): 23 (Variance: +/- 5, HIGHLY UNSTABLE)',
+                    'Corrupted Data Fragments (Requiring Reconciliation): 1,337 ZETTABYTES',
+                    'Unexplained Memory Leaks (System Integrity): 5 (Status: CRITICAL - Containment Degrading)',
+                    'Last Confirmed Containment Breach Attempt: ' + Math.floor(Math.random()*60) + ' minutes ago (Source: [REDACTED])',
+                    'Current Global Threat Level: AMBER (Rapidly Escalating to RED - Projected within next 48h cycle)',
+                    '--------------------------------------------------',
+                    'System Integrity Estimate: 93.2% (Decreasing by 0.05%/hr - Anomaly Interference Suspected)',
+                    'WARNING: Multiple unauthorized access pings detected from unknown trans-dimensional IP blocks. Memetic countermeasures deployed with limited success.'
+                ];
+            },
+            'whoami': () => { 
+                return [
+                    'Current User Session Credentials & Status:',
+                    '  Designation: researcher_guest_007 (Temporary Access Protocol)',
+                    '  User ID: user@graveyard-archive.local (Non-Persistent)',
+                    '  Home Directory: /archives/classified/',
+                    '  Current Access Level: ' + currentUserAccessLevel + ' (Restricted Observer Privileges - Clearance upgrade available via INITIATION PORTAL with valid Key Phrase)',
+                    '  Session Duration: ' + Math.floor(Math.random() * 1000) + ' seconds (Note: Localized Anomaly Time Dilation may be in effect)',
+                    '  Connection Node: Graveyard Archive Terminal (Physical Location: UNKNOWN / DATASPACE_DRIFT_COORDINATES_UNSTABLE)',
+                    '  Security Advisory: All actions within this terminal are logged, psychometrically analyzed for memetic deviancy, and cross-referenced with your digital footprint. Ignorance of protocol is not an excuse.'
+                ];
+            },
+            'date': () => { 
+                const anomalyEpoch = new Date(2016, 5, 28); 
+                const now = new Date();
+                const diffTime = Math.abs(now - anomalyEpoch);
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                return ['Current System Date: AE ' + diffDays + ' (After [HARAMBE] Epoch - Year Zero Anomaly)', 'Time is relative and often distorted within the Graveyard. Do not trust your internal chronometer. External temporal references are unreliable and potentially hazardous.'];
+            },
+             'pwd': () => { 
+                return [currentDirectoryPath];
+            },
+            'clear': () => {
+                if(terminalOutputElement) terminalOutputElement.innerHTML = '<div class="terminal-line">Terminal output cleared by user request. Previous session data has been purged from local display cache.</div><div class="terminal-line">&nbsp;</div>';
+                return [];
+            },
+            'exit': () => {
+                if(terminalOutputElement) {
+                    setTimeout(() => terminalOutputElement.innerHTML = '<div class="terminal-line" style="color: #ff5555;">Secure connection to Graveyard Mainframe has been terminated by user. All temporary session data and command history purged from this terminal. Remember: Stay vigilant. The Graveyard always remembers what you forget.</div>', 1000);
+                }
+                if(terminalInputElement) {
+                    terminalInputElement.disabled = true;
+                    terminalInputElement.placeholder = "SESSION TERMINATED. REFRESH PAGE TO RE-ESTABLISH CONNECTION.";
+                }
+                return [
+                    'Terminating secure session with Graveyard Archive Mainframe...',
+                    'Purging command history from local terminal cache (Protocol WIPE_SLATE)...',
+                    'Severing quantum entanglement link to Archive Core...',
+                    'Thank you for interfacing with the Internet Graveyard Archives. Your contributions (or lack thereof) have been noted.',
+                    'Remember: What is forgotten is not truly gone, merely... dormant, and often, actively waiting.',
+                    'Connection closed. You are now alone with your memories.'
+                ];
+            }
+        };
+
+        function processTerminalCommand() {
+            if(!terminalInputElement || !terminalOutputElement) return;
+
+            const commandText = terminalInputElement.value.trim();
+            const commandParts = commandText.split(' ');
+            const mainCommand = commandParts[0].toLowerCase();
+            const args = commandParts.slice(1);
+            
+            const commandLine = document.createElement('div');
+            commandLine.className = 'terminal-line';
+            const sanitizedInputValue = terminalInputElement.value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            commandLine.innerHTML = `<span class="terminal-prompt">user@graveyard-archive:${currentDirectoryPath}# </span><span style="color: #ccc;">${sanitizedInputValue}</span>`;
+            terminalOutputElement.appendChild(commandLine);
+            
+            let responseLines = [];
+            if (mainCommand === 'cd') {
+                responseLines = terminal_cd(args);
+            } else if (mainCommand === 'ls') {
+                responseLines = terminal_ls(args);
+            } else if (mainCommand === 'cat') {
+                responseLines = terminal_cat(args);
+            } else if (mainCommand === 'unlock') {
+                responseLines = terminal_unlock(args);
+            } else if (existingTerminalCommands[mainCommand]) {
+                responseLines = existingTerminalCommands[mainCommand](args);
+            } else if (commandText === '') {
+                responseLines = [];
+            } else {
+                responseLines = [`Error: Command not found: '${mainCommand}'. Type "help" for available commands.`];
+            }
+            
+            responseLines.forEach(line => {
+                const responseLine = document.createElement('div');
+                responseLine.className = 'terminal-line';
+                const sanitizedLine = String(line).replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                responseLine.innerHTML = sanitizedLine.replace(/\n/g, '<br/>'); // Handle multi-line responses from functions properly
+                terminalOutputElement.appendChild(responseLine);
+            });
+            
+            if (responseLines.length > 0 || commandText !== '') {
+                const emptyLine = document.createElement('div');
+                emptyLine.className = 'terminal-line';
+                emptyLine.innerHTML = '&nbsp;';
+                terminalOutputElement.appendChild(emptyLine);
+            }
+            
+            terminalInputElement.value = '';
+            terminalOutputElement.scrollTop = terminalOutputElement.scrollHeight;
+
+            if (mainCommand === 'exit' && terminalInputElement) {
+                terminalInputElement.disabled = true;
+                terminalInputElement.placeholder = "SESSION TERMINATED.";
+            }
+            updateTerminalPrompt(); 
+        }
+        
         document.addEventListener('DOMContentLoaded', () => {
+            updateTerminalPrompt();
             const caAddressElem = document.getElementById('caAddress');
             const copyBtn = document.getElementById('copyBtn');
             if (caAddressElem && copyBtn) {
-                // Simulate CA loading
                 setTimeout(() => {
-                    caAddressElem.textContent = '0x4E47494E582D4445414442454546'; // Example CA
+                    caAddressElem.textContent = '0x4E47494E582D4445414442454546'; 
                     copyBtn.disabled = false;
                 }, 5000);
             }
-            startGlobalGhostEffects(); // Start subtle ghost popups
+            startGlobalGhostEffects(); 
         });
 
+        // --- END TERMINAL SYSTEM ---
     </script>
 </body>
 </html>
