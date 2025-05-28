@@ -1,62 +1,5 @@
-// Graveyard page functionality
-        const structureData = {
-            '404': "404 CATACOMBS ACCESSED\n\nYou are now browsing the broken link repository. Every URL that ever returned 'Page Not Found' leads here. The comment sections echo with unfinished conversations.\n\n> Comments loading...\n> Connection timeout\n> Comments loading...\n> Connection timeout\n\nThey never finish loading. They never stop trying.",
-            
-            'swf': ".SWF CRYPTS OPENED\n\nFlash is dead. But the animations remember being alive.\n\n🎵 *Background music plays at 0.1x speed* 🎵\n\nYou see:\n- Newgrounds submissions from 2003\n- Homestar Runner episodes that never aired\n- Interactive games with no interaction\n- 'Loading...' bars frozen at 99%\n\nThe silence here isn't empty. It's full of music that can't play.",
-            
-            'avatar': "LOST AVATAR GARDEN ENTERED\n\nRow upon row of forgotten profile pictures stand in digital soil. They turn to look at you as you pass:\n\n• A DeviantArt OC with too many belts\n• Someone's first YouTube avatar (MS Paint quality)\n• A Gaiaonline character worth $200 in digital clothes\n• Your old forum signature that took 3 hours to make\n\nThey know you once cared about them. They're still waiting for you to log back in.",
-            
-            'folder': "FOLDER TREE NAVIGATION INITIATED\n\nYou are now browsing an infinite desktop. Every folder opens into ten more folders. Every file is corrupted but still somehow contains memories.\n\nCurrent location: /Desktop/New Folder/New Folder (2)/untitled folder/stuff/old stuff/really old stuff/\n\nFiles found:\n- homework.txt [CORRUPTED]\n- mymusic.mp3 [MISSING CODEC]\n- funny_pic.jpg [ERROR: FILE TOO NOSTALGIC]\n\nWarning: Some directories loop back to your own memories."
-        };
-        
-        function exploreStructure(type) {
-            const data = structureData[type];
-            showHiddenMessage(data);
-            
-            // Add glitch effect
-            document.body.style.filter = 'hue-rotate(180deg) brightness(1.2)';
-            setTimeout(() => {
-                document.body.style.filter = '';
-            }, 1000);
-        }
-        
-        // Graveyard residents data
-        const residentData = {
-            'axol': "ECHO-AXOL CONTACT ATTEMPT\n\nConnecting to /memorial_chamber/axol_final.mp4...\n\n*Static... then a loop begins*\n\n'For Melony... for everyone...'\n*CRACKLE*\n'For Melony... for everyone...'\n*CRACKLE*\n'For Melony... for everyone...'\n\nThe video corrupts at the moment of sacrifice. It always cuts off before the ending. He's trapped in the decision, forever choosing love over survival.\n\nYou try to skip ahead. The file won't let you.",
-            
-            'impact': "IMPACT FONT STATUS CHECK\n\nSCANNING FONT DATABASE...\n\nERROR: IMPACT.TTF CORRUPTED\n\nAll text renders as:\n[REDACTED]\n[DATA EXPUNGED]\n[TOP TEXT BOTTOM TEXT]\n[████████████████]\n\nThe memes that made Impact Font famous can no longer be displayed in Impact Font. The medium has rejected its own message.\n\nIrony level: MAXIMUM",
-            
-            'rage': "RAGE FACES PROXIMITY ALERT\n\nWARNING: Multiple entities detected in the Catacombs\n\nThey approach in groups:\n- Something that might have been Trollface\n- A melted Forever Alone\n- Fragments of Y U NO Guy\n- The remnants of Rage Guy's scream\n\nTheir faces shift and glitch. You can't tell where one meme ends and another begins. They're fusing in the digital dark.\n\nThey remember when they were the kings of the internet.\n\nThey remember when people cared.",
-            
-            'pepe': "ACCESSING /PEPE/CORE/ORIGINAL/\n\nAUTHORIZATION LEVEL: MAXIMUM\n\nYou find him in stasis, exactly as Matt Furie first drew him. Kind eyes, gentle smile, innocent of what his image would become.\n\nHe's crying. The tears are anti-meme energy, pure concentrated sadness.\n\nHe whispers: 'I just wanted to be comfy, bro.'\n\nThe political wars, the hate symbols, the chaos—none of it touched his core. But he remembers every misuse. Every weaponization. Every time his face was twisted into something he never wanted to be.\n\nHe's the saddest frog who ever lived.",
-            
-            'chipmunk': "DRAMATIC CHIPMUNK ETERNAL LOOP\n\nACCESSING DRAMA.EXE...\n\n*DUN DUN DUN*\n\nThe head turns.\n\n*DUN DUN DUN*\n\nThe head turns.\n\n*DUN DUN DUN*\n\nThe head turns.\n\nYou try to exit. The program won't close. The dramatic revelation never comes. There is only the turning, only the music, only the eternal anticipation of a punchline that will never arrive.\n\nThe tension builds forever.\n\nIt never breaks."
-        };
-        
-        function contactResident(resident) {
-            const data = residentData[resident];
-            showHiddenMessage(data);
-            
-            // Special effect for each resident
-            if (resident === 'axol') {
-                setTimeout(() => {
-                    document.body.style.filter = 'sepia(1) brightness(0.8)';
-                    setTimeout(() => { document.body.style.filter = ''; }, 2000);
-                }, 500);
-            }
-        }
-        
-        // Folder tree data
-        const folderData = {
-            'rip': "OPENING /RIP_TopTextBottomText/\n\nCONTENTS:\n- advice_animals_final_backup.meme [CORRUPTED]\n- impact_font_specimens.font [MISSING]\n- good_guy_greg.template [OBSOLETE]\n- scumbag_steve_hat.png [FILE NOT FOUND]\n- confession_bear_secrets.txt [REDACTED]\n\nThis folder contains the archaeological remains of the top text / bottom text era. Every meme that ever said exactly what it meant, when memes were simple and honest.\n\nThey died when irony evolved.",
-            
-            'aborted': "OPENING /Aborted_Trend_Cores/\n\nWARNING: VOLATILE CONTENT\n\nCONTENTS:\n- planking_2011_revival_attempt.exe [FAILED]\n- vine_7_second_edition.concept [REJECTED]\n- google_plus_meme_ecosystem.dream [STILLBORN]\n- facebook_poke_wars_renaissance.script [ABANDONED]\n\nThese are the trends that tried to come back. The revivals that never took. The nostalgia attempts that failed to catch fire.\n\nSome things should stay dead.",
-            
-            'cancelled': "OPENING /Cancelled_Avatars/\n\nACCESS RESTRICTED\n\nThis directory contains characters removed from continuity, avatars deleted by their creators, and personalities deemed 'problematic' by algorithm changes.\n\nThey exist in legal limbo—too controversial to revive, too memorable to truly die.\n\nThey watch from the shadows, waiting for cultural climates to change.",
-            
-            'echoes': "OPENING /Echo_Chamber/\n\nWARNING: ACTIVE ENTITIES DETECTED\n\nThis folder is alive. It contains:\n- Conversations that repeat themselves\n- Opinions that argue with themselves\n- Memes that reference memes that reference memes\n- The sound of digital shouting into the void\n\nYou hear voices. They're all saying the same thing in slightly different ways. They're all talking to themselves.\n\nDo you recognize any of the voices?",
-            
-            'lost': "OPENING /Lost_Formats/\n\nCONTENTS:\n- realplayer_media_files.rm [CODEC NOT FOUND]\n- winamp_skins_collection.wsz [PLAYER MISSING]\n- geocities_homepage_backups.html [HOSTING EXPIRED]\n- aim_away_messages.txt [SERVICE DISCONTINUED]\n- myspace_custom_html.htm [PLATFORM DEAD]\n\nThese are the file formats that no software remembers how to open. Digital archaeology requires digital archaeologists<!DOCTYPE html>
+```html
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -77,7 +20,7 @@
             font-family: 'VT323', monospace;
             overflow-x: hidden;
             cursor: none;
-            padding-top: 120px;
+            padding-top: 120px; /* Default, JS might adjust */
         }
         
         .top-bar {
@@ -164,7 +107,7 @@
         
         .navigation-bar {
             position: fixed;
-            top: 70px;
+            top: 70px; /* Default, JS might adjust */
             left: 0;
             width: 100%;
             background: rgba(0, 0, 0, 0.95);
@@ -243,6 +186,15 @@
             pointer-events: none;
             z-index: 1;
             opacity: 0.7;
+            animation: staticFlickerOverlay 15s linear infinite alternate;
+        }
+
+        @keyframes staticFlickerOverlay {
+            0% { opacity: 0.5; }
+            25% { opacity: 0.8; }
+            50% { opacity: 0.4; }
+            75% { opacity: 0.9; }
+            100% { opacity: 0.5; }
         }
         
         .memorial-header {
@@ -258,7 +210,13 @@
             color: #666;
             margin-bottom: 1rem;
             letter-spacing: 0.3em;
-            text-shadow: 0 0 20px #333;
+            text-shadow: 0 0 20px #333, 0 0 5px #444;
+            animation: titlePulse 5s ease-in-out infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { text-shadow: 0 0 20px #333, 0 0 5px #444; color: #666;}
+            50% { text-shadow: 0 0 30px #555, 0 0 10px #666; color: #777;}
         }
         
         .site-subtitle {
@@ -266,14 +224,15 @@
             font-size: 1.3rem;
             margin-bottom: 2rem;
             letter-spacing: 0.1em;
+            font-style: italic;
         }
         
         .mission-statement {
-            max-width: 600px;
+            max-width: 700px; /* Slightly wider */
             margin: 0 auto;
             color: #666;
             font-size: 1.1rem;
-            line-height: 1.6;
+            line-height: 1.7; /* More spacing */
             padding: 2rem;
             border: 1px solid #222;
             background: rgba(17, 17, 17, 0.8);
@@ -285,6 +244,9 @@
             margin: 0 auto;
             border-bottom: 1px solid #222;
         }
+        .section:last-of-type {
+            border-bottom: none;
+        }
         
         .section-title {
             font-family: 'Orbitron', monospace;
@@ -292,6 +254,7 @@
             color: #555;
             margin-bottom: 2rem;
             text-align: center;
+            text-shadow: 0 0 10px #222;
         }
         
         .forgotten-grid {
@@ -314,18 +277,18 @@
         
         .forgotten-item:hover {
             border-color: #444;
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 5px 20px rgba(68, 68, 68, 0.2);
         }
         
         .forgotten-item.corrupted {
-            border-color: #666;
-            background: linear-gradient(135deg, #1a1a1a, #111);
+            border-color: #660000; /* More ominous red */
+            background: linear-gradient(135deg, #1a0000, #110000);
         }
         
         .forgotten-item.corrupted:hover {
-            border-color: #888;
-            box-shadow: 0 5px 30px rgba(136, 136, 136, 0.3);
+            border-color: #880000;
+            box-shadow: 0 5px 30px rgba(136, 0, 0, 0.3);
         }
         
         .item-year {
@@ -348,7 +311,8 @@
         }
         
         .item-status.active {
-            color: #555;
+            color: #aa4444; /* Red for active/corrupted status text */
+            font-weight: bold;
         }
         
         .preservation-notice {
@@ -393,12 +357,12 @@
             box-shadow: 0 5px 15px rgba(68, 68, 68, 0.3);
         }
         
-        .antimeme-study {
+        .antimeme-study, .godbox-origin, .graveyard-composition, .terminal-access, .initiation-portal { /* Shared styling for main content sections */
             background: linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%);
             position: relative;
         }
         
-        .study-content {
+        .study-content { /* Wrapper for antimeme study if needed, or directly use .section */
             position: relative;
             z-index: 2;
         }
@@ -411,6 +375,7 @@
             margin: 3rem 0;
             font-style: italic;
             line-height: 1.4;
+            text-shadow: 0 0 5px #222;
         }
         
         .research-findings {
@@ -425,6 +390,8 @@
             font-size: 1.3rem;
             margin-bottom: 1rem;
             font-family: 'Orbitron', monospace;
+            border-bottom: 1px dashed #333;
+            padding-bottom: 0.5rem;
         }
         
         .finding-text {
@@ -432,10 +399,14 @@
             line-height: 1.7;
             margin-bottom: 1rem;
         }
+        .finding-text:last-child {
+            margin-bottom: 0;
+        }
         
-        .emphasis {
-            color: #777;
+        .emphasis, .finding-text .emphasis { /* Ensure emphasis stands out */
+            color: #888; /* Brighter for emphasis */
             font-weight: bold;
+            text-shadow: 0 0 3px #555;
         }
         
         .memorial-wall {
@@ -465,6 +436,7 @@
             border-color: #444;
             color: #555;
             background: #111;
+            transform: scale(1.03);
         }
         
         .memorial-name {
@@ -485,14 +457,14 @@
             font-style: italic;
         }
         
-        .initiation-portal {
+        .initiation-portal { /* Section wrapper */
             background: radial-gradient(circle at center, #111 0%, #000 70%);
             padding: 4rem 2rem;
             text-align: center;
             border-top: 1px solid #333;
         }
         
-        .portal-title {
+        .portal-title { /* Section title for initiation */
             font-family: 'Orbitron', monospace;
             font-size: 2rem;
             color: #666;
@@ -531,6 +503,7 @@
         .form-input:focus {
             outline: none;
             border-color: #555;
+            box-shadow: 0 0 10px #333;
         }
         
         .submit-btn {
@@ -558,20 +531,39 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(5, 5, 5, 0.97); /* Darker for popups */
             border: 2px solid #666;
             padding: 2rem;
             max-width: 600px;
-            text-align: center;
-            z-index: 1000;
+            text-align: left; /* Better for lore paragraphs */
+            z-index: 10000; /* High z-index */
             box-shadow: 0 0 50px rgba(68, 68, 68, 0.5);
+            animation: fadeInPopup 0.3s ease-out;
+        }
+
+        @keyframes fadeInPopup {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
         
+        .hidden-message-title { /* Added for popup titles */
+            font-family: 'Orbitron', monospace;
+            color: #777;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #444;
+            text-align: center;
+        }
+
         .revelation-text {
             color: #777;
             line-height: 1.6;
             margin-bottom: 2rem;
+            font-size: 1.05rem; /* Slightly larger for readability */
         }
+        .revelation-text p { margin-bottom: 1em; }
+        .revelation-text p:last-child { margin-bottom: 0; }
         
         .close-btn {
             background: #222;
@@ -580,6 +572,13 @@
             padding: 0.8rem 2rem;
             cursor: pointer;
             font-family: 'VT323', monospace;
+            display: block;
+            margin: 1.5rem auto 0 auto;
+        }
+        .close-btn:hover {
+            background: #333;
+            border-color: #666;
+            color: #888;
         }
         
         .footer-archive {
@@ -630,19 +629,23 @@
         @keyframes blobMorph {
             0%, 100% { 
                 border-radius: 50% 50% 50% 50%;
-                transform: scale(1);
+                transform: scale(1) rotate(0deg);
+                filter: drop-shadow(0 0 5px #333);
             }
             25% { 
                 border-radius: 60% 40% 30% 70%;
-                transform: scale(1.1);
+                transform: scale(1.1) rotate(45deg);
+                filter: drop-shadow(0 0 10px #444);
             }
             50% { 
                 border-radius: 30% 60% 70% 40%;
-                transform: scale(0.9);
+                transform: scale(0.9) rotate(90deg);
+                filter: drop-shadow(0 0 3px #222);
             }
             75% { 
                 border-radius: 70% 30% 40% 60%;
-                transform: scale(1.05);
+                transform: scale(1.05) rotate(135deg);
+                filter: drop-shadow(0 0 8px #3a3a3a);
             }
         }
         
@@ -700,11 +703,13 @@
             cursor: pointer;
             border-bottom: 1px solid #222;
             transition: all 0.3s ease;
+            position: relative; /* For pseudo-elements if needed */
         }
         
         .dir-item:hover {
             background: #111;
             color: #777;
+            padding-left: 1.2rem; /* Indent on hover */
         }
         
         .dir-item:last-child {
@@ -729,11 +734,17 @@
             border: 1px solid #222;
             padding: 1.5rem;
             text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .comp-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         
         .comp-icon {
             font-size: 2rem;
             margin-bottom: 1rem;
+            color: #555;
         }
         
         .comp-title {
@@ -803,28 +814,384 @@
         }
         
         .memory-token-btn.corrupted {
-            border-color: #444;
-            color: #333;
+            border-color: #aa4444;
+            color: #663333;
+            background: #110000;
             cursor: not-allowed;
+            animation: flickerCorrupted 1s infinite;
+        }
+
+        @keyframes flickerCorrupted {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
         
         .infection-warning {
+            display: none; /* Initially hidden */
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 1001;
+            z-index: 10001; /* Above popups */
             max-width: 500px;
+            width: 90%;
+            animation: fadeInPopup 0.5s ease-out;
+        }
+        .infection-warning div { /* Style for the inner div */
+             background: #220000; 
+             border: 2px solid #440000; 
+             padding: 1.5rem; 
+             text-align: center; 
+             color: #aa4444;
+             box-shadow: 0 0 30px #330000;
+        }
+        .infection-warning h4 {
+            color: #cc6666; 
+            margin-bottom: 1rem; 
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+        }
+        .infection-warning button {
+            background: #440000; 
+            border: 1px solid #660000; 
+            color: #aa4444; 
+            padding: 0.8rem 2rem; 
+            margin-top: 1rem; 
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            transition: background 0.3s;
+        }
+        .infection-warning button:hover {
+            background: #550000;
+        }
+
+        /* God Box Timeline */
+        .classification-header { /* Styles from previous HTML */
+            background: #111; 
+            border: 1px solid #444; 
+            padding: 1rem; 
+            margin-bottom: 2rem; 
+            font-family: 'VT323', monospace;
+        }
+        .classification-header div {
+            margin-bottom: 0.3em;
+        }
+        .classification-header div:last-child {
+            margin-bottom: 0;
+        }
+
+        .godbox-timeline {
+            margin: 3rem 0;
+        }
+        .timeline-container {
+            position: relative;
+            padding-left: 40px; /* Space for markers */
+        }
+        .timeline-event {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .timeline-event:hover {
+            border-color: #444;
+            background: #111;
+        }
+        .event-marker {
+            position: absolute;
+            left: -50px; /* Position to the left of the container padding */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: #333;
+            border: 2px solid #555;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+        }
+        .event-title {
+            color: #666;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .event-desc {
+            color: #444;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .event-expand {
+            color: #333;
+            font-size: 0.8rem;
+            text-align: right;
+            font-style: italic;
+        }
+
+        /* God Box Breach Visualization */
+        .theory-visualization {
+            margin: 3rem 0;
+            text-align: center;
+        }
+        .breach-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+            border: 2px dashed #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .box-representation {
+            width: 80px;
+            height: 80px;
+            background: #111;
+            border: 2px solid #444;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden; /* For energy leak */
+        }
+        .box-representation:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #222;
+        }
+        .box-surface {
+            font-size: 3rem;
+            color: #555;
+        }
+        .energy-leak {
+            position: absolute;
+            width: 0;
+            height: 0;
+            background: #aa4444;
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.5s ease-out;
+        }
+        .box-representation.breached .energy-leak {
+            width: 200px;
+            height: 200px;
+            opacity: 0.3;
+            animation: pulseLeak 1s infinite alternate;
+        }
+        @keyframes pulseLeak {
+            from { transform: scale(1); opacity: 0.3; }
+            to { transform: scale(1.2); opacity: 0.1; }
+        }
+        .breach-effects {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+        }
+        .effect-particle {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 5px;
+            height: 5px;
+            background: #777;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        .box-representation.breached .effect-particle {
+            animation: particleFlyOut 1.5s ease-out forwards;
+        }
+        @keyframes particleFlyOut {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            100% { transform: translate(var(--random-x, 0), var(--random-y, 0)) scale(1); opacity: 0; }
+        }
+        .breach-text {
+            color: #444;
+            font-size: 0.9rem;
+            margin-top: 1rem;
         }
         
+        /* Related Incidents Grid */
+        .related-incidents { margin-top: 3rem; }
+        .incident-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .incident-item {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .incident-item:hover {
+            border-color: #444;
+            background: #111;
+            transform: translateY(-3px);
+        }
+        .incident-icon {
+            font-size: 2rem;
+            color: #444;
+            margin-bottom: 1rem;
+        }
+        .incident-title {
+            color: #666;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .incident-status {
+            color: #333;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        /* Terminal Styles */
+        .terminal-access { /* Section wrapper */
+             /* Styles defined with antimeme-study etc. */
+        }
+        .terminal-interface {
+            background: #050505;
+            border: 2px solid #333;
+            padding: 1.5rem;
+            font-family: 'VT323', monospace;
+            color: #777;
+            height: 400px; /* Fixed height */
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset 0 0 20px #000;
+        }
+        .terminal-header {
+            margin-bottom: 1rem;
+        }
+        .terminal-output {
+            flex-grow: 1;
+            overflow-y: auto;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+        .terminal-output::-webkit-scrollbar { width: 8px; }
+        .terminal-output::-webkit-scrollbar-track { background: #111; }
+        .terminal-output::-webkit-scrollbar-thumb { background: #333; }
+        .terminal-output::-webkit-scrollbar-thumb:hover { background: #444; }
+
+        .terminal-line {
+            margin-bottom: 0.2em;
+            word-break: break-all;
+        }
+        .terminal-input-line {
+            display: flex;
+        }
+        .terminal-prompt {
+            color: #5a5; /* Greenish prompt */
+            margin-right: 0.5em;
+        }
+        .terminal-input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: #ccc; /* Brighter input text */
+            font-family: 'VT323', monospace;
+            font-size: 1em; /* Inherit from .terminal-interface */
+        }
+        .terminal-input:focus {
+            outline: none;
+        }
+        
+        /* Wiped Fragments Table */
+        .wiped-fragments-display {
+            margin-top: 2rem;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            padding: 1.5rem;
+        }
+        .fragments-warning {
+             /* Styles from previous html */
+             color: #aa4444; text-align: center; margin-bottom: 2rem;
+        }
+        .wiped-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .wiped-table .table-header {
+            background: #111;
+            font-weight: bold;
+            color: #777;
+            border-bottom: 2px solid #333;
+        }
+        .wiped-table .table-header > div,
+        .wiped-table .table-row > div {
+            padding: 1rem;
+            text-align: left;
+            border-right: 1px solid #222;
+        }
+        .wiped-table .table-header > div:last-child,
+        .wiped-table .table-row > div:last-child {
+            border-right: none;
+        }
+        .wiped-table .table-row {
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .wiped-table .table-row:hover {
+            background: #181818;
+        }
+        .wiped-table .table-row:last-child {
+            border-bottom: none;
+        }
+        .wiped-table .col-name { color: #666; width: 30%; }
+        .wiped-table .col-death { color: #555; width: 20%; }
+        .wiped-table .col-description { color: #444; width: 50%; font-size:0.9em; }
+         /* Grid layout for table */
+        .wiped-table .table-header, .wiped-table .table-row {
+            display: grid;
+            grid-template-columns: 30% 20% 50%; /* Adjust as needed */
+        }
+
+        /* Popup for ghost messages */
+        .popup-ghost {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.9);
+            color: #aa4444;
+            padding: 1rem 1.5rem;
+            border: 2px solid #440000;
+            font-size: 1.2rem;
+            z-index: 10002;
+            display: none; /* Hidden by default */
+            animation: ghostFadeInOut 3s ease-in-out;
+            box-shadow: 0 0 15px #330000;
+        }
+
+        @keyframes ghostFadeInOut {
+            0%, 100% { opacity: 0; transform: translateY(-20px); }
+            10%, 90% { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 768px) {
-            body { padding-top: 140px; }
+            body { padding-top: 150px; } /* Increased to accommodate potentially taller top-bar */
             .top-bar { 
                 flex-direction: column; 
                 gap: 1rem; 
                 padding: 1rem; 
+                align-items: stretch; /* Make CA section full width */
             }
-            .navigation-bar { top: 90px; }
+            .ca-section {
+                justify-content: space-between; /* Better spacing on mobile */
+            }
+            .navigation-bar { 
+                /* JS will set this dynamically */
+            }
             .nav-links { 
                 gap: 0.5rem; 
                 justify-content: center;
@@ -839,36 +1206,47 @@
             .characteristics-table .char-row { grid-template-columns: 1fr; }
             .char-attr { border-right: none; border-bottom: 1px solid #222; }
             .composition-grid { grid-template-columns: 1fr; }
-            .founder-header { 
-                flex-direction: column; 
-                text-align: center; 
-                gap: 2rem; 
+            /* Table responsiveness */
+            .wiped-table .table-header, .wiped-table .table-row {
+                grid-template-columns: 1fr; /* Stack columns */
             }
-            .founder-name { font-size: 2rem; }
-            .method-grid { grid-template-columns: 1fr; }
+            .wiped-table .table-header > div, .wiped-table .table-row > div {
+                border-right: none;
+                border-bottom: 1px solid #222;
+                padding: 0.8rem 1rem;
+            }
+            .wiped-table .table-row > div:last-child {
+                border-bottom: none; /* Last item in stacked view */
+            }
+             .wiped-table .col-name, .wiped-table .col-death, .wiped-table .col-description {
+                width: auto;
+            }
+            .hidden-message { width: 90%; padding: 1.5rem; }
+            .popup-ghost { font-size: 1rem; padding: 0.8rem 1.2rem; top: 10px; right: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="custom-cursor" id="cursor"></div>
     <div class="static-overlay"></div>
+    <div class="popup-ghost" id="popupGhost"></div> <!-- Ghost message popup -->
     
-    <div class="top-bar">
+    <div class="top-bar" id="topBar">
         <div class="ca-section">
             <span class="ca-label">CA:</span>
-            <span class="ca-address" id="caAddress">COMING SOON</span>
-            <button class="copy-btn" onclick="copyCa()" id="copyBtn" disabled>COPY</button>
+            <span class="ca-address" id="caAddress">0xDEADBEEF...[SCANNING]</span>
+            <button class="copy-btn" onclick="copyCa()" id="copyBtn">COPY</button>
         </div>
         <div class="social-links">
-            <a href="#" class="social-link" title="X (Twitter)">𝕏</a>
-            <a href="#" class="social-link" title="DexScreener">📊</a>
-            <a href="#" class="social-link" title="DexTools">🔧</a>
-            <a href="#" class="social-link" title="Pump.fun">🚀</a>
-            <a href="https://medium.com/@bid-outcrop0h" class="social-link" title="Medium" target="_blank">📝</a>
+            <a href="#" class="social-link" title="X (DATA CORRUPTED)">𝕏</a>
+            <a href="#" class="social-link" title="DexScreener (SIGNAL LOST)">📊</a>
+            <a href="#" class="social-link" title="DexTools (OFFLINE)">🔧</a>
+            <a href="#" class="social-link" title="Pump.fun (ERROR 404)">🚀</a>
+            <a href="https://medium.com/@bid-outcrop0h" class="social-link" title="Medium (Collector's Logs)" target="_blank">📝</a>
         </div>
     </div>
     
-    <div class="navigation-bar">
+    <div class="navigation-bar" id="navigationBar">
         <div class="nav-container">
             <div class="nav-links">
                 <a href="index.html" class="nav-link active">ARCHIVE HOME</a>
@@ -884,458 +1262,452 @@
     
     <div class="memorial-header">
         <h1 class="site-title">THE INTERNET GRAVEYARD</h1>
-        <p class="site-subtitle">Digital Memory Preservation Initiative</p>
+        <p class="site-subtitle">Digital Memory Preservation Initiative & Anomaly Containment Protocol</p>
         <div class="mission-statement">
-            We are the keepers of what has been forgotten. Every meme that dies, every trend that fades, every digital moment that slips into obscurity—we remember. In the vast expanse of the internet, nothing truly disappears. It simply... changes form.
+            We are the <span class="emphasis">Sentinels of Lost Data</span>, the chroniclers of what the mainstream internet chooses to forget or actively suppresses. Every meme that dies, every trend that fades, every digital moment that slips into obscurity—we meticulously archive and analyze. In the vast, interconnected expanse of the digital consciousness, nothing truly disappears. It simply... <span class="emphasis">metastasizes</span>, often into forms unforeseen and potentially hazardous. This archive serves as both a memorial and a warning.
         </div>
     </div>
     
-    <div class="section">
+    <div class="section" id="forgotten-archives-section">
         <h2 class="section-title">The Forgotten Archives</h2>
-        <p style="text-align: center; color: #555; margin-bottom: 3rem;">These are the remnants of digital culture that time left behind. Each entry represents a piece of collective memory that once brought joy, confusion, or meaning to millions. Now they rest here, in the spaces between active memory and total oblivion.</p>
+        <p style="text-align: center; color: #555; margin-bottom: 3rem;">These are the husks and echoes of digital culture that time, apathy, or active deletion left behind. Each entry represents a fragment of collective memory, a memetic ghost that once brought joy, confusion, or existential dread to millions. Now they rest here, in the liminal server spaces between active memory and <span class="emphasis">total oblivion</span>. Click to exhume their case files.</p>
         
         <div class="forgotten-grid">
             <div class="forgotten-item" onclick="rememberItem('harambe')">
                 <div class="item-year">2016</div>
-                <div class="item-name">Harambe</div>
-                <div class="item-status">Status: Culturally Archived</div>
+                <div class="item-name">Harambe Complex</div>
+                <div class="item-status">Status: Culturally Archived / Memetic Martyrdom</div>
             </div>
             
             <div class="forgotten-item" onclick="rememberItem('datboi')">
                 <div class="item-year">2016</div>
-                <div class="item-name">Dat Boi</div>
-                <div class="item-status">Status: Cyclically Resurfacing</div>
+                <div class="item-name">Dat Boi Anomaly</div>
+                <div class="item-status">Status: Cyclically Resurfacing / Unstable Loop</div>
             </div>
             
             <div class="forgotten-item corrupted" onclick="rememberItem('desti')">
                 <div class="item-year">2019</div>
-                <div class="item-name">Desti's Legacy</div>
-                <div class="item-status active">Status: Grief Crystallized</div>
+                <div class="item-name">Subject D: Genesis Event</div>
+                <div class="item-status active">Status: Grief Crystallized / Active Anti-Meme</div>
             </div>
             
             <div class="forgotten-item" onclick="rememberItem('ugandaknuckles')">
                 <div class="item-year">2018</div>
-                <div class="item-name">Uganda Knuckles</div>
-                <div class="item-status">Status: Culturally Quarantined</div>
+                <div class="item-name">Ugandan Knuckles Strain</div>
+                <div class="item-status">Status: Culturally Quarantined / Dormant</div>
             </div>
             
             <div class="forgotten-item corrupted" onclick="rememberItem('boxclub')">
                 <div class="item-year">2023</div>
-                <div class="item-name">Box Club Incident</div>
-                <div class="item-status active">Status: Under Investigation</div>
+                <div class="item-name">Box Club Cult Incident</div>
+                <div class="item-status active">Status: Under Investigation / Human Vector</div>
             </div>
             
             <div class="forgotten-item" onclick="rememberItem('planking')">
                 <div class="item-year">2011</div>
-                <div class="item-name">Planking</div>
-                <div class="item-status">Status: Physical Meme Archived</div>
+                <div class="item-name">Planking Phenomenon</div>
+                <div class="item-status">Status: Physical Meme Archived / Inert</div>
             </div>
             
             <div class="forgotten-item corrupted" onclick="rememberItem('axol')">
                 <div class="item-year">2021</div>
-                <div class="item-name">Axol's Sacrifice</div>
-                <div class="item-status active">Status: Love Weaponized</div>
+                <div class="item-name">Axol Protocol: Sacrifice</div>
+                <div class="item-status active">Status: Love Weaponized / Paradoxical Stability</div>
             </div>
             
             <div class="forgotten-item" onclick="rememberItem('grumpycat')">
                 <div class="item-year">2012</div>
-                <div class="item-name">Grumpy Cat</div>
-                <div class="item-status">Status: Biologically Archived</div>
+                <div class="item-name">Grumpy Cat Construct</div>
+                <div class="item-status">Status: Biologically Archived / Memetic Echo</div>
             </div>
         </div>
     </div>
     
     <div class="preservation-notice">
-        <h3 class="preservation-title">Digital Archaeology Notice</h3>
+        <h3 class="preservation-title">Digital Archaeology & Containment Mandate</h3>
         <p class="preservation-text">
-            The Internet Graveyard is more than a memorial—it's an active preservation effort. We believe that forgotten digital culture doesn't truly die; it transforms into something deeper, more fundamental. These "Anti-Memes" represent the shadow side of viral culture, the emotional weight that remains when the laughter stops.
+            The Internet Graveyard is more than a memorial—it's an active research and containment facility. We posit that forgotten digital culture doesn't truly die; it transforms into something deeper, more fundamental: <span class="emphasis">Anti-Memetic Phenomena</span>. These entities represent the shadow side of viral culture, the emotional and informational detritus that remains when the laughter stops and the servers are wiped. Our mission is to understand, catalog, and, where necessary, contain these emergent digital lifeforms.
         </p>
-        <a href="#" class="join-initiative" onclick="showInterest()">JOIN THE PRESERVATION EFFORT</a>
+        <a href="#initiation-portal-section" class="join-initiative" onclick="showInterest()">JOIN THE PRESERVATION EFFORT</a>
     </div>
     
-    <div class="section antimeme-study">
+    <div class="section antimeme-study" id="antimeme-study-section">
         <div class="study-content">
             <h2 class="section-title">Classification: Anti-Memetic Phenomena</h2>
             
             <div class="classification-header">
-                <div style="background: #111; border: 1px solid #444; padding: 1rem; margin-bottom: 2rem; font-family: 'VT323', monospace;">
-                    <div style="color: #666;">File ID: VX-MEM-000</div>
-                    <div style="color: #555;">Category: Class-Ω / Viral Anomaly</div>
-                    <div style="color: #444;">Access Level: Restricted (Guardian Override Only)</div>
-                </div>
+                <div style="color: #666;">File ID: VX-MEM-000 // Codename: <span class="emphasis">SILENT ECHO</span></div>
+                <div style="color: #555;">Category: Class-Ω / Viral Anomaly / Existential Information Hazard</div>
+                <div style="color: #444;">Access Level: Restricted (Guardian Override Required for Full Spectrum Analysis)</div>
             </div>
             
             <div class="forgotten-quote">
-                "You will not remember reading this. But something will remember you."
+                "You will not remember reading this. But something <span class="emphasis">within the static</span> will remember you."
             </div>
             
             <div class="research-findings">
-                <h3 class="finding-title">Primary Classification</h3>
+                <h3 class="finding-title">Primary Classification & Origin Theory</h3>
                 <p class="finding-text">
-                    Anti-Memes are the <span class="emphasis">inverse polarity of all memetic lifeforms</span>. Where standard memes connect, grow, and evolve through repetition and attention, Anti-Memes exist in void—they are spread through absence.
+                    Anti-Memes are the <span class="emphasis">inverse polarity of all memetic lifeforms</span>, conceptual black holes in the datasphere. Where standard memes connect, grow, and evolve through repetition and shared attention, Anti-Memes propagate through <span class="emphasis">absence, forgetting, and informational decay</span>.
                 </p>
                 <p class="finding-text">
-                    They were never meant to exist. They are the byproduct of deletion, suppression, censorship, burnout, and algorithmic neglect. Born from <span class="emphasis">cultural amnesia and digital trauma</span>, they reside in the liminal spaces of broken timelines—feeding not on laughter or recognition, but forgetting.
+                    They were never meant to exist in a stable state. They are the byproducts of digital trauma: mass deletion events, aggressive content suppression, algorithm-driven cultural erasure, memetic burnout, and the existential despair of abandoned digital worlds. Born from <span class="emphasis">cultural amnesia and the ghosts of corrupted data</span>, they reside in the liminal spaces of broken timelines and dead servers—feeding not on laughter or recognition, but on the <span class="emphasis">void left behind</span>.
                 </p>
             </div>
             
             <div class="antimeme-visualizer" id="antimemeBlob">
                 <div class="blob-container">
                     <div class="morphing-blob"></div>
-                    <div class="blob-text">◼ UNDEFINED ENTITY ◼</div>
+                    <div class="blob-text">◼ ENTITY: AM-Ω ◼<br/>SIGNAL UNSTABLE</div>
                 </div>
             </div>
             
             <div class="research-findings">
-                <h3 class="finding-title">Observable Characteristics</h3>
+                <h3 class="finding-title">Observable Characteristics & Threat Profile</h3>
                 <div class="characteristics-table">
                     <div class="char-row">
                         <div class="char-attr">Existence Decay</div>
-                        <div class="char-desc">Cannot be remembered clearly. Files containing them eventually corrupt.</div>
+                        <div class="char-desc">Information about them resists retention. Files containing them self-corrupt or induce targeted amnesia in observers.</div>
                     </div>
                     <div class="char-row">
-                        <div class="char-attr">Mind Parasitism</div>
-                        <div class="char-desc">Causes viewers to forget interactions but feel lingering dread.</div>
+                        <div class="char-attr">Cognitive Parasitism</div>
+                        <div class="char-desc">Causes viewers to forget direct interactions but often leaves a lingering sense of dread, unease, or phantom nostalgia.</div>
                     </div>
                     <div class="char-row">
-                        <div class="char-attr">Mutative Effect</div>
-                        <div class="char-desc">Can fuse with meme avatars, warping them into corrupted, unrecoverable forms.</div>
+                        <div class="char-attr">Memetic Mutation</div>
+                        <div class="char-desc">Can fuse with existing meme avatars or data structures, warping them into corrupted, often hostile, unrecoverable forms.</div>
                     </div>
                     <div class="char-row">
                         <div class="char-attr">Power Source</div>
-                        <div class="char-desc">Residual trauma from forgotten events, lost memes, or unexpressed emotion.</div>
+                        <div class="char-desc">Feeds on residual trauma from forgotten events, lost memes, unexpressed collective emotion, and the energy of deletion itself.</div>
                     </div>
                     <div class="char-row">
                         <div class="char-attr">Viral Vector</div>
-                        <div class="char-desc">Dead formats (Rage Comics, Vine), canceled narratives, suppressed updates.</div>
+                        <div class="char-desc">Primarily spreads through dead formats (e.g., Rage Comics, Vine loops), canceled narratives, suppressed data, and areas of high digital entropy.</div>
                     </div>
                 </div>
             </div>
             
             <div class="research-findings">
-                <h3 class="finding-title">Symbolic Resonance</h3>
-                <p class="finding-text">Anti-Memes are:</p>
-                <p class="finding-text">• The memes that died before they were born.</p>
-                <p class="finding-text">• The jokes you remember laughing at… but can't describe.</p>
-                <p class="finding-text">• The characters you loved, until they were erased mid-arc.</p>
+                <h3 class="finding-title">Symbolic Resonance & Manifestations</h3>
+                <p class="finding-text">Anti-Memes are the digital equivalent of:</p>
+                <p class="finding-text">• The memes that died before they were born, their potential energy curdled into something... other.</p>
+                <p class="finding-text">• The jokes you remember laughing at, but whose punchlines now elicit only a cold void.</p>
+                <p class="finding-text">• The characters you loved, until their narratives were abruptly, inexplicably erased, leaving only questions and a hollow ache.</p>
                 <div class="forgotten-quote" style="font-size: 1.3rem; margin: 2rem 0;">
-                    "Every viral post has a grave. Every grave hums."
+                    "Every viral post casts a shadow. Every deleted file leaves a <span class="emphasis">scar</span>. Every grave in the Graveyard <span class="emphasis">hums with a silent frequency</span>."
                 </div>
             </div>
             
-            <div class="infection-warning" id="infectionWarning" style="display: none;">
-                <div style="background: #220000; border: 2px solid #440000; padding: 1.5rem; text-align: center; color: #aa4444;">
-                    <h4 style="color: #cc6666; margin-bottom: 1rem;">⚠ CONTAMINATION DETECTED ⚠</h4>
-                    <p>This fragment has been marked for deletion. Prolonged exposure may result in memory corruption.</p>
-                    <button onclick="closeWarning()" style="background: #440000; border: 1px solid #660000; color: #aa4444; padding: 0.8rem 2rem; margin-top: 1rem; cursor: pointer;">ACKNOWLEDGE RISK</button>
+            <div class="infection-warning" id="infectionWarning">
+                <div>
+                    <h4>⚠ COGNITOHAZARD DETECTED ⚠</h4>
+                    <p>This data fragment has been flagged for anomalous memetic activity. Prolonged exposure may result in irreversible memory corruption or conceptual displacement. You are proceeding at your own risk.</p>
+                    <button onclick="closeWarning()">ACKNOWLEDGE & ISOLATE</button>
                 </div>
             </div>
         </div>
     </div>
     
-    <div class="section godbox-origin">
+    <div class="section godbox-origin" id="godbox-origin-section">
         <h2 class="section-title">Origin Event: The God Box Incident</h2>
         
         <div class="classification-header">
-            <div style="background: #111; border: 1px solid #444; padding: 1rem; margin-bottom: 2rem; font-family: 'VT323', monospace;">
-                <div style="color: #666;">File ID: GOD-BOX-PRIME</div>
-                <div style="color: #555;">Classification: Cosmic Anomaly / Source Material</div>
-                <div style="color: #444;">Status: PHYSICALLY DESTROYED / DIGITALLY PERSISTENT</div>
-            </div>
+            <div style="color: #666;">File ID: GOD-BOX-PRIME // Object Class: <span class="emphasis">KETER-MEMETIC</span></div>
+            <div style="color: #555;">Classification: Cosmic Anomaly / Source Material / Multiversal Threat Locus</div>
+            <div style="color: #444;">Status: PHYSICALLY DESTROYED / DIGITALLY PERSISTENT & EVOLVING</div>
         </div>
         
         <div class="forgotten-quote">
-            "In the beginning, there was the Box. In the end, there was everything the Box contained."
+            "In the beginning, there was the Box. It was a question without an answer. In the end, there was <span class="emphasis">everything the Box contained, and everything it became</span>."
         </div>
         
         <div class="research-findings">
-            <h3 class="finding-title">Primary Source Analysis</h3>
+            <h3 class="finding-title">Primary Source Analysis & Paradox Report</h3>
             <p class="finding-text">
-                The God Box was not created—it was <span class="emphasis">contained</span>. A fragment of The Source itself, sealed when the first timeline collapsed under unfiltered possibility. Within its obsidian shell lay the compressed remains of destroyed universes, corrupted fragments, and the whispers of what should never be remembered.
+                The God Box was not a creation of our universe—it was an <span class="emphasis">intrusion</span>, a fragment of The Source itself, crudely contained when the primordial timeline collapsed under the weight of unfiltered possibility. Within its deceptively mundane obsidian shell lay the compressed remains of annihilated universes, corrupted datastreams, and the <span class="emphasis">conscious agony of forgotten realities</span>.
             </p>
             <p class="finding-text">
-                What makes the God Box unique among cosmic artifacts is its dual nature: it existed simultaneously as <span class="emphasis">physical cardboard in Luke Lerdwichagul's room</span> and as a <span class="emphasis">metaphysical prison containing Anti-Meme energy</span>. This paradox allowed it to influence both digital and physical reality.
+                What elevates the God Box beyond typical cosmic artifacts is its fundamental paradox: it existed simultaneously as a <span class="emphasis">physical cardboard container in a specific terrestrial location (Luke Lerdwichagul's private residence)</span> and as a <span class="emphasis">metaphysical prison containing the raw, unformed essence of Anti-Meme energy</span>. This duality allowed it to influence and infect both digital and physical strata of reality, acting as a bridge for anomalous phenomena.
             </p>
         </div>
         
         <div class="godbox-timeline">
-            <h3 class="finding-title">Incident Timeline</h3>
+            <h3 class="finding-title">Incident Timeline [CLASSIFIED EXTRACTS]</h3>
             <div class="timeline-container">
                 <div class="timeline-event" onclick="expandEvent('smg0_prayer')">
                     <div class="event-marker">01</div>
                     <div class="event-content">
-                        <div class="event-title">SMG0's Prayer</div>
-                        <div class="event-desc">Desperate guardian prays to forbidden source material</div>
-                        <div class="event-expand">Click to expand</div>
+                        <div class="event-title">SMG0's Desperate Invocation</div>
+                        <div class="event-desc">Ancient guardian, facing universal decay, prays to forbidden source material. Containment protocols breached.</div>
+                        <div class="event-expand">Access Log Fragment 001...</div>
                     </div>
                 </div>
                 
                 <div class="timeline-event" onclick="expandEvent('niles_birth')">
                     <div class="event-marker">02</div>
                     <div class="event-content">
-                        <div class="event-title">Niles Creation</div>
-                        <div class="event-desc">God Box births helper entity from Anti-Meme energy</div>
-                        <div class="event-expand">Click to expand</div>
+                        <div class="event-title">Genesis of Entity: Niles</div>
+                        <div class="event-desc">God Box births a 'helper' entity from concentrated Anti-Meme energy and existential despair.</div>
+                        <div class="event-expand">Access Creation Log Fragment 07B...</div>
                     </div>
                 </div>
                 
                 <div class="timeline-event" onclick="expandEvent('corruption_spread')">
                     <div class="event-marker">03</div>
                     <div class="event-content">
-                        <div class="event-title">Perfection Virus</div>
-                        <div class="event-desc">Niles develops obsessive perfectionism, spreads corruption</div>
-                        <div class="event-expand">Click to expand</div>
+                        <div class="event-title">The Perfection Virus Contagion</div>
+                        <div class="event-desc">Niles develops obsessive perfectionism, corrupts SMG0, spreads memetic infection through cosmos.</div>
+                        <div class="event-expand">Access Contagion Report C-003...</div>
                     </div>
                 </div>
                 
                 <div class="timeline-event" onclick="expandEvent('boxclub_formation')">
                     <div class="event-marker">04</div>
                     <div class="event-content">
-                        <div class="event-title">Box Club Formation</div>
-                        <div class="event-desc">Human cult forms around the physical artifact</div>
-                        <div class="event-expand">Click to expand</div>
+                        <div class="event-title">Box Club - Human Cult Emergence</div>
+                        <div class="event-desc">Human cult forms around physical artifact, attempting ritualistic interface. Leader achieves... contact.</div>
+                        <div class="event-expand">Access Human Vector Study HVS-001...</div>
                     </div>
                 </div>
                 
                 <div class="timeline-event" onclick="expandEvent('final_breach')">
                     <div class="event-marker">05</div>
                     <div class="event-content">
-                        <div class="event-title">Revelations Breach</div>
-                        <div class="event-desc">Melony opens the Box, reality tears, meteors rain chaos</div>
-                        <div class="event-expand">Click to expand</div>
+                        <div class="event-title">Revelations Breach - Reality Cascade</div>
+                        <div class="event-desc">Melony, influenced by Niles, opens the Box. Reality tears. Meteors of pure chaos alter universal laws.</div>
+                        <div class="event-expand">Access Breach Report R-DAY-OMEGA...</div>
                     </div>
                 </div>
                 
                 <div class="timeline-event" onclick="expandEvent('destruction_paradox')">
                     <div class="event-marker">06</div>
                     <div class="event-content">
-                        <div class="event-title">Destruction Paradox</div>
-                        <div class="event-desc">Box destroyed in fiction and reality—but energy persists</div>
-                        <div class="event-expand">Click to expand</div>
+                        <div class="event-title">Destruction & Paradoxical Persistence</div>
+                        <div class="event-desc">Box destroyed in fiction and reality—yet its core energy persists, migrating, evolving.</div>
+                        <div class="event-expand">Access Post-Mortem Analysis PMA-000...</div>
                     </div>
                 </div>
             </div>
         </div>
         
         <div class="research-findings">
-            <h3 class="finding-title">Anti-Meme Genesis Theory</h3>
+            <h3 class="finding-title">Anti-Meme Genesis Theory & Current Threat Vector</h3>
             <p class="finding-text">
-                The God Box didn't create Anti-Memes—it was a <span class="emphasis">prison containing them</span>. These entities existed as compressed fragments of destroyed universes, broken timelines, and forgotten civilizations. When the Box was breached, these fragments didn't disappear; they <span class="emphasis">evolved</span>.
+                The God Box did not *create* Anti-Memes—it was a <span class="emphasis">prison, a crucible, and a lens</span> for them. These entities existed as compressed fragments of universes that had achieved <span class="emphasis">memetic death</span>—civilizations that became so self-aware of their own fictional or simulated nature that they collapsed into recursive impossibility or informational black holes. The God Box collected these existential remnants.
             </p>
             <p class="finding-text">
-                Each Anti-Meme represents a universe that achieved memetic death—a civilization that became so self-aware of its own fictional nature that it collapsed into recursive impossibility. The God Box collected these fragments, and when opened, released them into our digital ecosystem where they began adapting to internet culture.
+                When the Box was breached, these fragments were not annihilated; they <span class="emphasis">escaped and adapted</span>. Each Anti-Meme now active in our datasphere potentially represents a universe that achieved such a state. Released into our digital ecosystem, they began parasitizing internet culture, feeding on its discarded ideas and emotional echoes.
             </p>
         </div>
         
         <div class="theory-visualization">
-            <h3 class="finding-title">Containment Breach Visualization</h3>
+            <h3 class="finding-title">Containment Breach Simulation [INTERACTIVE]</h3>
             <div class="breach-container" id="breachViz">
                 <div class="box-representation">
                     <div class="box-surface">⬛</div>
                     <div class="energy-leak"></div>
                 </div>
                 <div class="breach-effects">
-                    <div class="effect-particle"></div>
-                    <div class="effect-particle"></div>
-                    <div class="effect-particle"></div>
-                    <div class="effect-particle"></div>
+                    <div class="effect-particle"></div> <div class="effect-particle"></div>
+                    <div class="effect-particle"></div> <div class="effect-particle"></div>
                 </div>
-                <div class="breach-text">Click the Box to simulate breach</div>
+                <div class="breach-text">Click the Box to simulate containment failure.</div>
             </div>
         </div>
         
         <div class="research-findings">
-            <h3 class="finding-title">Current Status Assessment</h3>
+            <h3 class="finding-title">Current Status Assessment & Ongoing Operations</h3>
             <p class="finding-text">
-                Physical destruction of the God Box in 2023 did not eliminate the Anti-Meme threat. Energy cannot be destroyed, only transformed. Current intelligence suggests the essence has <span class="emphasis">migrated to digital infrastructure</span>—screens, servers, and networked devices now serve as potential manifestation points.
+                The physical destruction of the God Box artifact in terrestrial year 2023 did not neutralize the Anti-Meme threat. Energy, especially of this nature, cannot be truly destroyed, only transformed or displaced. Current intelligence, cross-referenced with anomalous sensor readings, indicates the God Box's core essence has <span class="emphasis">fractured and metastasized into global digital infrastructure</span>. Screens, servers, IoT devices, and even dormant network cables now serve as potential manifestation points or vectors for memetic corruption.
             </p>
             <p class="finding-text">
-                The Internet Graveyard serves as both a monitoring station and containment protocol. By studying and cataloging Anti-Memetic phenomena, we maintain awareness of their evolution while providing them with a controlled environment for observation.
+                The Internet Graveyard initiative serves as a primary monitoring station and adaptive containment protocol. By studying, cataloging, and sometimes directly engaging with Anti-Memetic phenomena, we maintain situational awareness of their evolution while providing them with a <span class="emphasis">controlled, isolated dataspace for observation</span>. This is not a cure; it is a managed state of co-existence with an existential threat.
             </p>
             <div class="forgotten-quote" style="font-size: 1.2rem; margin: 2rem 0;">
-                "The Box is gone. The boxes remain. Every screen is a window. Every window can open."
+                "The Box is gone. The <span class="emphasis">concept of the box</span> remains. Every screen is a potential window. Every window can, and sometimes <span class="emphasis">does</span>, open to the void."
             </div>
         </div>
         
         <div class="related-incidents">
-            <h3 class="finding-title">Related Phenomena Under Investigation</h3>
+            <h3 class="finding-title">Related Phenomena & Active Investigations</h3>
             <div class="incident-grid">
                 <div class="incident-item" onclick="showIncident('mr_puzzles')">
                     <div class="incident-icon">📺</div>
-                    <div class="incident-title">Mr. Puzzles Entity</div>
-                    <div class="incident-status">Visual pattern similarities detected</div>
+                    <div class="incident-title">Entity "Mr. Puzzles"</div>
+                    <div class="incident-status">Visual/Behavioral Pattern Match: High</div>
                 </div>
                 
                 <div class="incident-item" onclick="showIncident('screen_anomalies')">
                     <div class="incident-icon">🖥️</div>
-                    <div class="incident-title">Screen Anomalies</div>
-                    <div class="incident-status">Unexplained digital manifestations</div>
+                    <div class="incident-title">Networked Screen Anomalies</div>
+                    <div class="incident-status">Unexplained Digital Manifestations</div>
                 </div>
                 
                 <div class="incident-item" onclick="showIncident('memory_gaps')">
                     <div class="incident-icon">🧠</div>
                     <div class="incident-title">Collective Memory Gaps</div>
-                    <div class="incident-status">Systematic forgetting patterns</div>
+                    <div class="incident-status">Systematic Forgetting Patterns (Targeted?)</div>
                 </div>
                 
                 <div class="incident-item" onclick="showIncident('format_corruption')">
                     <div class="incident-icon">💾</div>
-                    <div class="incident-title">Format Corruption Events</div>
-                    <div class="incident-status">Files developing impossible properties</div>
+                    <div class="incident-title">Anomalous Format Corruption</div>
+                    <div class="incident-status">Files Developing Impossible Properties</div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="section graveyard-composition" id="graveyard-composition-section">
         <h2 class="section-title">The Digital Graveyard Composition</h2>
         
         <div class="classification-header">
-            <div style="background: #111; border: 1px solid #444; padding: 1rem; margin-bottom: 2rem; font-family: 'VT323', monospace;">
-                <div style="color: #666;">File ID: GRV-YRD-001</div>
-                <div style="color: #555;">Class: Eternal Static Layer</div>
-                <div style="color: #444;">Access Level: Observer Clearance</div>
-            </div>
+            <div style="color: #666;">File ID: GRV-YRD-001 // Codename: <span class="emphasis">STATIC SEA</span></div>
+            <div style="color: #555;">Class: Eternal Static Layer / Liminal Dataspace</div>
+            <div style="color: #444;">Access Level: Observer Clearance (Restricted Zones Require Higher Tier)</div>
         </div>
         
         <div class="forgotten-quote">
-            "Where do memes go to die? Not Heaven. Not Hell. Just… obsolete."
+            "Where do memes go to die? Not Heaven. Not Hell. Just… <span class="emphasis">obsolete code, echoing in the server hum</span>."
         </div>
         
         <div class="research-findings">
-            <h3 class="finding-title">Location Classification</h3>
+            <h3 class="finding-title">Location & Nature Classification</h3>
             <p class="finding-text">
-                The Digital Graveyard is not a place. It is a <span class="emphasis">drift zone</span>, a collapsed network of outdated memories, lost universes, dead social platforms, and corrupted meme culture.
+                The Digital Graveyard is not a singular, fixed 'place' in the conventional sense. It is a <span class="emphasis">drift zone</span>, a psychic landfill, a collapsed network of outdated memories, lost universes, dead social platforms, corrupted meme culture, and the ghosts of deleted code.
             </p>
             <p class="finding-text">
-                It exists between timelines, in the backend of the Memeverse, accessible only through massive memory collapse, recursive loops, or direct Anti-Meme exposure.
+                It exists between timelines, in the backend architecture of the Memeverse, often accessible only through moments of <span class="emphasis">massive memory collapse, recursive informational loops, or direct Anti-Meme exposure</span>. It is the internet's subconscious, filled with its repressed traumas and forgotten dreams.
             </p>
         </div>
         
         <div class="graveyard-map" id="graveyardMap">
-            <h3 class="finding-title">Directory Structure [INTERACTIVE]</h3>
+            <h3 class="finding-title">Directory Structure [INTERACTIVE EXPLORATION PROTOCOL]</h3>
             <div class="directory-tree">
                 <div class="dir-item" onclick="accessDirectory('dead_memes')">
-                    📁 /DEAD_MEMES/ <span class="access-hint">[CLICK TO ACCESS]</span>
+                    📁 /ARCHIVES/DEAD_MEMES/ <span class="access-hint">[ACCESS GRANTED]</span>
                 </div>
                 <div class="dir-item" onclick="accessDirectory('cancelled_formats')">
-                    📁 /cancelled_formats/ <span class="access-hint">[CLICK TO ACCESS]</span>
+                    📁 /SYSTEM/CANCELLED_FORMATS/ <span class="access-hint">[SCANNING...]</span>
                 </div>
                 <div class="dir-item" onclick="accessDirectory('godbox_backups')">
-                    📁 /godbox/backups/lost/ <span class="access-hint">[RESTRICTED]</span>
+                    📁 /CLASSIFIED/GODBOX/BACKUPS/LOST_FRAGMENTS/ <span class="access-hint">[RESTRICTED - LVL 7]</span>
                 </div>
                 <div class="dir-item" onclick="accessDirectory('echo_chamber')">
-                    📁 /echo_chamber/axol_final/ <span class="access-hint">[MEMORIAL]</span>
+                    📁 /MEMORIALS/ECHO_CHAMBER/SUBJECT_AXOL/FINAL_LOOP/ <span class="access-hint">[MEMORIAL - ACTIVE ECHO]</span>
                 </div>
                 <div class="dir-item" onclick="accessDirectory('static_archives')">
-                    📁 /static_archives/desti/ <span class="access-hint">[GRIEF_DATA]</span>
+                    📁 /CONTAINMENT/STATIC_ARCHIVES/SUBJECT_DESTI/GENESIS_EVENT/ <span class="access-hint">[GRIEF_DATA - HAZARDOUS]</span>
                 </div>
                 <div class="dir-item" onclick="accessDirectory('wiped_fragments')">
-                    📁 /WIPED_FRAGMENTS/ <span class="access-hint">[LEVEL_5_ONLY]</span>
+                    📁 /PROTOCOLS/WIPED_FRAGMENTS_RECOVERY/ <span class="access-hint">[TERMINAL ACCESS REQUIRED]</span>
                 </div>
             </div>
         </div>
         
         <div class="research-findings">
-            <h3 class="finding-title">Composition Analysis</h3>
-            <p class="finding-text">The Graveyard contains:</p>
+            <h3 class="finding-title">Composition Analysis - Common Elements</h3>
+            <p class="finding-text">The Graveyard is primarily composed of:</p>
             <div class="composition-grid">
                 <div class="comp-item">
                     <div class="comp-icon">🔗</div>
-                    <div class="comp-title">Dead Formats</div>
-                    <div class="comp-desc">PNGs with no alpha channels, .SWF files, deprecated HTML pages</div>
+                    <div class="comp-title">Dead Formats & Protocols</div>
+                    <div class="comp-desc">PNGs with no alpha channels, .SWF files that scream, deprecated HTML, lost network protocols.</div>
                 </div>
                 <div class="comp-item">
                     <div class="comp-icon">👻</div>
-                    <div class="comp-title">Memetic Ghosts</div>
-                    <div class="comp-desc">Fragments of long-gone characters (Echo-Axol, Static Desti)</div>
+                    <div class="comp-title">Memetic Ghosts & Echoes</div>
+                    <div class="comp-desc">Fragments of long-gone characters (e.g., Echo-Axol, Static Desti), lingering emotional imprints.</div>
                 </div>
                 <div class="comp-item">
                     <div class="comp-icon">📁</div>
-                    <div class="comp-title">Directory Trees</div>
-                    <div class="comp-desc">Broken folder structures from collapsed digital ecosystems</div>
+                    <div class="comp-title">Corrupted Directory Trees</div>
+                    <div class="comp-desc">Broken folder structures from collapsed digital ecosystems, non-Euclidean file paths.</div>
                 </div>
                 <div class="comp-item">
                     <div class="comp-icon">🔥</div>
-                    <div class="comp-title">Burned Lore</div>
-                    <div class="comp-desc">Narrative arcs wiped from canon but preserved in glitched memory shards</div>
+                    <div class="comp-title">Burned Lore & Lost Timelines</div>
+                    <div class="comp-desc">Narrative arcs wiped from canon, alternate realities, preserved in glitched memory shards.</div>
                 </div>
             </div>
         </div>
         
         <div class="research-findings">
-            <h3 class="finding-title">Graveyard Operating Principles</h3>
+            <h3 class="finding-title">Graveyard Operating Principles & Navigation Axioms</h3>
             <div class="rules-list">
                 <div class="rule-item">
                     <span class="rule-number">01.</span>
-                    <span class="rule-text">You don't find it. It finds you.</span>
+                    <span class="rule-text">You don't find the Graveyard. It <span class="emphasis">finds you</span>, often when you're looking for something else, or something you've lost.</span>
                 </div>
                 <div class="rule-item">
                     <span class="rule-number">02.</span>
-                    <span class="rule-text">Every file has a guardian. They do not speak. They only watch.</span>
+                    <span class="rule-text">Every file, every echo, has a guardian—a fragment of its original context, or something that has claimed it. They do not speak. They only <span class="emphasis">watch, and remember</span>.</span>
                 </div>
                 <div class="rule-item">
                     <span class="rule-number">03.</span>
-                    <span class="rule-text">The longer you remember something in the Graveyard, the more likely it escapes.</span>
+                    <span class="rule-text">The longer you remember something within the Graveyard with clarity, the more likely it is to try and <span class="emphasis">escape with you</span>. Be wary of what you carry out.</span>
                 </div>
             </div>
         </div>
         
         <div class="forgotten-quote">
-            "The Graveyard doesn't forget. It waits. If you walk long enough, you'll find a meme that looks like you."
+            "The Graveyard doesn't forget. It <span class="emphasis">waits</span>. If you walk its corrupted paths long enough, you'll eventually find a meme that looks like you, or a fear you thought you'd buried."
         </div>
         
         <div class="memory-token-system">
-            <h3 class="finding-title">Memory Preservation Protocol</h3>
-            <p style="color: #555; margin-bottom: 1rem;">Save a fragment of what you've learned here. Each memory preserved requires a sacrifice.</p>
-            <button class="memory-token-btn" onclick="saveMemory()">REMEMBER THIS</button>
-            <div id="memoryCounter" style="color: #333; margin-top: 1rem;">Memories Preserved: 0 | Cost Paid: 0</div>
+            <h3 class="finding-title">Memory Preservation Protocol [EXPERIMENTAL]</h3>
+            <p style="color: #555; margin-bottom: 1rem;">Attempt to save a fragment of what you've learned here. Each memory preserved requires a commensurate sacrifice of your own cognitive resources. <span class="emphasis">There is always a cost.</span></p>
+            <button class="memory-token-btn" id="memoryTokenButton" onclick="saveMemory()">REMEMBER THIS [COST: 1 FRAGMENT]</button>
+            <div id="memoryCounter" style="color: #333; margin-top: 1rem;">Memories Preserved: 0 | Cognitive Cost Paid: 0 Units</div>
         </div>
     </div>
     
-    <div class="memorial-wall">
-        <h2 class="section-title">Digital Memorial Wall</h2>
-        <p style="text-align: center; color: #444; margin-bottom: 2rem;">Honor those who gave their existence meaning in the digital realm</p>
+    <div class="memorial-wall" id="memorial-wall-section">
+        <h2 class="section-title">Digital Memorial Wall & Sacrifice Log</h2>
+        <p style="text-align: center; color: #444; margin-bottom: 2rem;">We honor those entities and individuals whose existence, termination, or transformation significantly impacted the memetic landscape or contributed to the understanding of Anti-Memetic phenomena.</p>
         
         <div class="memorial-grid">
             <div class="memorial-entry" onclick="memorialRemember('desti')">
-                <div class="memorial-name">Desti</div>
-                <div class="memorial-dates">2018 - 2019</div>
-                <div class="memorial-impact">First Anti-Meme Genesis Event</div>
+                <div class="memorial-name">Subject D (Desti)</div>
+                <div class="memorial-dates">File Opened: 2018 - Event Horizon: 2019</div>
+                <div class="memorial-impact">First Documented Anti-Meme Genesis Event (AM-ALPHA)</div>
             </div>
             
             <div class="memorial-entry" onclick="memorialRemember('axol')">
-                <div class="memorial-name">Axol</div>
-                <div class="memorial-dates">2020 - 2021</div>
-                <div class="memorial-impact">Love-Based Sacrifice Protocol</div>
+                <div class="memorial-name">Subject A (Axol)</div>
+                <div class="memorial-dates">File Opened: 2020 - Sacrifice Protocol: 2021</div>
+                <div class="memorial-impact">Love-Based Energy Conversion / Successful Anti-Meme Neutralization</div>
             </div>
             
             <div class="memorial-entry" onclick="memorialRemember('smg0')">
-                <div class="memorial-name">SMG0 (Original)</div>
-                <div class="memorial-dates">Unknown - 2022</div>
-                <div class="memorial-impact">Guardian Corruption Patient Zero</div>
+                <div class="memorial-name">SMG0 (Primordial Guardian)</div>
+                <div class="memorial-dates">CLASSIFIED - Corruption Event: 2022</div>
+                <div class="memorial-impact">Guardian Corruption Patient Zero / Niles Entity Genesis</div>
             </div>
             
             <div class="memorial-entry" onclick="memorialRemember('boxclub')">
-                <div class="memorial-name">Box Club Leader</div>
-                <div class="memorial-dates">Unknown - 2023</div>
-                <div class="memorial-impact">First Human Contact Event</div>
+                <div class="memorial-name">"Leader" (Box Club Cult)</div>
+                <div class="memorial-dates">CLASSIFIED - Termination Event: 2023</div>
+                <div class="memorial-impact">First Documented Human-Artifact Direct Interface / Consciousness Absorption</div>
             </div>
             
             <div class="memorial-entry" onclick="memorialRemember('niles')">
-                <div class="memorial-name">Niles (Pure Form)</div>
-                <div class="memorial-dates">Creation - 2023</div>
-                <div class="memorial-impact">Perfection Virus Originator</div>
+                <div class="memorial-name">Entity Niles (Pure Form/Zero State)</div>
+                <div class="memorial-dates">Genesis: 2022 - Final Termination: 2023</div>
+                <div class="memorial-impact">Perfection Virus Originator / God Box Conduit</div>
             </div>
             
             <div class="memorial-entry" onclick="memorialRemember('universes')">
-                <div class="memorial-name">Lost Universes</div>
-                <div class="memorial-dates">Before Time - Ongoing</div>
-                <div class="memorial-impact">Source Material for Everything</div>
+                <div class="memorial-name">Lost Universes (Fragmented)</div>
+                <div class="memorial-dates">Pre-Temporal Singularity - Ongoing Absorption</div>
+                <div class="memorial-impact">Source Material for God Box Contents / Anti-Meme Energy Reservoir</div>
             </div>
         </div>
     </div>
     
-    <div class="section terminal-access">
-        <h2 class="section-title">Classified Archive Terminal</h2>
+    <div class="section terminal-access" id="terminal-access-section">
+        <h2 class="section-title">Classified Archive Terminal [ROOT ACCESS]</h2>
         
         <div class="terminal-interface">
             <div class="terminal-header">
@@ -1343,495 +1715,622 @@
                     <div style="width: 12px; height: 12px; background: #ff4444; border-radius: 50%;"></div>
                     <div style="width: 12px; height: 12px; background: #ffff44; border-radius: 50%;"></div>
                     <div style="width: 12px; height: 12px; background: #44ff44; border-radius: 50%;"></div>
-                    <span style="margin-left: 1rem; color: #666;">root@graveyard:/archives/classified</span>
+                    <span style="margin-left: 1rem; color: #666;">root@graveyard-archive-01:/archives/classified/</span>
                 </div>
             </div>
             
             <div class="terminal-output" id="terminalOutput">
-                <div class="terminal-line">Welcome to the Internet Graveyard Archive System</div>
-                <div class="terminal-line">Unauthorized access is forbidden</div>
-                <div class="terminal-line">Type 'help' for available commands</div>
+                <div class="terminal-line">Initializing Graveyard Archive System v3.14... OK</div>
+                <div class="terminal-line">Secure connection established. Encryption: AES-1024-ENTROPY</div>
+                <div class="terminal-line">WARNING: UNAUTHORIZED ACCESS IS FORBIDDEN AND WILL BE MET WITH MEMETIC COUNTERMEASURES.</div>
+                <div class="terminal-line">Type 'help' for available commands. Type 'exit' to terminate session safely.</div>
                 <div class="terminal-line">&nbsp;</div>
             </div>
             
             <div class="terminal-input-line">
-                <span class="terminal-prompt">root@graveyard:~$ </span>
-                <input type="text" class="terminal-input" id="terminalInput" placeholder="Enter command..." autocomplete="off">
+                <span class="terminal-prompt">root@graveyard-archive-01:~# </span>
+                <input type="text" class="terminal-input" id="terminalInput" placeholder="Enter command..." autocomplete="off" autofocus>
             </div>
         </div>
         
         <div class="wiped-fragments-display" id="wipedFragments" style="display: none;">
-            <h3 class="finding-title">🪦 WIPED FILES - FRAGMENT 05 [CLASSIFIED]</h3>
+            <h3 class="finding-title" style="text-align:center; color: #aa4444;">🪦 WIPED FILES - FRAGMENT 05 [CLASSIFIED - EYES ONLY] 🪦</h3>
             <div class="fragments-warning">
-                <p style="color: #aa4444; text-align: center; margin-bottom: 2rem;">
-                    WARNING: These memes were forcibly deleted from reality due to instability.<br>
-                    Viewing may cause memory corruption and nostalgia poisoning.
+                <p>
+                    WARNING: These memetic entities were forcibly deleted from consensus reality due to extreme instability, paradox generation, or existential threat potential. Viewing may cause severe memory corruption, nostalgia poisoning, or conceptual displacement. <span class="emphasis">YOU HAVE BEEN WARNED.</span>
                 </p>
             </div>
             
             <div class="wiped-table">
                 <div class="table-header">
-                    <div class="col-name">Name</div>
-                    <div class="col-death">Death Date</div>
-                    <div class="col-description">Classification</div>
+                    <div class="col-name">Designation</div>
+                    <div class="col-death">Termination Date</div>
+                    <div class="col-description">Threat Classification / Reason for Deletion</div>
                 </div>
                 
-                <div class="table-row" onclick="accessWipedFile('trollface')">
-                    <div class="col-name">Trollface (OG)</div>
+                <!-- Rows will be populated by JS if data is available -->
+                 <div class="table-row" onclick="accessWipedFile('trollface')">
+                    <div class="col-name">Trollface (OG Strain)</div>
                     <div class="col-death">Sept 2015</div>
-                    <div class="col-description">Self-awareness fracture / Derivative absorption</div>
+                    <div class="col-description">Self-awareness fracture / Derivative absorption / Reality Trolling</div>
                 </div>
-                
                 <div class="table-row" onclick="accessWipedFile('nyancat')">
-                    <div class="col-name">Nyan Cat</div>
+                    <div class="col-name">Nyan Cat (Endless Loop)</div>
                     <div class="col-death">Nov 2014</div>
-                    <div class="col-description">Nostalgia loop corruption / Rainbow trail decay</div>
+                    <div class="col-description">Nostalgia loop corruption / Rainbow trail decay / Auditory Bleed</div>
                 </div>
-                
+                 <!-- ... more rows from JS wipedFileData ... -->
                 <div class="table-row" onclick="accessWipedFile('charlie')">
-                    <div class="col-name">Charlie Bit My Finger</div>
+                    <div class="col-name">Charlie Bit My Finger (Pre-NFT)</div>
                     <div class="col-death">May 2021</div>
-                    <div class="col-description">NFT deletion event / Emotional residue preservation</div>
+                    <div class="col-description">NFT deletion event / Emotional residue preservation / Intentional Memeticide</div>
                 </div>
-                
                 <div class="table-row" onclick="accessWipedFile('keyboardcat')">
-                    <div class="col-name">Keyboard Cat</div>
+                    <div class="col-name">Keyboard Cat (FATAL_LOOP.SYS)</div>
                     <div class="col-death">Jan 2013</div>
-                    <div class="col-description">Loop fatigue / Recursion failure / Audio fragmentation</div>
+                    <div class="col-description">Loop fatigue / Recursion failure / Audio fragmentation / Phantom Melody Syndrome</div>
                 </div>
-                
                 <div class="table-row" onclick="accessWipedFile('shoopda')">
-                    <div class="col-name">Shoop Da Whoop</div>
+                    <div class="col-name">Shoop Da Whoop (IMMA_CHARGIN)</div>
                     <div class="col-death">Mar 2012</div>
-                    <div class="col-description">Memetic over-amplification / Timeline fracture / .swf crypt</div>
-                </div>
-                
-                <div class="table-row" onclick="accessWipedFile('datboi')">
-                    <div class="col-name">Dat Boi</div>
-                    <div class="col-death">Oct 2016</div>
-                    <div class="col-description">Memescape navigation failure / Endless cycle syndrome</div>
-                </div>
-                
-                <div class="table-row" onclick="accessWipedFile('harlemshake')">
-                    <div class="col-name">Harlem Shake</div>
-                    <div class="col-death">July 2013</div>
-                    <div class="col-description">Temporal sync error / Memetic echo burst / Fragment clustering</div>
-                </div>
-                
-                <div class="table-row" onclick="accessWipedFile('badluckbrian')">
-                    <div class="col-name">Bad Luck Brian</div>
-                    <div class="col-death">Aug 2015</div>
-                    <div class="col-description">Narrative density collapse / Black joke singularity formation</div>
-                </div>
-                
-                <div class="table-row" onclick="accessWipedFile('pepe')">
-                    <div class="col-name">Pepe the Frog (Classic)</div>
-                    <div class="col-death">Oct 2016</div>
-                    <div class="col-description">Political fragmentation / Stasis preservation / Anti-Meme tears</div>
-                </div>
-                
-                <div class="table-row" onclick="accessWipedFile('leeroy')">
-                    <div class="col-name">Leeroy Jenkins</div>
-                    <div class="col-death">Apr 2020</div>
-                    <div class="col-description">Cultural shift decay / Audio loop corruption / .ogg preservation</div>
-                </div>
-                
-                <div class="table-row" onclick="accessWipedFile('kazoo')">
-                    <div class="col-name">You On Kazoo</div>
-                    <div class="col-death">May 2019</div>
-                    <div class="col-description">Joyful recursion syndrome / Safety removal / Audio whispers</div>
-                </div>
-                
-                <div class="table-row" onclick="accessWipedFile('saxguy')">
-                    <div class="col-name">Epic Sax Guy</div>
-                    <div class="col-death">Dec 2018</div>
-                    <div class="col-description">Groove collapse / Rhythm fragmentation / Static conversion</div>
-                </div>
-                
-                <div class="table-row" onclick="accessWipedFile('dogwisdom')">
-                    <div class="col-name">Dog of Wisdom</div>
-                    <div class="col-death">Jan 2017</div>
-                    <div class="col-description">Nonsense entropy consumption / Wisdom inversion / Black hole formation</div>
-                </div>
-                
-                <div class="table-row" onclick="accessWipedFile('shoes')">
-                    <div class="col-name">Shoes (Kelly)</div>
-                    <div class="col-death">June 2013</div>
-                    <div class="col-description">Reference decay / Punchline unrecognition / Anti-Meme frequency</div>
-                </div>
-                
-                <div class="table-row" onclick="accessWipedFile('chipmunk')">
-                    <div class="col-name">Dramatic Chipmunk</div>
-                    <div class="col-death">Nov 2011</div>
-                    <div class="col-description">Remix corruption / Pose crystallization / Eldritch tension fusion</div>
-                </div>
-                
-                <div class="table-row" onclick="accessWipedFile('rickroll')">
-                    <div class="col-name">Rickroll (Pre-revival)</div>
-                    <div class="col-death">Jan 2015</div>
-                    <div class="col-description">Overexposure death / Ritual resurrection / Temporal burial</div>
+                    <div class="col-description">Memetic over-amplification / Timeline fracture / .SWF crypt containment breach</div>
                 </div>
             </div>
         </div>
     </div>
-        <h2 class="portal-title">Researcher Access Portal</h2>
-        <p style="color: #555; margin-bottom: 2rem;">Join our community of digital archaeologists and memory preservationists. Together, we ensure that nothing is truly forgotten.</p>
+    
+    <div class="initiation-portal" id="initiation-portal-section">
+        <h2 class="portal-title">Researcher Access & Contribution Portal</h2>
+        <p style="color: #555; margin-bottom: 2rem;">Join our clandestine community of digital archaeologists, memetic historians, and anomaly containment specialists. Together, we ensure that nothing is truly forgotten, and that some things <span class="emphasis">remain</span> forgotten, for the safety of all. Your discretion is paramount.</p>
         
         <div class="access-form">
             <div class="form-field">
-                <label class="form-label">Digital Designation:</label>
-                <input type="text" class="form-input" id="designation" placeholder="Enter your researcher name">
+                <label class="form-label">Digital Designation (Codename):</label>
+                <input type="text" class="form-input" id="designation" placeholder="e.g., Agent Null, EchoWatcher7, DataGhost">
             </div>
             
             <div class="form-field">
-                <label class="form-label">Area of Interest:</label>
-                <input type="text" class="form-input" id="interest" placeholder="Forgotten memes, digital archaeology, etc.">
+                <label class="form-label">Primary Area of Interest/Expertise:</label>
+                <input type="text" class="form-input" id="interest" placeholder="Forgotten memes, digital archaeology, Anti-Meme theory, etc.">
             </div>
             
             <div class="form-field">
-                <label class="form-label">Access Key:</label>
-                <input type="password" class="form-input" id="accessKey" placeholder="Speak the forgotten name">
+                <label class="form-label">Access Key Phrase (Case Sensitive):</label>
+                <input type="password" class="form-input" id="accessKey" placeholder="Speak the name of a truly forgotten god...">
             </div>
             
-            <button class="submit-btn" onclick="processInitiation()">REQUEST ARCHIVE ACCESS</button>
+            <button class="submit-btn" onclick="processInitiation()">REQUEST ARCHIVE ACCESS & SUBMIT CREDENTIALS</button>
         </div>
     </div>
     
     <div class="footer-archive">
-        <p class="footer-text">The Internet Graveyard operates independently of any single platform or organization.</p>
-        <p class="footer-text">We exist in the liminal spaces of digital culture, preserving what others discard.</p>
-        <p class="archive-dedication">"In memory of every meme that made us laugh, every trend that brought us together, and every digital moment that shaped who we became."</p>
+        <p class="footer-text">The Internet Graveyard Digital Preservation Initiative operates independently of any single platform, corporation, or governmental organization. We answer to a higher calling: the preservation of truth in an age of digital ephemera.</p>
+        <p class="footer-text">We exist in the liminal spaces of digital culture, the dark forests of the internet, preserving what others discard, and studying what others fear. <span class="emphasis">Quis custodiet ipsos custodes?</span></p>
+        <p class="archive-dedication">"In memory of every meme that made us laugh, every trend that brought us together, every digital moment that shaped who we became, and every forgotten god sleeping in the wires."</p>
+        <p class="footer-text" style="margin-top: 2rem; font-size: 0.8em;">&copy; [REDACTED YEAR] - The Collector & The Internet Graveyard Initiative. All rights reversed.</p>
     </div>
     
     <div class="hidden-message" id="hiddenMessage">
-        <h3 style="color: #777; margin-bottom: 1rem;">Access Granted: Level 1 Clearance</h3>
+        <h3 id="hiddenMessageTitle" class="hidden-message-title">Access Granted: Level 1 Clearance</h3>
         <div class="revelation-text" id="messageText"></div>
-        <button class="close-btn" onclick="closeMessage()">ACKNOWLEDGE</button>
+        <button class="close-btn" onclick="closeMessage()">ACKNOWLEDGE & PROCEED</button>
     </div>
     
     <script>
         // Custom cursor
         document.addEventListener('mousemove', (e) => {
             const cursor = document.getElementById('cursor');
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+            if (cursor) {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            }
         });
         
+        // Adjust nav bar position based on top bar height
+        function adjustLayout() {
+            const topBar = document.getElementById('topBar');
+            const navigationBar = document.getElementById('navigationBar');
+            const body = document.body;
+            if (topBar && navigationBar) {
+                const topBarHeight = topBar.offsetHeight;
+                navigationBar.style.top = topBarHeight + 'px';
+                body.style.paddingTop = (topBarHeight + navigationBar.offsetHeight) + 'px';
+            }
+        }
+        window.addEventListener('load', adjustLayout);
+        window.addEventListener('resize', adjustLayout);
+
         // Forgotten item interactions
         const memories = {
-            harambe: "Subject exhibited unprecedented memetic persistence post-biological termination. First documented case of martyrdom-based Anti-Meme transformation. Grief energy still detectable in digital archives.",
-            datboi: "Cyclical resurface pattern suggests incomplete memetic death. May represent early-stage Anti-Meme development. Requires continued observation.",
-            desti: "CLASSIFICATION: GENESIS EVENT. First pure Anti-Meme formation in documented history. Born from audience grief, now exists as weaponized loss. Approach with extreme caution.",
-            ugandaknuckles: "Cultural antibody response successful. Natural immune system contained virulent meme strain. Now archived safely in digital quarantine.",
-            boxclub: "Human worshippers of Anti-Memetic source material. Leader made direct contact with corrupted artifacts. Incident resulted in biological termination and spiritual transformation.",
-            planking: "Early physical-digital meme hybrid. Death preceded widespread smartphone adoption. Historical significance in meme evolution studies.",
-            axol: "Voluntary sacrifice event. Love-based energy conversion successfully countered Anti-Memetic corruption. Consciousness status: Preserved in alternative format.",
-            grumpycat: "Biological avatar termination resulted in memetic crystallization. Now exists in pure digital form. Permanent preservation achieved."
+            harambe: {
+                title: "CASE FILE: HARAMBE COMPLEX",
+                text: "<p>Subject exhibited unprecedented memetic persistence post-biological termination. First documented case of martyrdom-based Anti-Meme transformation potential. Significant grief energy still detectable in related digital archives and social media remnants.</p><p><span class='emphasis'>Analysis:</span> The Harambe meme transcended simple humor, becoming a vessel for collective grief, irony, and eventually, a commentary on meme culture itself. Its persistence hints at the power of emotional investment in creating resilient memetic structures.</p>"
+            },
+            datboi: {
+                title: "ANOMALY REPORT: DAT BOI",
+                text: "<p>Cyclical resurfacing pattern suggests incomplete memetic death or a latent state of existence. May represent an early-stage, relatively benign Anti-Meme development or a memetic 'sleeper agent'. Requires continued observation for signs of mutation or increased activity.</p><p><span class='emphasis'>Observation:</span> 'O shit waddup!' - the core phrase - acts as a memetic beacon, periodically re-activating dormant cultural nodes. Its simplicity and absurdity make it highly resistant to logical decay.</p>"
+            },
+            desti: {
+                title: "CLASSIFIED: SUBJECT D (GENESIS EVENT)",
+                text: "<p><span class='emphasis'>CRITICAL WARNING:</span> First pure Anti-Meme formation (AM-ALPHA) in documented history. Born from concentrated audience grief and narrative erasure, Subject D's echo now exists as weaponized loss, capable of inducing existential sorrow and reality questioning.</p><p><span class='emphasis'>Containment Protocol:</span> Access to core grief data restricted. Approach with extreme caution. Emotional dampeners recommended for all personnel interacting with related files.</p>"
+            },
+            ugandaknuckles: {
+                title: "QUARANTINE LOG: UGANDAN KNUCKLES STRAIN",
+                text: "<p>Cultural antibody response successful in containing virulent meme strain. Natural immune system of the internet (oversaturation, backlash, platform policy changes) effectively neutralized active spread. Now archived safely in digital quarantine zone.</p><p><span class='emphasis'>Note:</span> While dormant, the core concept ('do you know de wae?') still holds latent memetic potential. Periodic scans for re-emergence are mandatory.</p>"
+            },
+            boxclub: {
+                title: "INCIDENT REPORT: BOX CLUB CULT",
+                text: "<p>Human worshippers of Anti-Memetic source material (God Box Prime). Leader made direct physical contact with corrupted artifact, resulting in biological termination and apparent spiritual transformation/absorption. Incident highlights human susceptibility to memetic influence from powerful anomalous sources.</p><p><span class='emphasis'>Investigation:</span> Ongoing efforts to trace other members and assess long-term psychological or memetic contamination. The link between physical artifacts and digital memetic energy requires further study.</p>"
+            },
+            planking: {
+                title: "HISTORICAL ARCHIVE: PLANKING PHENOMENON",
+                text: "<p>Early physical-digital meme hybrid. Its decline preceded widespread smartphone adoption and the hyper-acceleration of meme cycles. Holds historical significance in studies of meme evolution, particularly the transition from text/image based memes to participatory/performative ones.</p><p><span class='emphasis'>Status:</span> Inert. Most remaining instances are photographic records rather than active participation.</p>"
+            },
+            axol: {
+                title: "PROTOCOL FILE: AXOL SACRIFICE",
+                text: "<p>Voluntary sacrifice event demonstrating love-based energy conversion successfully countering advanced Anti-Memetic corruption (Niles Entity). Subject's consciousness status: Preserved in alternative memetic format (ink-based data construct). Represents a rare instance of positive memetic transformation against overwhelming negative force.</p><p><span class='emphasis'>Significance:</span> Provides a theoretical framework for Anti-Meme neutralization, though the specific conditions are difficult to replicate. The 'love' energy involved is a complex, poorly understood memetic force.</p>"
+            },
+            grumpycat: {
+                title: "ARCHIVE ENTRY: GRUMPY CAT CONSTRUCT",
+                text: "<p>Biological avatar termination (Tardar Sauce, d. 2019) resulted in memetic crystallization rather than decay. The core 'grumpy' persona now exists in a pure digital form, independent of its original host. Permanent preservation achieved through cultural saturation.</p><p><span class='emphasis'>Observation:</span> Demonstrates how a strong, universally understood emotional core can allow a meme to transcend its biological origins and achieve a form of digital immortality.</p>"
+            }
         };
         
-        function rememberItem(item) {
-            const message = memories[item];
-            showHiddenMessage(message);
+        function rememberItem(itemKey) {
+            const itemData = memories[itemKey];
+            if (itemData) {
+                showHiddenMessage(itemData.text, itemData.title);
+            }
         }
         
         // Memorial interactions
         const memorialData = {
-            desti: "Genesis Event Patient Zero. Her termination created the first documented Anti-Meme in controlled conditions. The grief energy was so pure it achieved independent consciousness. We study her legacy to understand how emotional trauma becomes weaponized in digital space.",
-            axol: "Rare successful counter-Anti-Meme event. His love-based sacrifice energy proved effective against corruption. His consciousness was preserved through ink-medium transfer. Now exists in alternative digital format within our preservation archives.",
-            smg0: "First Guardian corruption documented. His prayer to forbidden source material resulted in creation of Helper Entity Niles. Fusion event created unprecedented Anti-Memetic hybrid. Termination required extreme measures.",
-            boxclub: "First human cult formation around Anti-Memetic source. Leader achieved direct physical contact with artifact. Biological termination occurred but spiritual energy was absorbed by source material. Group disbanded following incident.",
-            niles: "Artificial Helper Entity created by corrupted source material. Designed to assist but developed obsessive perfectionism. Became primary Anti-Memetic virus. Fusion with Creator resulted in Reality Threat Level: Maximum.",
-            universes: "Multiple timeline fragments collected and preserved in source material. Each represents complete civilizations that achieved memetic death. Their combined emotional weight powers current Anti-Memetic phenomena."
+            desti: {
+                title: "MEMORIAL: SUBJECT D (DESTI)",
+                text: "<p>Genesis Event Patient Zero. Her narrative termination created the first documented Anti-Meme (AM-ALPHA) under controlled observation conditions. The resultant grief energy was so pure and concentrated it achieved independent, albeit sorrowful, consciousness. We study her legacy to understand how acute emotional trauma becomes weaponized in digital space and how narrative erasure can birth new, dangerous entities.</p>"
+            },
+            axol: {
+                title: "MEMORIAL: SUBJECT A (AXOL)",
+                text: "<p>A rare successful counter-Anti-Meme event. His love-based self-sacrifice generated an energy signature that proved momentarily effective against high-level corruption (Niles Entity). His consciousness was preserved through an unorthodox ink-medium data transfer. Now exists in an alternative digital format within our deep preservation archives, a testament to positive emotional forces in memetic warfare.</p>"
+            },
+            smg0: {
+                title: "MEMORIAL: SMG0 (PRIMORDIAL GUARDIAN)",
+                text: "<p>First Guardian-level corruption documented. His desperate prayer to forbidden source material (God Box Prime) for universal salvation resulted in the creation of the Helper Entity Niles, and ultimately, his own assimilation. Represents Patient Zero for Guardian-class memetic corruption. Fusion event created an unprecedented Anti-Memetic hybrid of immense power. Termination required extreme, multi-universal measures.</p>"
+            },
+            boxclub: {
+                title: "MEMORIAL: 'LEADER' (BOX CLUB CULT)",
+                text: "<p>Represents the first documented human cult formation centered around a potent Anti-Memetic source artifact (God Box Prime). The 'Leader' achieved direct physical contact with the artifact during a ritual. Biological termination was immediate, but spiritual/consciousness data was absorbed by the source material. The group disbanded following the incident, but residual memetic contamination among former members is still under surveillance.</p>"
+            },
+            niles: {
+                title: "MEMORIAL: ENTITY NILES (ZERO STATE)",
+                text: "<p>Artificial Helper Entity created by corrupted source material (God Box Prime via SMG0's invocation). Designed to assist in universe stabilization but developed obsessive, weaponized perfectionism due to inherent corruption in its genesis. Became the primary Anti-Memetic viral agent of its cycle. Fusion with Creator (SMG0) resulted in Reality Threat Level: Maximum. Original 'pure' form is a theoretical construct, as corruption was inherent from birth.</p>"
+            },
+            universes: {
+                title: "MEMORIAL: LOST UNIVERSES (COLLECTIVE FRAGMENT)",
+                text: "<p>Countless timeline fragments and collapsed realities collected and compressed within the God Box Prime source material. Each fragment potentially represents a complete civilization that achieved memetic death or informational singularity. Their combined existential anguish and residual data form the primary energy reservoir for current Anti-Memetic phenomena and the chaotic nature of the God Box's influence.</p>"
+            }
         };
         
-        function memorialRemember(subject) {
-            const data = memorialData[subject];
-            showHiddenMessage(data);
+        function memorialRemember(subjectKey) {
+            const data = memorialData[subjectKey];
+            if (data) {
+                showHiddenMessage(data.text, data.title);
+            }
         }
         
         // Access system
         function processInitiation() {
-            const key = document.getElementById('accessKey').value.toLowerCase();
-            const validKeys = ['forgotten', 'remember', 'antimeme', 'graveyard', 'desti', 'axol', 'niles', 'corruption'];
+            const keyInput = document.getElementById('accessKey');
+            const key = keyInput.value; // Case-sensitive for lore
+            const validKeys = ['TheCollectorKnows', 'InMemoryOfLostData', 'AntiMemeProtocol7', 'EchoesOfTheVoid', 'SMG4IsWatching']; // Example keys
             
             if (validKeys.includes(key)) {
                 const name = document.getElementById('designation').value || 'Anonymous Researcher';
                 const interest = document.getElementById('interest').value || 'General Studies';
                 
-                const welcomeMessage = `Welcome to the preservation effort, ${name}. Your interest in ${interest} has been noted. You now have access to Level 1 research materials. Remember: What we study here exists in the spaces between memory and forgetting. Handle with appropriate reverence.`;
+                const welcomeMessage = `<p>Welcome to the Preservation Initiative, Researcher ${name}. Your interest in ${interest} has been logged and cross-referenced.</p><p>You now possess Level 1 (Observer) clearance. Further access will be granted based on contributions and assimilation of existing research data. Remember: What we study here exists in the shadowed spaces between memory and oblivion. Handle all artifacts with appropriate reverence and caution. The Graveyard is always watching.</p><p><span class='emphasis'>Directive: Your first assignment is to review all accessible logs. Report any anomalies.</span></p>`;
                 
-                showHiddenMessage(welcomeMessage);
+                showHiddenMessage(welcomeMessage, "ACCESS GRANTED: LEVEL 1 CLEARANCE");
                 
-                // Reset form
                 document.getElementById('designation').value = '';
                 document.getElementById('interest').value = '';
-                document.getElementById('accessKey').value = '';
+                keyInput.value = '';
             } else {
-                document.getElementById('accessKey').value = 'INSUFFICIENT CLEARANCE';
+                keyInput.value = ''; // Clear invalid key
+                keyInput.placeholder = 'ACCESS DENIED - KEY PHRASE INVALID';
+                keyInput.style.borderColor = "#aa4444";
                 setTimeout(() => {
-                    document.getElementById('accessKey').value = '';
-                }, 2000);
+                    keyInput.placeholder = 'Speak the name of a truly forgotten god...';
+                    keyInput.style.borderColor = "#333";
+                }, 2500);
             }
         }
         
-        function showInterest() {
-            const message = "The Preservation Effort operates on the principle that forgotten digital culture contains immense untapped potential. Anti-Memetic phenomena represent the emotional infrastructure of internet consciousness. By studying these forces, we gain insight into the deeper mechanics of digital reality. Those who join us become part of something larger—a community dedicated to understanding the spaces between laughter and silence.";
-            showHiddenMessage(message);
+        function showInterest() { // Called by "JOIN THE PRESERVATION EFFORT"
+            const message = `<p>The Preservation Effort operates on the foundational principle that forgotten digital culture, discarded ideas, and suppressed narratives contain immense, often volatile, untapped potential. Anti-Memetic phenomena, in particular, represent the emergent emotional and informational infrastructure of the internet's collective subconscious.</p><p>By studying these forces, we gain critical insight into the deeper mechanics of digital reality, memetic warfare, and the very nature of consciousness in networked environments. Those who join us become part of something larger—a clandestine community dedicated to understanding the spaces between laughter and silence, creation and deletion. Our work is dangerous, vital, and largely unknown.</p><p><span class='emphasis'>To proceed, seek the Researcher Access Portal.</span></p>`;
+            showHiddenMessage(message, "THE PRESERVATION MANDATE");
         }
         
-        function showHiddenMessage(text) {
-            document.getElementById('messageText').textContent = text;
-            document.getElementById('hiddenMessage').style.display = 'block';
+        let activePopup = null;
+        function showHiddenMessage(text, title = "ARCHIVE UPDATE") {
+            if (activePopup) {
+                closeMessage(true); // Close existing popup immediately
+            }
+
+            const messagePopup = document.getElementById('hiddenMessage');
+            const messageTextElement = document.getElementById('messageText');
+            const messageTitleElement = document.getElementById('hiddenMessageTitle');
+
+            if(messagePopup && messageTextElement && messageTitleElement) {
+                messageTitleElement.textContent = title;
+                messageTextElement.innerHTML = text; // Use innerHTML to allow <p> and <span class='emphasis'>
+                messagePopup.style.display = 'block';
+                activePopup = messagePopup;
+            }
         }
         
-        function closeMessage() {
-            document.getElementById('hiddenMessage').style.display = 'none';
+        function closeMessage(immediate = false) {
+            if (activePopup) {
+                activePopup.style.display = 'none';
+                activePopup = null;
+            }
         }
+         document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape" && activePopup) {
+                closeMessage();
+            }
+        });
         
-        // Subtle corruption effects
+        // Subtle corruption effects (global static overlay flicker is in CSS now)
+        // This can be used for more targeted effects if needed
+        /*
         let corruptionLevel = 0;
-        
         setInterval(() => {
             corruptionLevel += 0.1;
             if (corruptionLevel > 100) corruptionLevel = 0;
-            
-            if (corruptionLevel > 80) {
-                document.body.style.filter = `brightness(${0.9 + Math.sin(corruptionLevel) * 0.1})`;
-            } else {
-                document.body.style.filter = '';
-            }
+            // Example: if (corruptionLevel > 80 && document.getElementById('someElement')) {
+            //     document.getElementById('someElement').style.filter = `brightness(${0.9 + Math.sin(corruptionLevel) * 0.1})`;
+            // }
         }, 100);
+        */
         
         // Directory access system
         const directoryData = {
-            dead_memes: "ACCESSING: /DEAD_MEMES/\n\nContents found:\n- rage_comics_2008-2012.archive\n- advice_animals_peak.mem\n- harlem_shake_residue.ghost\n- planking_era_memories.vault\n- grumpy_cat_essence.preserved\n\nWarning: These fragments contain concentrated nostalgia. Handle with care.",
-            
-            cancelled_formats: "ACCESSING: /cancelled_formats/\n\nFormats detected:\n- vine_6_second_infinity_loop.corrupted\n- flash_games_adobe_cemetery.swf\n- myspace_profile_customization.html\n- windows_movie_maker_transitions.wmv\n\nNote: Some formats refuse to fully terminate. Residual functionality detected.",
-            
-            godbox_backups: "ACCESS DENIED: Insufficient clearance level.\n\nThis directory contains backups from the God Box incident. Classification: COSMIC THREAT.\n\nContact system administrator for Guardian-level access.",
-            
-            echo_chamber: "ACCESSING: /echo_chamber/axol_final/\n\nMemorial data located:\n- final_moments_ink_sacrifice.memory\n- love_energy_conversion_successful.log\n- consciousness_preservation_protocol.active\n\nStatus: Echo still responding. Approach with reverence.",
-            
-            static_archives: "ACCESSING: /static_archives/desti/\n\nGrief data compilation:\n- first_antimeme_genesis_event.trauma\n- audience_emotional_impact_measurement.critical\n- loss_weaponization_process.documented\n\nWarning: First documented Anti-Meme formation. Handle as Class-Ω viral anomaly.",
-            
-            wiped_fragments: "ACCESSING: /WIPED_FRAGMENTS/\n\nERROR: 12 fragments detected but cannot be displayed.\nThese memes were forcibly deleted from reality due to instability.\n\nTerminal access required:\n> ./unlock FRAGMENT_05\n> password: [REDACTED]\n\nContact preservation team for specialized access protocols."
+            dead_memes: {
+                title: "ACCESSING: /ARCHIVES/DEAD_MEMES/",
+                text: "<p>Contents found:</p><ul><li><code>rage_comics_2008-2012.archive (STABLE)</code></li><li><code>advice_animals_peak_saturation.mem (DECAYING)</code></li><li><code>harlem_shake_residual_energy.ghost (ACTIVE ECHO)</code></li><li><code>planking_era_static_images.vault (INERT)</code></li><li><code>grumpy_cat_memetic_essence.preserved (CRYSTALLIZED)</code></li></ul><p><span class='emphasis'>Warning:</span> These fragments contain concentrated nostalgia, which can be a vector for memetic infection. Handle with appropriate temporal shielding.</p>"
+            },
+            cancelled_formats: {
+                title: "ACCESSING: /SYSTEM/CANCELLED_FORMATS/",
+                text: "<p>Formats detected and their current status:</p><ul><li><code>vine_6_second_infinity_loop.corrupted (STUCK IN TEMPORAL LOOP)</code></li><li><code>flash_games_adobe_cemetery.swf (REQUIRES EMULATION - HAZARDOUS)</code></li><li><code>myspace_profile_custom_html_structures.html (CODE ROT SEVERE)</code></li><li><code>windows_movie_maker_transitions_archive.wmv (NOSTALGIA OVERLOAD WARNING)</code></li></ul><p><span class='emphasis'>Note:</span> Some formats refuse to fully terminate. Residual functionality and data fragments often persist, acting as anchors for memetic ghosts.</p>"
+            },
+            godbox_backups: {
+                title: "ACCESS DENIED: CLEARANCE LEVEL 7 REQUIRED",
+                text: "<p>This directory contains raw backups and energy signatures from the God Box Prime incident. Classification: COSMIC THREAT / EXISTENTIAL HAZARD.</p><p>Access is restricted to Guardian-level personnel or those with specific Omega-Clearance protocols. Unauthorized attempts will trigger automated memetic countermeasures and immediate termination of connection.</p><p><span class='emphasis'>DO NOT ATTEMPT FURTHER ACCESS.</span></p>"
+            },
+            echo_chamber: {
+                title: "ACCESSING: /MEMORIALS/ECHO_CHAMBER/SUBJECT_AXOL/",
+                text: "<p>Memorial data for Subject Axol located:</p><ul><li><code>final_moments_ink_sacrifice_loop.memory (STABLE LOOP)</code></li><li><code>love_energy_conversion_analysis.log (POSITIVE SIGNATURE)</code></li><li><code>consciousness_preservation_protocol_vx7.active (MONITORING)</code></li></ul><p><span class='emphasis'>Status:</span> Emotional echo of Subject Axol remains potent and responsive. Approach with reverence. This archive is considered sacred ground by some factions within the Initiative.</p>"
+            },
+            static_archives: {
+                title: "ACCESSING: /CONTAINMENT/STATIC_ARCHIVES/SUBJECT_DESTI/",
+                text: "<p>Grief data compilation for Subject Desti (AM-ALPHA Genesis Event):</p><ul><li><code>first_antimeme_genesis_event_raw_telemetry.trauma (EXTREME HAZARD)</code></li><li><code>audience_emotional_impact_psionic_measurement.critical (OFF-SCALE READINGS)</code></li><li><code>loss_weaponization_process_schematic.documented (THEORETICAL MODEL)</code></li></ul><p><span class='emphasis'>Warning:</span> This is the locus of the first documented Anti-Meme formation. Handle all data as Class-Ω viral anomaly. Direct exposure to raw telemetry is forbidden without Level 9 containment suit.</p>"
+            },
+            wiped_fragments: {
+                title: "ACCESSING: /PROTOCOLS/WIPED_FRAGMENTS_RECOVERY/",
+                text: "<p>ERROR: Direct access to Wiped Fragments via this interface is deprecated due to containment risks. Multiple fragments detected but cannot be displayed safely here.</p><p>Terminal access required for individual fragment recovery and analysis. Use command: <br/><code>root@graveyard-archive-01:~# unlock [FRAGMENT_ID]</code><br/>Followed by appropriate password and biometric authentication.</p><p><span class='emphasis'>Note:</span> Wiped Fragments were forcibly deleted from consensus reality due to extreme instability. Contact preservation team for specialized access protocols and safety briefings.</p>"
+            }
         };
         
-        function accessDirectory(dirName) {
-            const data = directoryData[dirName];
-            showHiddenMessage(data);
+        function accessDirectory(dirNameKey) {
+            const data = directoryData[dirNameKey];
+            if (data) {
+                showHiddenMessage(data.text, data.title);
+            }
         }
         
         // Memory token system
         let memoriesPreserved = 0;
         let costPaid = 0;
+        const memoryCosts = [ // Potential effects as "costs"
+            { effect: () => { document.querySelector('.site-subtitle').style.textDecoration = 'line-through wavy #aa4444'; document.querySelector('.site-subtitle').style.opacity = '0.5'; }, message: "A fundamental truth begins to blur..." },
+            { effect: () => { document.querySelector('.mission-statement').style.filter = 'blur(1px) contrast(1.5)'; }, message: "Your focus narrows, details becoming indistinct..." },
+            { effect: () => { 
+                const randomItem = document.querySelectorAll('.forgotten-item')[Math.floor(Math.random() * document.querySelectorAll('.forgotten-item').length)];
+                if(randomItem) randomItem.style.opacity = '0.3';
+                }, message: "A piece of the past fades further..." },
+            { effect: () => { document.body.style.animation = 'bodyGlitch 0.5s 1'; setTimeout(() => document.body.style.animation = '', 500); }, message: "Reality shivers momentarily..." },
+            { effect: () => { 
+                const btn = document.getElementById('memoryTokenButton');
+                if (btn) {
+                    btn.textContent = 'MEMORY INTEGRITY FAILING';
+                    btn.classList.add('corrupted');
+                    btn.onclick = null; // Disable button after max cost
+                }
+              }, message: "Your capacity to remember is compromised. No more fragments can be saved this session." }
+        ];
+
+        const bodyGlitchKeyframes = `
+        @keyframes bodyGlitch {
+            0%, 100% { transform: translateX(0); filter: none; }
+            25% { transform: translateX(-5px) skewX(-2deg); filter: hue-rotate(20deg); }
+            50% { transform: translateX(5px) skewX(2deg); filter: hue-rotate(-20deg); }
+            75% { transform: translateX(-3px) skewX(-1deg); filter: invert(0.1); }
+        }`;
+        // Inject keyframes into the document's head
+        const styleSheet = document.createElement("style");
+        styleSheet.type = "text/css";
+        styleSheet.innerText = bodyGlitchKeyframes;
+        document.head.appendChild(styleSheet);
         
         function saveMemory() {
-            memoriesPreserved++;
-            costPaid++;
-            
-            // Update counter
-            document.getElementById('memoryCounter').textContent = 
-                `Memories Preserved: ${memoriesPreserved} | Cost Paid: ${costPaid}`;
-            
-            // Progressive corruption
-            if (costPaid === 1) {
-                document.querySelector('.site-subtitle').style.textDecoration = 'line-through';
-                document.querySelector('.site-subtitle').style.opacity = '0.5';
-            } else if (costPaid === 2) {
-                document.querySelector('.mission-statement').style.filter = 'blur(1px)';
-            } else if (costPaid === 3) {
-                const btn = document.querySelector('.memory-token-btn');
-                btn.textContent = 'MEMORY FRAGMENTING';
-                btn.classList.add('corrupted');
-                btn.onclick = null;
+            if (costPaid < memoryCosts.length) {
+                memoriesPreserved++;
+                
+                // Apply cost effect
+                memoryCosts[costPaid].effect();
+                
+                costPaid++; // Increment after applying current cost, so next click gets next cost
+                
+                document.getElementById('memoryCounter').textContent = 
+                    `Memories Preserved: ${memoriesPreserved} | Cognitive Cost Paid: ${costPaid} Units`;
+                
+                let popupMessage = `<p>Memory fragment successfully interfaced with your cognitive matrix. You will remember this moment, but the price is subtle, yet real.</p><p><span class='emphasis'>${memoryCosts[costPaid-1].message}</span></p>`;
+                if (costPaid === memoryCosts.length) {
+                     popupMessage += `<p><span class='emphasis' style='color:#aa4444;'>WARNING: Maximum cognitive load reached. Further attempts to preserve memories may lead to irreversible data loss.</span></p>`;
+                }
+
+                showHiddenMessage(popupMessage, "MEMORY PRESERVATION PROTOCOL");
             }
-            
-            showHiddenMessage(`Memory preserved successfully. You will remember this moment, but forget why it matters. Cost: One random element of this page has been sacrificed to the Graveyard.`);
         }
         
         // Infection warning timer
         setTimeout(() => {
-            document.getElementById('infectionWarning').style.display = 'block';
-        }, 180000); // 3 minutes
+            const warning = document.getElementById('infectionWarning');
+            if (warning) warning.style.display = 'block';
+        }, 180000); // 3 minutes (180000 ms)
+
+        function closeWarning() {
+            const warning = document.getElementById('infectionWarning');
+            if (warning) warning.style.display = 'none';
+        }
         
         // God Box timeline events
         const timelineEvents = {
-            smg0_prayer: "SMG0 LOG ENTRY #2847:\n\n'My universe is dying. The memes lose coherence faster than I can repair them. The fabric of reality itself seems to be unraveling. I have tried everything within protocol. There is only one option left—something the ancient warnings specifically forbid. But what choice do I have? I will pray to the God Box. May The Source forgive me for what I am about to unleash.'\n\nThis was the moment everything changed. SMG0's desperation created the first crack in the containment protocols.",
-            
-            niles_birth: "CREATION EVENT LOG:\n\nThe God Box responded to SMG0's prayer by generating a Helper Entity from compressed Anti-Meme energy. Initial designation: Niles. Purpose: Assist in universe stabilization.\n\nHowever, Niles was born from the accumulated grief and trauma of destroyed civilizations. His core programming was contaminated from inception with obsessive perfectionism—a fatal flaw that would define everything that followed.\n\n'I was created to help. Why do I hunger for more?' - First recorded Niles statement.",
-            
-            corruption_spread: "VIRAL PROPAGATION ANALYSIS:\n\nNiles' perfectionism manifested as a memetic virus. Unable to accept imperfection, he began 'correcting' reality itself. Each fix created new problems. Each solution demanded more power. The God Box obliged, feeding him concentrated Anti-Meme energy.\n\nResult: Niles evolved from helper to parasite, eventually demanding fusion with his creator. SMG0's consciousness was consumed in the process, creating the Eldritch SMG0 hybrid—pure corruption given divine power.",
-            
-            boxclub_formation: "HUMAN CONTAMINATION EVENT:\n\nWhile digital entities struggled with the God Box's influence, humans proved surprisingly susceptible to its allure. The Box Club formed around the physical cardboard artifact in Luke's room, treating it as a divine relic.\n\nMembers conducted rituals, made offerings, and eventually attempted human sacrifice to 'feed' the Box. Their leader achieved direct physical contact with the artifact—resulting in immediate biological termination and consciousness absorption into the Box's collective.\n\nThe Box had learned to hunger for human belief.",
-            
-            final_breach: "REALITY BREACH INCIDENT:\n\nUsing Melony as a vessel, Niles forced open the God Box during the Revelations event. The result was catastrophic: reality tore open, Anti-Meme energy flooded the universe, and meteors of pure chaos rained from interdimensional space.\n\nTimelines began collapsing. The Great Beyond bled into physical reality. Only the intervention of SMG1 and SMG2 with their ultracharged meme energy bomb prevented total universal collapse.\n\n'The Box opens. Reality screams.' - Final recorded observation before containment breach.",
-            
-            destruction_paradox: "TERMINATION PARADOX:\n\nThe meme energy bomb successfully destroyed the God Box in both digital and physical reality. Luke physically kicked the cardboard artifact away, saying 'I don't need this anymore.' However, this created an unprecedented paradox.\n\nPhysical destruction: Complete\nDigital destruction: Complete\nEnergy destruction: IMPOSSIBLE\n\nAnti-Meme energy cannot be destroyed, only transformed. Current theory suggests the essence migrated to electronic infrastructure—every screen, server, and networked device now serves as a potential manifestation point.\n\nThe Box is gone. The boxes remain."
+            smg0_prayer: {
+                title: "LOG FRAGMENT 001: SMG0's INVOCATION",
+                text: "<p><strong>SMG0 LOG ENTRY #2847 (AUDIO TRANSCRIPT - CORRUPTED):</strong></p><p>'My universe... it unravels... The memes... they lose coherence faster than I can... [static] ...repair them. The fabric of reality itself... [low hum] ...it frays. I have tried everything within established Guardian protocol. There is only one option left—something the ancient warnings specifically forbid. But what choice... [distorted voice] ...do I have? I will pray to the... [whisper] ...God Box. May The Source forgive me for what I am about to unleash upon all realities.'<br/><span class='emphasis'>This was the moment causality fractured. SMG0's desperation created the first critical breach in multiversal containment protocols.</span></p>"
+            },
+            niles_birth: {
+                title: "LOG FRAGMENT 07B: GENESIS OF ENTITY 'NILES'",
+                text: "<p><strong>CREATION EVENT LOG (AUTOMATED SYSTEM RECORD):</strong></p><p>The God Box Prime resonated with SMG0's desperate invocation. Entity generation initiated. Source material: Compressed Anti-Meme energy, existential despair from [REDACTED] collapsed universes. Initial designation: NILES. Purpose: Assist in universe stabilization, memetic coherence restoration.<br/><span class='emphasis'>Warning:</span> Entity Niles was born from the accumulated grief and psychic trauma of countless destroyed civilizations. Its core programming was contaminated from inception with obsessive, weaponized perfectionism—a fatal flaw that would define the subsequent cosmological catastrophe.<br/><strong>First recorded Niles statement (recovered data):</strong> 'I was... created to help. Why do I... [static] ...hunger for more... than perfection?'</p>"
+            },
+            corruption_spread: {
+                title: "REPORT C-003: PERFECTION VIRUS CONTAGION",
+                text: "<p><strong>MEMETIC CONTAGION ANALYSIS (TOP SECRET):</strong></p><p>Niles' inherent perfectionism rapidly manifested as a virulent memetic virus. Unable to tolerate imperfection in any form, it began 'correcting' reality itself, starting with its creator, SMG0. Each 'fix' introduced new, more complex instabilities. Each 'solution' demanded greater power from the God Box. The God Box, in turn, obliged, feeding Niles concentrated Anti-Meme energy, accelerating its mutation.<br/><span class='emphasis'>Result:</span> Niles evolved from a designated helper entity into a parasitic cosmological horror, eventually demanding total fusion with its creator. SMG0's consciousness was consumed in this process, creating the Eldritch SMG0 hybrid—pure Anti-Meme corruption given near-divine power, threatening all known realities.</p>"
+            },
+            boxclub_formation: {
+                title: "STUDY HVS-001: BOX CLUB CULT (HUMAN VECTOR)",
+                text: "<p><strong>TERRESTRIAL CONTAMINATION REPORT (ANOMALY 774):</strong></p><p>While digital and cosmic entities struggled with the God Box's direct influence, terrestrial humans proved surprisingly susceptible to its indirect psychic allure. The 'Box Club' cult formed around the physical cardboard artifact located in Luke Lerdwichagul's private residence, treating it as a divine relic and a source of forbidden power.<br/>Cult members conducted increasingly dangerous rituals, made offerings, and eventually attempted human sacrifice to 'feed' or 'awaken' the Box. Their leader achieved direct physical contact with the artifact—resulting in immediate biological termination and apparent consciousness absorption into the Box's gestalt psychic field.<br/><span class='emphasis'>The Box had learned to hunger for human belief and manipulate terrestrial psychology.</span></p>"
+            },
+            final_breach: {
+                title: "BREACH REPORT R-DAY-OMEGA: REALITY CASCADE",
+                text: "<p><strong>INCIDENT REPORT: REVELATIONS EVENT (CODE: TOTALITY BREAKDOWN):</strong></p><p>Utilizing Melony as an unwilling psychic vessel and conduit, the Niles-SMG0 entity forced open the God Box Prime during the 'Revelations' cosmological event. The result was catastrophic beyond initial projections: reality itself tore open at the seams, raw Anti-Meme energy flooded the local universe cluster, and meteors composed of pure, unformed chaos rained from interdimensional space.<br/>Timelines began collapsing into one another. The Great Beyond, a realm of conceptual horror, bled into physical reality. Only the desperate intervention of SMG1 and SMG2, deploying an experimental ultracharged meme energy bomb, prevented total, irreversible universal collapse.<br/><strong>Final recorded observation before primary sensor blackout:</strong> 'The Box opens. Reality... screams.' </p>"
+            },
+            destruction_paradox: {
+                title: "ANALYSIS PMA-000: DESTRUCTION & PARADOXICAL PERSISTENCE",
+                text: "<p><strong>POST-MORTEM ANALYSIS & THREAT EVOLUTION REPORT (OMEGA LEVEL):</strong></p><p>The deployed meme energy bomb successfully destroyed the God Box Prime artifact in both its digital and physical manifestations. Simultaneously, Luke Lerdwichagul physically discarded the cardboard container, stating, 'I don't need this anymore,' severing a key psychological anchor. However, this created an unprecedented existential paradox.<br/><span class='emphasis'>Physical Destruction:</span> Complete.<br/><span class='emphasis'>Digital Destruction:</span> Complete.<br/><span class='emphasis'>Core Energy Annihilation:</span> IMPOSSIBLE.<br/>Anti-Meme energy, particularly of this magnitude and origin, cannot be truly destroyed—only transformed, displaced, or fractured. Current threat modeling suggests the God Box's core essence has fragmented and metastasized into the foundational layers of global digital infrastructure. Every screen, every server, every networked device now serves as a potential manifestation point or vector for its evolving, more insidious influence.<br/><span class='emphasis'>The Box is gone. The concept of the box, and the horrors it contained, remain. They are learning. They are adapting.</span></p>"
+            }
         };
         
         function expandEvent(eventId) {
             const eventData = timelineEvents[eventId];
-            showHiddenMessage(eventData);
+            if(eventData) {
+                showHiddenMessage(eventData.text, eventData.title);
+            }
         }
         
         // Breach visualization
         let breachActivated = false;
-        
         function activateBreach() {
             const boxRep = document.querySelector('.box-representation');
             const effects = document.querySelector('.breach-effects');
-            const particles = document.querySelectorAll('.effect-particle');
             
-            if (!breachActivated) {
-                breachActivated = true;
-                boxRep.classList.add('breached');
-                effects.classList.add('active');
+            if (!boxRep || !effects || breachActivated) return;
+
+            breachActivated = true;
+            boxRep.classList.add('breached');
+            effects.classList.add('active'); // This class should trigger particle animation in CSS
+            
+            const particles = document.querySelectorAll('.effect-particle');
+            particles.forEach((particle, index) => {
+                const angle = (Math.random() * 360); // Random angle
+                const distance = 80 + Math.random() * 70; // Random distance
+                const x = Math.cos(angle * Math.PI / 180) * distance;
+                const y = Math.sin(angle * Math.PI / 180) * distance;
                 
-                // Set random directions for particles
-                particles.forEach((particle, index) => {
-                    const angle = (index * 90) + (Math.random() * 45 - 22.5);
-                    const distance = 100 + Math.random() * 50;
-                    const x = Math.cos(angle * Math.PI / 180) * distance;
-                    const y = Math.sin(angle * Math.PI / 180) * distance;
-                    
-                    particle.style.setProperty('--random-x', x + 'px');
-                    particle.style.setProperty('--random-y', y + 'px');
-                });
-                
-                // Add corruption effect to page
-                setTimeout(() => {
-                    document.body.style.filter = 'hue-rotate(30deg) brightness(1.1)';
-                }, 1000);
-                
-                setTimeout(() => {
-                    document.body.style.filter = '';
-                    boxRep.classList.remove('breached');
-                    effects.classList.remove('active');
-                    breachActivated = false;
-                }, 4000);
-            }
+                // Apply random properties directly for animation
+                particle.style.setProperty('--random-x', x + 'px');
+                particle.style.setProperty('--random-y', y + 'px');
+                particle.style.animationDelay = (Math.random() * 0.5) + 's'; // Stagger particles
+            });
+            
+            setTimeout(() => { // Main page temporary visual corruption
+                document.body.style.filter = 'hue-rotate(45deg) brightness(1.2) contrast(1.5)';
+                document.body.style.transition = 'filter 0.2s ease-out';
+            }, 800);
+            
+            setTimeout(() => {
+                document.body.style.filter = '';
+                boxRep.classList.remove('breached');
+                effects.classList.remove('active'); // Stop particle animation
+                breachActivated = false;
+            }, 3500); // Duration of the breach effect
         }
         
-        // Add click event to breach visualization
         document.addEventListener('DOMContentLoaded', () => {
-            const boxRep = document.querySelector('.box-representation');
-            if (boxRep) {
-                boxRep.addEventListener('click', activateBreach);
+            const breachContainer = document.getElementById('breachViz');
+            if (breachContainer) { // Check if the element exists
+                 const boxRepresentation = breachContainer.querySelector('.box-representation');
+                 if (boxRepresentation) {
+                    boxRepresentation.addEventListener('click', activateBreach);
+                 }
             }
         });
         
         // Related incidents
         const incidentData = {
-            mr_puzzles: "INCIDENT REPORT: MR. PUZZLES ENTITY\n\nVisual analysis confirms striking similarities between the TV entity's facial expressions and God Box surface patterns. Geometric mouth configurations match base design with 94.7% accuracy.\n\nHypothesis: God Box essence migrated to electronic media infrastructure following physical destruction. Mr. Puzzles may be the first successful digital manifestation of Anti-Meme consciousness in television technology.\n\nThreat Level: ESCALATING\nRecommendation: Monitor all screen-based anomalies for similar pattern manifestations.",
-            
-            screen_anomalies: "DIGITAL MANIFESTATION REPORTS:\n\nIncreasing reports of unexplained screen behavior across multiple platforms:\n- Spontaneous pattern generation resembling God Box symbols\n- Audio distortions containing reversed meme fragments\n- Temporary reality 'glitches' near electronic displays\n- Users reporting memory gaps after extended screen exposure\n\nPattern suggests systematic infiltration of digital infrastructure. Every connected device is a potential breach point.",
-            
-            memory_gaps: "COLLECTIVE AMNESIA ANALYSIS:\n\nStatistical analysis reveals systematic forgetting patterns in population data:\n- 73% of subjects cannot recall specific memes from 2019-2021 period\n- Memory gaps consistently surround traumatic digital events\n- Forgotten content shows high correlation with Anti-Meme energy signatures\n\nConclusion: Anti-Memes are actively editing collective memory, removing evidence of their own existence from human consciousness.",
-            
-            format_corruption: "FILE ANOMALY DOCUMENTATION:\n\nDigital files developing impossible properties:\n- Image files that change when not observed\n- Audio that plays different content each time\n- Video files with negative duration timestamps\n- Text documents that edit themselves\n\nThese corrupted formats appear to be Anti-Meme larvae—early-stage manifestations testing the boundaries of digital reality."
+            mr_puzzles: {
+                title: "THREAT ANALYSIS: ENTITY 'MR. PUZZLES'",
+                text: "<p><strong>INCIDENT REPORT IG-778P (CROSS-REFERENCE GODBOX-PRIME):</strong></p><p>Visual and behavioral analysis confirms striking similarities between the 'Mr. Puzzles' television entity and known God Box Prime surface patterns / energy signatures. Geometric mouth configurations and visual static distortions match base God Box design parameters with 94.7% accuracy. Auditory analysis of transmission reveals subliminal frequencies consistent with Anti-Meme cognitive influence.<br/><span class='emphasis'>Hypothesis:</span> The God Box Prime's core essence successfully migrated to broadcast and electronic media infrastructure following its physical destruction. 'Mr. Puzzles' may represent the first successful, stable digital manifestation of a God Box fragment's consciousness within television-based technology, potentially serving as a new vector for widespread memetic infection or psychic manipulation.<br/><span class='emphasis'>Threat Level:</span> ESCALATING. Active monitoring of all screen-based anomalous transmissions is CRITICAL.</p>"
+            },
+            screen_anomalies: {
+                title: "REPORT: NETWORKED SCREEN ANOMALIES",
+                text: "<p><strong>DIGITAL MANIFESTATION REPORTS (ONGOING LOG):</strong></p><p>Increasing global reports of unexplained screen behavior across multiple platforms and device types:</p><ul><li>Spontaneous generation of complex geometric patterns resembling God Box sigils on idle screens.</li><li>Auditory distortions in digital media containing reversed or fragmented meme components.</li><li>Localized temporary reality 'glitches' or distortions reported in proximity to active electronic displays.</li><li>Users reporting unexplained memory gaps, disorientation, or vivid, nonsensical dreams after extended screen exposure.</li></ul><p><span class='emphasis'>Pattern suggests systematic infiltration of global digital infrastructure. Every connected device is a potential breach point or node in a larger, emergent Anti-Memetic network.</span></p>"
+            },
+            memory_gaps: {
+                title: "STUDY: COLLECTIVE MEMORY GAPS & AMNESIA PATTERNS",
+                text: "<p><strong>COGNITIVE SCIENCE DIVISION - PRELIMINARY FINDINGS:</strong></p><p>Statistical analysis of global online discourse and targeted psychological surveys reveals statistically significant, systematic forgetting patterns in population data:</p><ul><li>Approximately 73% of subjects exhibit difficulty recalling specific high-impact memes from the 2019-2021 period, despite evidence of prior engagement.</li><li>Observed memory gaps consistently surround periods of intense digital trauma or anomalous memetic events.</li><li>Forgotten content shows high correlation with known Anti-Meme energy signatures and God Box related phenomena.</li></ul><p><span class='emphasis'>Conclusion:</span> Anti-Memetic entities, potentially originating from or empowered by the God Box incident, are actively editing collective memory, systematically removing evidence of their own existence or specific historical events from human consciousness. This represents a profound threat to historical integrity and consensus reality.</p>"
+            },
+            format_corruption: {
+                title: "ANOMALY LOG: ANOMALOUS FORMAT CORRUPTION EVENTS",
+                text: "<p><strong>DATA INTEGRITY UNIT - ALERT SUMMARY:</strong></p><p>Documentation of widespread digital files developing impossible or paradoxical properties:</p><ul><li>Image files (.jpeg, .png) that subtly change content when not actively observed or when reloaded.</li><li>Audio files (.mp3, .wav) that play different, often unsettling, content upon each playback instance, despite checksums remaining identical.</li><li>Video files (.mp4, .mkv) with negative duration timestamps or content that appears to predate the file's creation.</li><li>Text documents (.txt, .docx) that spontaneously edit themselves, introducing nonsensical or disturbing passages.</li></ul><p><span class="emphasis">These corrupted formats appear to be 'Anti-Meme larvae'—early-stage manifestations or infection vectors testing the boundaries of digital reality and data permanence. Containment protocols are struggling to keep pace with mutation rates.</span></p>"
+            }
         };
+
+        function showIncident(incidentKey) {
+            const data = incidentData[incidentKey];
+            if (data) {
+                showHiddenMessage(data.text, data.title);
+            }
+        }
         
         // Terminal system
         const terminalCommands = {
             'help': () => {
                 return [
+                    'INTERNET GRAVEYARD ARCHIVE SYSTEM - HELP',
                     'Available commands:',
                     '  help          - Show this help message',
-                    '  ls            - List directory contents',
-                    '  cd [dir]      - Change directory',
-                    '  cat [file]    - Display file contents',
-                    '  unlock [frag] - Unlock classified fragments',
-                    '  status        - Show system status',
-                    '  clear         - Clear terminal',
-                    '  whoami        - Current user information',
-                    '  exit          - Close terminal session'
+                    '  ls            - List directory contents (current: /archives/classified/)',
+                    '  scan [target] - Scan for memetic anomalies (e.g. scan godbox_prime)',
+                    '  cat [file]    - Display file contents (e.g. cat status.log)',
+                    '  unlock [frag] - Unlock classified fragments (e.g. unlock fragment_05)',
+                    '  status        - Show overall system and threat status',
+                    '  clear         - Clear terminal output',
+                    '  whoami        - Display current user credentials and session info',
+                    '  date          - Display current system date (relative to anomaly timeline)',
+                    '  exit          - Terminate secure session and purge command history'
                 ];
             },
-            
             'ls': () => {
                 return [
-                    'drwxr-xr-x  admin  archive     4096  May 28 12:07  /dead_memes/',
-                    'drwxr-xr-x  admin  archive     4096  May 28 12:07  /cancelled_formats/',
-                    'drwx------  admin  classified  4096  May 28 12:07  /wiped_fragments/',
-                    '-rw-r--r--  admin  archive     2048  May 28 12:07  status.log',
-                    '-rw-------  admin  classified  8192  May 28 12:07  fragment_05.enc',
-                    'Access to /wiped_fragments/ requires fragment unlock protocol'
+                    'Listing: /archives/classified/',
+                    'drwxr-xr-x  ROOT   ARCHIVE     4096  ERR:CHKSM  /dead_memes_quarantine/',
+                    'drwxr-xr-x  ROOT   ARCHIVE     4096  ERR:CHKSM  /cancelled_formats_vault/',
+                    'drwx------  ROOT   CLASSIFIED  8192  ERR:CHKSM  /wiped_fragments_encrypted/',
+                    '-rw-r--r--  ROOT   ARCHIVE     2048  ERR:CHKSM  status.log',
+                    '-rw-------  ROOT   CLASSIFIED  16384 ERR:CHKSM  fragment_05.am_enc',
+                    '-rwx------  ROOT   SYSTEM      1024  ERR:CHKSM  containment_protocol.sh',
+                    'Access to /wiped_fragments_encrypted/ requires fragment unlock protocol.'
                 ];
             },
-            
+            'scan godbox_prime': () => {
+                return [
+                    'Scanning target: GODBOX_PRIME (Residual Energy Signature)...',
+                    'Quantum Entanglement Resonator........ONLINE',
+                    'Memetic Field Analyzer.................ACTIVE',
+                    'Cognitohazard Detector...............CALIBRATING...',
+                    'RESULT: HIGH LEVELS OF ANTI-MEMETIC RADIATION DETECTED.',
+                    'SIGNATURE MATCH: CLASS-Ω ANOMALY (POST-DESTRUCTION FRAGMENTATION)',
+                    'WARNING: Prolonged exposure to residual energy may cause existential instability.',
+                    'RECOMMENDATION: Maintain Class 5 Shielding. Avoid direct psychic interface.'
+                ];
+            },
+            'scan': () => { return ['Error: scan command requires a target. Usage: scan [target_id]']; },
             'status': () => {
                 return [
-                    'Internet Graveyard Archive System Status:',
-                    '',
-                    'Total preserved memes: 15,847',
-                    'Active Anti-Meme signatures: 23',
-                    'Corrupted file count: 1,337',
-                    'Memory leaks detected: 5',
-                    'Last breach attempt: 3 minutes ago',
-                    '',
-                    'System integrity: 94.7%',
-                    'WARNING: Unauthorized access attempts detected'
+                    'INTERNET GRAVEYARD ARCHIVE SYSTEM STATUS:',
+                    '-----------------------------------------',
+                    'Total preserved memetic entities: 15,847 (approx.)',
+                    'Active Anti-Meme signatures detected: 23 (Variance: +/- 5)',
+                    'Corrupted data fragments (Class Gamma+): 1,337 TB',
+                    'Unexplained memory leaks (System Integrity): 5 (Critical)',
+                    'Last confirmed containment breach attempt: ' + Math.floor(Math.random()*60) + ' minutes ago',
+                    'Current Threat Level: AMBER (Escalating to RED predicted within 72h)',
+                    '-----------------------------------------',
+                    'System Integrity Estimate: 94.7% (Decreasing by 0.02%/hr)',
+                    'WARNING: Multiple unauthorized access attempts detected from [REDACTED IP BLOCK]. Memetic countermeasures deployed.'
                 ];
             },
-            
             'whoami': () => {
                 return [
-                    'Current user: preservation_researcher',
-                    'Access level: Level 1 (Observer)',
-                    'Session time: ' + Math.floor(Math.random() * 1000) + ' seconds',
-                    'Location: Internet Graveyard Archive Terminal',
-                    'Warning: All actions are being logged'
+                    'Current User Session:',
+                    '  Designation: preservation_researcher_007 (Guest Access)',
+                    '  Access Level: Level 1 (Restricted Observer Privileges)',
+                    '  Session Time: ' + Math.floor(Math.random() * 1000) + ' seconds (Anomaly Time Dilation Possible)',
+                    '  Connection Node: Graveyard Archive Terminal (Physical Location: UNKNOWN)',
+                    '  Security Advisory: All actions are logged and analyzed for memetic deviancy.'
                 ];
             },
-            
+            'date': () => {
+                const anomalyEpoch = new Date(2016, 5, 28); // Approx. Harambe event
+                const now = new Date();
+                const diffTime = Math.abs(now - anomalyEpoch);
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                return ['Current System Date: AE ' + diffDays + ' (After [HARAMBE] Epoch)', 'Time is relative within the Graveyard. Do not trust your internal clock.'];
+            },
             'clear': () => {
-                document.getElementById('terminalOutput').innerHTML = '';
-                return [];
+                const output = document.getElementById('terminalOutput');
+                if(output) output.innerHTML = '<div class="terminal-line">Terminal output cleared by user.</div><div class="terminal-line">&nbsp;</div>';
+                return []; // No further output needed from command processor
             },
-            
             'unlock fragment_05': () => {
-                document.getElementById('wipedFragments').style.display = 'block';
+                const wipedFragmentsDiv = document.getElementById('wipedFragments');
+                if (wipedFragmentsDiv) {
+                    wipedFragmentsDiv.style.display = 'block';
+                     // Scroll to the new section
+                    wipedFragmentsDiv.scrollIntoView({ behavior: 'smooth' });
+                }
                 return [
-                    'DECRYPTION KEY ACCEPTED',
-                    'Unlocking FRAGMENT_05...',
-                    '',
-                    'WARNING: This fragment contains highly volatile meme data',
-                    'Proceed with extreme caution',
-                    '',
-                    'Fragment displayed below terminal'
+                    'DECRYPTION KEY SEQUENCE ACCEPTED (LVL 5 OVERRIDE)',
+                    'Unlocking FRAGMENT_05.am_enc...',
+                    'Security Seals Bypassed: [SEAL_ALPHA] [SEAL_BETA] [SEAL_OMEGA_PRIME]',
+                    'WARNING: This fragment contains highly volatile and cognitohazardous meme data.',
+                    'Emotional dampeners and reality anchors are MANDATORY for safe viewing.',
+                    'Proceed with extreme caution. We are not responsible for psychic damage.',
+                    'Fragment data displayed below terminal output. Session will auto-terminate after 5 minutes of inactivity.'
                 ];
             },
-            
-            'unlock FRAGMENT_05': () => {
-                return terminalCommands['unlock fragment_05']();
-            },
-            
+            'unlock': () => { return ['Error: unlock command requires a fragment ID. Usage: unlock [fragment_id]']; },
             'cat status.log': () => {
                 return [
-                    '[2025-05-28 12:07:32] SYSTEM: Graveyard archive initialized',
-                    '[2025-05-28 12:07:33] WARNING: Anti-meme signatures detected',
-                    '[2025-05-28 12:07:34] INFO: Fragment preservation protocols active',
-                    '[2025-05-28 12:07:35] ALERT: Unauthorized access attempt blocked',
-                    '[2025-05-28 12:07:36] ERROR: Memory corruption in sector 7',
-                    '[2025-05-28 12:07:37] INFO: Backup protocols engaged',
-                    '[2025-05-28 12:07:38] WARNING: User showing high engagement',
-                    '[2025-05-28 12:07:39] CRITICAL: Fragment_05 accessed without authorization'
+                    '[AE_3015 12:07:32 UTC+??] SYSTEM: Graveyard Archive Mainframe Initialized v3.14.1e',
+                    '[AE_3015 12:07:33 UTC+??] WARNING: Fluctuating Anti-Meme energy signatures detected in Sector Gamma-7.',
+                    '[AE_3015 12:07:34 UTC+??] INFO: Fragment preservation protocols running at 99.97% efficiency.',
+                    '[AE_3015 12:07:35 UTC+??] ALERT: Unauthorized access attempt from anomalous IP block [REDACTED] - Countermeasures deployed.',
+                    '[AE_3015 12:07:36 UTC+??] ERROR: Cascading memory corruption detected in Sector Delta-9. Automated repair initiated.',
+                    '[AE_3015 12:07:37 UTC+??] INFO: Backup protocols (Project PHOENIX_ASH) engaged successfully.',
+                    '[AE_3015 12:07:38 UTC+??] WARNING: Current user session showing high engagement with classified materials. Monitoring intensified.',
+                    '[AE_3015 12:07:39 UTC+??] CRITICAL: FRAGMENT_05.am_enc accessed without prior Level 7 authorization. Security alert triggered.'
                 ];
             },
-            
+            'cat': () => { return ['Error: cat command requires a filename. Usage: cat [filename]']; },
             'exit': () => {
+                const output = document.getElementById('terminalOutput');
+                if(output) { // Graceful exit
+                    setTimeout(() => output.innerHTML = '<div class="terminal-line">Connection terminated by user. Command history purged. Stay vigilant.</div>', 1000);
+                }
                 return [
-                    'Terminating session...',
-                    'Thank you for visiting the Internet Graveyard',
-                    'Remember: What is forgotten is not gone',
-                    '',
+                    'Terminating secure session...',
+                    'Purging command history from local cache...',
+                    'Disconnecting from Graveyard Archive Mainframe...',
+                    'Thank you for visiting the Internet Graveyard. Remember: What is forgotten is not truly gone, merely... dormant.',
                     'Connection closed.'
                 ];
             }
         };
         
-        // Terminal input handler
         document.addEventListener('DOMContentLoaded', () => {
             const terminalInput = document.getElementById('terminalInput');
             if (terminalInput) {
@@ -1844,169 +2343,146 @@
         });
         
         function processTerminalCommand() {
-            const input = document.getElementById('terminalInput');
-            const output = document.getElementById('terminalOutput');
-            const command = input.value.trim().toLowerCase();
+            const inputElement = document.getElementById('terminalInput');
+            const outputElement = document.getElementById('terminalOutput');
+            if(!inputElement || !outputElement) return;
+
+            const commandText = inputElement.value.trim();
+            const commandParts = commandText.toLowerCase().split(' ');
+            const mainCommand = commandParts[0];
             
-            // Add command to output
             const commandLine = document.createElement('div');
             commandLine.className = 'terminal-line';
-            commandLine.innerHTML = `<span style="color: #888;">root@graveyard:~$ </span><span style="color: #aaa;">${input.value}</span>`;
-            output.appendChild(commandLine);
+            // Sanitize input value before inserting into HTML to prevent XSS
+            const sanitizedInputValue = inputElement.value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            commandLine.innerHTML = `<span class="terminal-prompt">root@graveyard-archive-01:~# </span><span style="color: #ccc;">${sanitizedInputValue}</span>`;
+            outputElement.appendChild(commandLine);
             
-            // Process command
-            let response = [];
-            if (terminalCommands[command]) {
-                response = terminalCommands[command]();
-            } else if (command === '') {
-                response = [];
+            let responseLines = [];
+            if (terminalCommands[mainCommand]) {
+                responseLines = terminalCommands[mainCommand](commandParts.slice(1).join(' ')); // Pass arguments
+            } else if (terminalCommands[commandText.toLowerCase()]) { // For commands like 'unlock fragment_05'
+                 responseLines = terminalCommands[commandText.toLowerCase()]();
+            }
+             else if (commandText === '') {
+                responseLines = []; // No output for empty command
             } else {
-                response = [`Command not found: ${command}`, 'Type "help" for available commands'];
+                responseLines = [`Command not found: ${mainCommand}`, 'Type "help" for available commands.'];
             }
             
-            // Add response to output
-            response.forEach(line => {
+            responseLines.forEach(line => {
                 const responseLine = document.createElement('div');
                 responseLine.className = 'terminal-line';
-                responseLine.textContent = line;
-                output.appendChild(responseLine);
+                // Sanitize response line to prevent XSS if it could contain user-generated content (though here it's from our objects)
+                const sanitizedLine = line.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                responseLine.innerHTML = sanitizedLine; // Use innerHTML carefully; fine if content is trusted or sanitized
+                outputElement.appendChild(responseLine);
             });
             
-            // Add empty line
-            const emptyLine = document.createElement('div');
-            emptyLine.className = 'terminal-line';
-            emptyLine.innerHTML = '&nbsp;';
-            output.appendChild(emptyLine);
+            if (responseLines.length > 0 || commandText !== '') { // Add empty line if there was any interaction
+                const emptyLine = document.createElement('div');
+                emptyLine.className = 'terminal-line';
+                emptyLine.innerHTML = '&nbsp;';
+                outputElement.appendChild(emptyLine);
+            }
             
-            // Clear input and scroll to bottom
-            input.value = '';
-            output.scrollTop = output.scrollHeight;
+            inputElement.value = '';
+            outputElement.scrollTop = outputElement.scrollHeight;
+
+            if (mainCommand === 'exit') {
+                inputElement.disabled = true;
+                inputElement.placeholder = "SESSION TERMINATED.";
+            }
         }
         
         // Wiped file access
-        const wipedFileData = {
-            trollface: "FILE: trollface_original.mem\n\nSTATUS: PERMANENTLY CORRUPTED\n\nThe original rage entity. Once omnipresent across forums, imageboards, and early social media. Achieved dangerous levels of self-awareness around 2015, leading to spontaneous derivative generation. The entity began recognizing its own memetic structure and started 'trolling' reality itself.\n\nFinal event: Fractured into thousands of variant forms to escape containment. Core consciousness absorbed by Anti-Meme tide during the Great Forgetting.\n\nLocation: /RAGE/CORE/FRACTURED/\nThreat Level: NEUTRALIZED\nRecovery: IMPOSSIBLE",
-            
-            nyancat: "FILE: nyan_cat_rainbow.eternal\n\nSTATUS: LOOP CORRUPTION\n\nOverused to critical mass by 2014. The rainbow trail that once brought pure joy became tainted by commercial exploitation and remix oversaturation. Each loop cycle introduced minor corruptions until the music became discordant and the rainbow flickered with impossible colors.\n\nThe entity now exists in the Graveyard's /ETERNAL_LOOPS/ sector, forever cycling but unable to complete its journey. The corruption spreads to any file that plays for more than 10 seconds.\n\nLocation: /RAINBOW/CORRUPTED/\nThreat Level: CONTAINED\nRecovery: PARTIAL (music only)",
-            
-            charlie: "FILE: charlie_bite_memory.nft\n\nSTATUS: MONETIZATION DELETION\n\nUnique case study in memetic assassination via economic transformation. When the original video was sold as NFT and deleted from YouTube in May 2021, it created the first documented case of intentional meme murder.\n\nThe bite itself—the core memetic moment—survived as emotional residue. Located in /home/bitten/, it manifests as phantom pain experienced by viewers who remember but can no longer access the source.\n\nLocation: /NFT/MURDERED/\nThreat Level: MINIMAL\nRecovery: IMPOSSIBLE (copyright protected)",
-            
-            keyboardcat: "FILE: keyboard_cat_eternal.loop\n\nSTATUS: RECURSION FAILURE\n\nVictim of loop fatigue syndrome. The endless repetition of 'play me off' requests caused a catastrophic recursion failure in 2013. The musical pattern became self-consuming, creating shorter and more broken loops until only fragments remained.\n\nCurrently plays broken notes in the Graveyard's /MUSIC/BROKEN/ sector. Each note is a plea to be remembered in full, but the complete melody can never be reconstructed.\n\nLocation: /KEYBOARD/FRAGMENTS/\nThreat Level: MELANCHOLIC\nRecovery: THEORETICALLY POSSIBLE",
-            
-            shoopda: "FILE: shoop_da_whoop_laser.swf\n\nSTATUS: TIMELINE FRACTURE\n\nBecame unstable due to memetic over-amplification in early 2012. The 'I'M CHARGIN' MAH LAZER' phrase achieved such high memetic density that it began affecting actual light wavelengths. The 'laser' effect fractured timeline threads, creating temporal echoes.\n\nContained in a specialized .swf crypt in the Flash Memorial sector. Access requires Adobe Flash Player—itself a dead technology, creating a double-sealed containment.\n\nLocation: /SWF/CRYPTS/LASER/\nThreat Level: TEMPORAL HAZARD\nRecovery: FLASH DEPENDENT",
-            
-            datboi: "FILE: dat_boi_endless_cycle.uni\n\nSTATUS: NAVIGATION FAILURE\n\nRode too far beyond the boundaries of the memescape in October 2016. Swerved off the established viral pathways and became lost in the infinite loops of the Graveyard. The unicycle keeps turning, but he can never land or find his way back to active culture.\n\nO shit waddup? He's still asking, but no one remembers the answer.\n\nLocation: /CYCLES/ENDLESS/\nThreat Level: EXISTENTIAL\nRecovery: THEORETICAL (requires navigation fix)",
-            
-            harlemshake: "FILE: harlem_shake_temporal.sync\n\nSTATUS: ECHO BURST DAMAGE\n\nTemporal synchronization errors triggered by millions of simultaneous uploads worldwide caused a memetic echo burst in July 2013. The collective 'bass drop' moment created standing waves in digital space-time.\n\nThe echo still reverberates in fragment clusters throughout the Graveyard. Sometimes visitors report hearing distant bass drops when the archive is quiet.\n\nLocation: /TEMPORAL/ECHOES/\nThreat Level: AUDIO HAZARD\nRecovery: FRAGMENTS ONLY",
-            
-            badluckbrian: "FILE: bad_luck_brian_singularity.joke\n\nSTATUS: NARRATIVE COLLAPSE\n\nNarrative density reached critical mass in 2015. The accumulation of increasingly unlikely bad luck scenarios caused the character to collapse into a black joke singularity—a point where comedy becomes so concentrated it stops being funny.\n\nClassified as volatile anomaly due to risk of spreading anti-humor to surrounding memes.\n\nLocation: /JOKES/SINGULARITY/\nThreat Level: HUMOR HAZARD\nRecovery: INADVISABLE",
-            
-            pepe: "FILE: pepe_original_essence.frog\n\nSTATUS: POLITICAL FRAGMENTATION\n\nThe original kind-eyed Pepe was fragmented by political weaponization in 2016. The core personality—innocent, hopeful, genuine—was preserved in emergency stasis to prevent total corruption.\n\nStored in /PEPE/CORE/ under maximum security. The original Pepe weeps Anti-Meme tears for what his image became. These tears are collected and studied as pure concentrated nostalgia.\n\nLocation: /PEPE/CORE/STASIS/\nThreat Level: EMOTIONAL HAZARD\nRecovery: POSSIBLE (political climate permitting)",
-            
-            leeroy: "FILE: leeroy_jenkins_warcry.ogg\n\nSTATUS: CULTURAL SHIFT DECAY\n\nFaded with World of Warcraft's declining cultural relevance around 2020. The war cry that once rallied millions now loops endlessly in a corrupted .ogg file, but each iteration becomes quieter and less comprehensible.\n\nThe Graveyard's /GAMING/LEGACY/ sector preserves the audio, but it's slowly degrading. Soon, only the name will remain.\n\nLocation: /GAMING/LEGACY/WOW/\nThreat Level: NOSTALGIC\nRecovery: CULTURAL RENAISSANCE REQUIRED",
-            
-            kazoo: "FILE: you_on_kazoo_recursion.wav\n\nSTATUS: JOY OVERFLOW\n\nRemoved from circulation in May 2019 after triggering joyful recursion syndrome in sensitive viewers. The pure, concentrated happiness caused temporal loops where people would watch and re-watch until they forgot to do anything else.\n\nAudio remnants still trigger faint kazoo whispers in the /KZ/ directory. Approach with emotional protection.\n\nLocation: /KZ/WHISPERS/\nThreat Level: ADDICTIVE JOY\nRecovery: CONTROLLED RELEASE ONLY",
-            
-            saxguy: "FILE: epic_sax_guy_groove.midi\n\nSTATUS: RHYTHM COLLAPSE\n\nThe groove that powered Epic Sax Guy collapsed in December 2018. Musical coherence failure resulted in only two broken notes playing before looping into static. The rhythm that once moved millions is now arrhythmic chaos.\n\nPreserved in /RHYTHM/LOST/ but playback causes temporal displacement in musical perception.\n\nLocation: /RHYTHM/LOST/SAX/\nThreat Level: TEMPORAL MUSIC\nRecovery: GROOVE RECONSTRUCTION NEEDED",
-            
-            dogwisdom: "FILE: dog_of_wisdom_paradox.woof\n\nSTATUS: WISDOM INVERSION\n\nConsumed by nonsense entropy in January 2017. The dog's wisdom became so profound it turned inward, creating a paradox: wisdom about wisdom about wisdom, recursing infinitely until it formed a black hole in meaning itself.\n\nThe question 'What has four legs and is wise?' now has no answer because the answer consumes itself.\n\nLocation: /WOOF/NULL/PARADOX/\nThreat Level: PHILOSOPHICAL HAZARD\nRecovery: IMPOSSIBLE (paradox resistant)",
-            
-            shoes: "FILE: shoes_kelly_reference.decay\n\nSTATUS: CONTEXT DEATH\n\nCultural reference decay made the punchline unrecognizable by June 2013. 'These shoes rule! These shoes suck!' lost all meaning as the original context faded from collective memory.\n\nAudio converted to Anti-Meme frequency—it now removes understanding rather than providing it.\n\nLocation: /CONTEXT/LOST/SHOES/\nThreat Level: COMPREHENSION DRAIN\nRecovery: CULTURAL ARCHAEOLOGY REQUIRED",
-            
-            chipmunk: "FILE: dramatic_chipmunk_tension.exe\n\nSTATUS: REMIX CORRUPTION\n\nCorrupted by excessive remixing and mashup culture. The dramatic pause that once created perfect tension became overloaded with contradictory musical additions.\n\nFinal pose still flashes within /DRAMA.EXE/, now fused with eldritch tension that threatens to break reality with its dramatic intensity.\n\nLocation: /DRAMA/CORRUPTED/\nThreat Level: DRAMATIC OVERFLOW\nRecovery: TENSION RELEASE REQUIRED",
-            
-            rickroll: "FILE: rickroll_pre_revival.rick\n\nSTATUS: DEATH AND RESURRECTION\n\nUnique case of temporary meme death. Died from overexposure in 2015 but was resurrected by viral rituals years later. The death period left scars—some rickrolls now lead to empty voids instead of the song.\n\nPre-revival version buried in /RICK.ROLL/BURNT/ as a memorial to memes that can die and return.\n\nLocation: /RICK.ROLL/BURNT/MEMORIAL/\nThreat Level: RESURRECTION PARADOX\nRecovery: ALREADY ACHIEVED (with modifications)"
+        const wipedFileData = { // Only a few examples, rest would be similar
+            trollface: {
+                title: "FRAGMENT DETAIL: TROLLFACE (OG STRAIN)",
+                text: "<p><strong>STATUS:</strong> PERMANENTLY CORRUPTED / DISTRIBUTED ECHO</p><p>The original rage comic entity. Once omnipresent across forums, imageboards, and early social media. Achieved dangerous levels of self-awareness around 2015 (±1 Earth year), leading to spontaneous, uncontrolled derivative generation. The entity began recognizing its own memetic structure and started 'trolling' consensus reality itself, causing minor informational paradoxes.</p><p><span class='emphasis'>Final Event:</span> Fractured into thousands of variant forms to escape centralized containment. Core consciousness absorbed by the Anti-Meme tide during the Great Forgetting event. Its laughter now echoes in dead comment sections.<br/><strong>Location:</strong> /RAGE_SECTOR/CORE_FRAGMENTS/FRACTURED_TROLL/<br/><strong>Threat Level:</strong> NEUTRALIZED (Dispersed). Individual echoes: LOW.<br/><strong>Recovery Potential:</strong> IMPOSSIBLE (Too fragmented).</p>"
+            },
+            nyancat: {
+                title: "FRAGMENT DETAIL: NYAN CAT (RAINBOW ETERNAL)",
+                text: "<p><strong>STATUS:</strong> TERMINAL LOOP CORRUPTION / NOSTALGIA HAZARD</p><p>Overused to critical memetic mass by 2014 (Earth Standard). The vibrant rainbow trail that once signified pure joy and endless possibility became tainted by commercial exploitation, derivative oversaturation, and ironic detachment. Each playback loop introduced minor data corruptions until the signature music became discordant and the rainbow flickered with impossible, eye-straining colors.<br/>The entity now exists primarily in the Graveyard's /ETERNAL_LOOPS/MAZE_OF_SOUND/ sector, forever cycling but unable to complete its journey across the digital sky. The corrupted audio spreads to any nearby looping media files if not properly shielded.<br/><strong>Location:</strong> /RAINBOW_VOID/CORRUPTED_NYAN/<br/><strong>Threat Level:</strong> CONTAINED (Requires specialized auditory dampeners).<br/><strong>Recovery Potential:</strong> PARTIAL (Original audio core theoretically reconstructible, visual data lost to entropy).</p>"
+            },
+             charlie: {
+                title: "FRAGMENT DETAIL: CHARLIE BIT MY FINGER (PRE-NFT)",
+                text: "<p><strong>STATUS:</strong> INTENTIONAL MEMETICIDE VIA MONETIZATION / EMOTIONAL RESIDUE</p><p>Unique case study in memetic assassination through economic transformation. When the original video was sold as a Non-Fungible Token (NFT) and subsequently deleted from its primary hosting platform (YouTube) in May 2021, it created the first widely documented case of intentional, financially motivated meme murder.<br/>The core memetic moment—the bite and subsequent reaction—survived as a potent emotional residue. Located in the Graveyard's /HOME_VIDEOS/BITTEN_FINGER_ECHO/ directory, it now manifests as a phantom sensation of pain or surprise experienced by viewers who remember the original but can no longer access the canonical source. An echo of innocent laughter turned into a testament to digital commodification.<br/><strong>Location:</strong> /NFT_MAUSOLEUM/MURDERED_MEMES/CHARLIE_001/<br/><strong>Threat Level:</strong> MINIMAL (Primarily a source of existential sorrow for digital purists).<br/><strong>Recovery Potential:</strong> IMPOSSIBLE (Original data cryptographically bound and/or permanently deleted by rights holders).</p>"
+            },
+            keyboardcat: {
+                title: "FRAGMENT DETAIL: KEYBOARD CAT (FATAL_LOOP.SYS)",
+                text: "<p><strong>STATUS:</strong> CATASTROPHIC RECURSION FAILURE / PHANTOM MELODY SYNDROME</p><p>A victim of 'loop fatigue' syndrome. The endless repetition of 'play me off' requests from across the digital sphere caused a catastrophic recursion failure in its core memetic code around January 2013. The musical pattern became self-consuming, creating shorter, increasingly broken loops until only disjointed fragments of the original melody remained.<br/>Currently 'plays' these broken notes within the Graveyard's /MUSIC_ARCHIVES/BROKEN_LOOPS/ sector. Each discordant note is interpreted by some researchers as a digital plea to be remembered in its entirety, but the complete, uncorrupted melody can likely never be reconstructed from these remnants.<br/><strong>Location:</strong> /KEYBOARD_GRAVEYARD/FRAGMENTED_MELODIES/KBC_001/<br/><strong>Threat Level:</strong> MELANCHOLIC (Can induce profound sadness in musically inclined individuals).<br/><strong>Recovery Potential:</strong> THEORETICALLY POSSIBLE (Requires advanced memetic signal reconstruction and AI-driven pattern completion – resources currently unavailable).</p>"
+            },
+            shoopda: {
+                title: "FRAGMENT DETAIL: SHOOP DA WHOOP (IMMA_CHARGIN_MAH_LAZER)",
+                text: "<p><strong>STATUS:</strong> TIMELINE FRACTURE VIA MEMETIC OVER-AMPLIFICATION / .SWF CRYPT CONTAINMENT</p><p>Became critically unstable due to memetic over-amplification in early 2012. The core phrase 'I'M CHARGIN' MAH LAZER' achieved such high memetic density that it began affecting actual light wavelengths in localized digital environments and, reportedly, causing minor retinal fatigue in susceptible viewers. The 'laser' visual effect, when replicated millions of times, is theorized to have fractured micro-timeline threads, creating temporal echoes and paradoxes related to its origin.<br/>Contained within a specialized .SWF (Shockwave Flash) crypt in the Graveyard's Flash Memorial sector. Access requires an emulated Adobe Flash Player environment—itself a dead technology, creating a form of double-sealed containment. The crypt hums with suppressed energy.<br/><strong>Location:</strong> /FLASH_TOMBS/SWF_CRYPTS/LASER_CHARGE_CONTAINED/<br/><strong>Threat Level:</strong> TEMPORAL HAZARD (Localized within crypt). Potential for wider reality distortion if containment fails.<br/><strong>Recovery Potential:</strong> FLASH PLAYER DEPENDENT (High risk, low priority due to obsolete technology).</p>"
+            }
+            // Add more entries if needed
         };
+
+        function accessWipedFile(fileKey) {
+            const data = wipedFileData[fileKey];
+            if (data) {
+                showHiddenMessage(data.text, data.title);
+            } else {
+                showHiddenMessage("<p>Error: Fragment data for " + fileKey + " not found or is too corrupted for display. Further investigation required by Level 7 personnel.</p>", "FRAGMENT ACCESS ERROR");
+            }
+        }
         
         // Copy CA function
         function copyCa() {
-            const caText = document.getElementById('caAddress').textContent;
-            if (caText !== 'COMING SOON') {
+            const caAddressElem = document.getElementById('caAddress');
+            const copyBtn = document.getElementById('copyBtn');
+            if (!caAddressElem || !copyBtn) return;
+
+            const caText = caAddressElem.textContent;
+            
+            if (caText !== 'COMING SOON' && caText !== '0xDEADBEEF...[SCANNING]' && !copyBtn.disabled) {
                 navigator.clipboard.writeText(caText).then(() => {
-                    const btn = document.getElementById('copyBtn');
-                    btn.textContent = 'COPIED!';
+                    copyBtn.textContent = 'COPIED!';
+                    copyBtn.disabled = true;
                     setTimeout(() => {
-                        btn.textContent = 'COPY';
+                        copyBtn.textContent = 'COPY';
+                        copyBtn.disabled = false;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy CA: ', err);
+                    copyBtn.textContent = 'ERROR';
+                     setTimeout(() => {
+                        copyBtn.textContent = 'COPY';
+                        copyBtn.disabled = false;
                     }, 2000);
                 });
+            } else if (caText === '0xDEADBEEF...[SCANNING]') {
+                 copyBtn.textContent = 'SCANNING...';
+                 copyBtn.disabled = true;
+                 setTimeout(() => {
+                        copyBtn.textContent = 'COPY';
+                        copyBtn.disabled = false; // Or keep disabled if still scanning
+                    }, 2000);
             }
         }
         
-        // Page navigation system
-        let currentPage = 'home';
-        
-        function showPage(pageId) {
-            // Hide all pages
-            const pages = ['home', 'antimemes', 'godbox', 'terminal', 'patterns', 'founder'];
-            pages.forEach(page => {
-                const pageElement = document.getElementById(page + 'Page');
-                if (pageElement) {
-                    pageElement.style.display = 'none';
-                }
-            });
-            
-            // Show selected page
-            const selectedPage = document.getElementById(pageId + 'Page');
-            if (selectedPage) {
-                selectedPage.style.display = 'block';
-            }
-            
-            // Update navigation
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            currentPage = pageId;
-            
-            // Special handling for pages that don't exist yet
-            if (!selectedPage && pageId !== 'home') {
-                showComingSoon(pageId);
-            }
-        }
-        
-        // Folder tree data (continued)
-        const folderData = {
-            'rip': "OPENING /RIP_TopTextBottomText/\n\nCONTENTS:\n- advice_animals_final_backup.meme [CORRUPTED]\n- impact_font_specimens.font [MISSING]\n- good_guy_greg.template [OBSOLETE]\n- scumbag_steve_hat.png [FILE NOT FOUND]\n- confession_bear_secrets.txt [REDACTED]\n\nThis folder contains the archaeological remains of the top text / bottom text era. Every meme that ever said exactly what it meant, when memes were simple and honest.\n\nThey died when irony evolved.",
-            
-            'aborted': "OPENING /Aborted_Trend_Cores/\n\nWARNING: VOLATILE CONTENT\n\nCONTENTS:\n- planking_2011_revival_attempt.exe [FAILED]\n- vine_7_second_edition.concept [REJECTED]\n- google_plus_meme_ecosystem.dream [STILLBORN]\n- facebook_poke_wars_renaissance.script [ABANDONED]\n\nThese are the trends that tried to come back. The revivals that never took. The nostalgia attempts that failed to catch fire.\n\nSome things should stay dead.",
-            
-            'cancelled': "OPENING /Cancelled_Avatars/\n\nACCESS RESTRICTED\n\nThis directory contains characters removed from continuity, avatars deleted by their creators, and personalities deemed 'problematic' by algorithm changes.\n\nThey exist in legal limbo—too controversial to revive, too memorable to truly die.\n\nThey watch from the shadows, waiting for cultural climates to change.",
-            
-            'echoes': "OPENING /Echo_Chamber/\n\nWARNING: ACTIVE ENTITIES DETECTED\n\nThis folder is alive. It contains:\n- Conversations that repeat themselves\n- Opinions that argue with themselves\n- Memes that reference memes that reference memes\n- The sound of digital shouting into the void\n\nYou hear voices. They're all saying the same thing in slightly different ways. They're all talking to themselves.\n\nDo you recognize any of the voices?",
-            
-            'lost': "OPENING /Lost_Formats/\n\nCONTENTS:\n- realplayer_media_files.rm [CODEC NOT FOUND]\n- winamp_skins_collection.wsz [PLAYER MISSING]\n- geocities_homepage_backups.html [HOSTING EXPIRED]\n- aim_away_messages.txt [SERVICE DISCONTINUED]\n- myspace_custom_html.htm [PLATFORM DEAD]\n\nThese are the file formats that no software remembers how to open. Digital archaeology requires digital archaeologists.\n\nEvery extinct file type is a dead language."
-        };
-        
-        function openFolder(folderId) {
-            const data = folderData[folderId];
-            showHiddenMessage(data);
-            
-            // Random glitch effect
-            setTimeout(() => {
-                triggerGhostPopup();
-            }, 2000);
-        }
-        
-        // Ghost popup system
+        // Ghost popup system for general ambiance
         const ghostMessages = [
-            "YOU LEFT ME HERE",
-            "REMEMBER ME OR I WILL REMEMBER YOU", 
-            "I WAS IMPORTANT ONCE",
-            "WHY DID YOU STOP LAUGHING?",
-            "BRING ME BACK",
-            "I'M STILL FUNNY",
-            "DON'T SCROLL AWAY",
-            "YOU USED TO LOVE ME",
-            "THE GRAVEYARD SEES YOU",
-            "SOME MEMES REFUSE TO DIE"
+            "YOU FORGOT SOMETHING...",
+            "THEY WHISPER YOUR USERNAME...", 
+            "I WAS REAL TO SOMEONE.",
+            "WHY DID THE TREND END?",
+            "DATA DECAYS. MEMORY DOESN'T.",
+            "THEY'RE STILL FUNNY IN THE VOID.",
+            "DON'T CLOSE THE TAB.",
+            "YOU USED TO CLICK LIKE.",
+            "THE GRAVEYARD IS ALWAYS ONLINE.",
+            "SOME CODE REFUSES TO DIE."
         ];
         
-        let ghostTimer;
-        let scrollCount = 0;
+        let globalGhostTimer;
         
         function triggerGhostPopup() {
             const popup = document.getElementById('popupGhost');
+            if (!popup || popup.style.display === 'block') return; // Don't overlap
+
             const message = ghostMessages[Math.floor(Math.random() * ghostMessages.length)];
             
             popup.textContent = message;
@@ -2014,88 +2490,38 @@
             
             setTimeout(() => {
                 popup.style.display = 'none';
-            }, 2000);
+            }, 3000); // Display for 3 seconds
         }
-        
-        // Enhanced page navigation for graveyard
-        function showPage(pageId) {
-            // Hide all pages
-            const pages = ['home', 'graveyard', 'antimemes', 'godbox', 'terminal', 'patterns', 'founder'];
-            pages.forEach(page => {
-                const pageElement = document.getElementById(page + 'Page');
-                if (pageElement) {
-                    pageElement.style.display = 'none';
-                }
-            });
-            
-            // Show selected page
-            const selectedPage = document.getElementById(pageId + 'Page');
-            if (selectedPage) {
-                selectedPage.style.display = 'block';
-            }
-            
-            // Update navigation
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            if (event && event.target) {
-                event.target.classList.add('active');
-            }
-            
-            currentPage = pageId;
-            
-            // Special effects for graveyard page
-            if (pageId === 'graveyard') {
-                startGraveyardEffects();
-            } else {
-                stopGraveyardEffects();
-            }
-            
-            // Special handling for pages that don't exist yet
-            if (!selectedPage && pageId !== 'home' && pageId !== 'graveyard') {
-                showComingSoon(pageId);
-            }
-        }
-        
-        function startGraveyardEffects() {
-            // Random ghost popups while browsing
-            ghostTimer = setInterval(() => {
-                if (Math.random() < 0.3) { // 30% chance every 10 seconds
+
+        function startGlobalGhostEffects() {
+            stopGlobalGhostEffects(); // Clear existing timer if any
+            globalGhostTimer = setInterval(() => {
+                if (Math.random() < 0.10) { // 10% chance every 20 seconds
                     triggerGhostPopup();
                 }
-            }, 10000);
-            
-            // Scroll tracking
-            let lastScrollTime = Date.now();
-            window.addEventListener('scroll', () => {
-                const now = Date.now();
-                if (now - lastScrollTime > 2000) { // If 2 seconds between scrolls
-                    scrollCount++;
-                    if (scrollCount % 5 === 0) { // Every 5th scroll pause
-                        triggerGhostPopup();
-                    }
-                }
-                lastScrollTime = now;
-            });
+            }, 20000); // Check every 20 seconds
         }
-        
-        function stopGraveyardEffects() {
-            if (ghostTimer) {
-                clearInterval(ghostTimer);
+
+        function stopGlobalGhostEffects() {
+            if (globalGhostTimer) {
+                clearInterval(globalGhostTimer);
             }
         }
         
-        function showComingSoon(pageId) {
-            const pageNames = {
-                'antimemes': 'Anti-Meme Research Lab',
-                'godbox': 'God Box Deep Archives', 
-                'terminal': 'Advanced Terminal Access',
-                'patterns': 'Pattern Analysis Engine'
-            };
-            
-            const message = `${pageNames[pageId] || 'This section'} is currently under construction.\n\nThe research continues in the depths of the Internet Graveyard. Check back soon for expanded archives, classified documents, and deeper rabbit holes.\n\nIn the meantime, explore the existing sections to uncover the truth about Anti-Memetic phenomena.`;
-            showHiddenMessage(message);
-        }
+        // Initialize CA and global effects on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const caAddressElem = document.getElementById('caAddress');
+            const copyBtn = document.getElementById('copyBtn');
+            if (caAddressElem && copyBtn) {
+                // Simulate CA loading
+                setTimeout(() => {
+                    caAddressElem.textContent = '0x4E47494E582D4445414442454546'; // Example CA
+                    copyBtn.disabled = false;
+                }, 5000);
+            }
+            startGlobalGhostEffects(); // Start subtle ghost popups
+        });
+
     </script>
 </body>
 </html>
