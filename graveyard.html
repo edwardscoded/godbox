@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌌 The Digital Graveyard | Where Virality Goes to Rot</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&family=UnifrakturCook:wght@700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000;
+            color: #888;
+            font-family: 'VT323', monospace;
+            overflow-x: hidden;
+            cursor: none;
+            padding-top: 120px;
+        }
+        
+        .custom-cursor {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background: #444;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
+            animation: cursorFade 3s ease-in-out infinite;
+        }
+        
+        @keyframes cursorFade {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.2); }
+        }
+        
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #111, #000, #111);
+            border-bottom: 1px solid #333;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1002;
+            font-family: 'VT323', monospace;
+        }
+        
+        .ca-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .ca-label {
+            color: #666;
+            font-size: 1.2rem;
+        }
+        
+        .ca-address {
+            color: #888;
+            font-size: 1.1rem;
+            font-family: 'Orbitron', monospace;
+            letter-spacing: 0.1em;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(45deg, #333, #222);
+            border: 1px solid #555;
+            color: #777;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover:not(:disabled) {
+            border-color: #777;
+            color: #999;
+            background: linear-gradient(45deg, #555, #333);
+        }
+        
+        .copy-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-link {
+            color: #666;
+            text-decoration: none;
+            font-size: 1.3rem;
+            padding: 0.5rem;
+            border: 1px solid #333;
+            background: rgba(17, 17, 17, 0.8);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+        
+        .social-link:hover {
+            color: #888;
+            border-color: #555;
+            background: rgba(34, 34, 34, 0.8);
+            transform: translateY(-2px);
+        }
+        
+        .navigation-bar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            border-bottom: 1px solid #222;
+            padding: 0.8rem 0;
+            z-index: 1001;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .nav-link {
+            color: #555;
+            text-decoration: none;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85rem;
+            padding: 0.6rem 1rem;
+            border: 1px solid #222;
+            background: rgba(17, 17, 17, 0.6);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            letter-spacing: 0.03em;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        
+        .nav-link:hover {
+            color: #777;
+            border-color: #444;
+            background: rgba(34, 34, 34, 0.8);
+        }
+        
+        .nav-link.active {
+            color: #888;
+            border-color: #666;
+            background: rgba(68, 68, 68, 0.3);
+        }
+        
+        .graveyard-deep {
+            background: 
+                linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23000"/><rect width="1" height="100" fill="%23111" x="50"/><rect width="100" height="1" fill="%23111" y="50"/></svg>');
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .graveyard-header {
+            text-align: center;
+            padding: 4rem 2rem;
+            border-bottom: 2px solid #333;
+            background: radial-gradient(circle at center, #111 0%, #000 70%);
+            position: relative;
+        }
+        
+        .graveyard-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 4rem;
+            color: #666;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px #444;
+            animation: titleFlicker 8s ease-in-out infinite;
+        }
+        
+        @keyframes titleFlicker {
+            0%, 98%, 100% { opacity: 1; }
+            99% { opacity: 0.8; }
+        }
+        
+        .graveyard-subtitle {
+            font-size: 1.8rem;
+            color: #555;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .author-byline {
+            color: #444;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .graveyard-quote {
+            font-family: 'UnifrakturCook', cursive;
+            font-size: 1.6rem;
+            color: #777;
+            font-style: italic;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+        
+        .graveyard-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .graveyard-section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: rgba(17, 17, 17, 0.6);
+            border: 1px solid #333;
+            position: relative;
+        }
+        
+        .section-header {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: #666;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1rem;
+        }
+        
+        .graveyard-text {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .emphasis-red { color: #aa4444; font-weight: bold; }
+        .emphasis-yellow { color: #aaaa44; font-weight: bold; }
+        .emphasis-purple { color: #aa44aa; font-weight: bold; }
+        .emphasis-green { color: #44aa44; font-weight: bold; }
+        
+        .graveyard-list {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .list-item {
+            color: #666;
+            margin-bottom: 0.8rem;
+            padding-left: 1rem;
+            border-left: 2px solid #333;
+        }
+        
+        .structure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .structure-item {
+            background: linear-gradient(135deg, #111, #000);
+            border: 1px solid #333;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .structure-item:hover {
+            border-color: #555;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(85, 85, 85, 0.3);
+        }
+        
+        .structure-item::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #333, #555, #333);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .structure-item:hover::before {
+            opacity: 1;
+        }
+        
+        .structure-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+        
+        .structure-title {
+            color: #777;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', monospace;
+        }
+        
+        .structure-desc {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .rules-warning {
+            background: #220000;
+            border: 2px solid #440000;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .warning-text {
+            color: #cc6666;
+            font-size: 1.3rem;
+            font-style: italic;
+        }
+        
+        .rules-list {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        
+        .rule-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .rule-number {
+            color: #666;
+            font-weight: bold;
+            margin-right: 1rem;
+            min-width: 3rem;
+        }
+        
+        .rule-text {
+            color: #444;
+        }
+        
+        .residents-table {
+            background: #0a0a0a;
+            border: 2px solid #333;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+        
+        .residents-table .table-header {
+            background: #111;
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr;
+            font-weight: bold;
+            color: #777;
+            border-bottom: 2px solid #333;
+        }
+        
+        .resident-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .resident-row:hover {
+            background: #111;
+            color: #888;
+        }
+        
+        .resident-row:last-child {
+            border-bottom: none;
+        }
+        
+        .residents-table .col-name,
+        .residents-table .col-role,
+        .residents-table .col-status {
+            padding: 1.5rem 1rem;
+            color: #555;
+            border-right: 1px solid #222;
+        }
+        
+        .residents-table .col-status {
+            border-right: none;
+        }
+        
+        .interactive-folder-tree {
+            background: linear-gradient(135deg, #0a0a0a, #000);
+            border: 2px solid #444;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .folder-warning {
+            color: #aa4444;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        
+        .folder-container {
+            background: #000;
+            border: 1px solid #333;
+            padding: 1.5rem;
+            font-family: 'VT323', monospace;
+        }
+        
+        .folder-item {
+            padding: 1rem;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 1px solid #222;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .folder-item:hover {
+            background: #111;
+            color: #888;
+        }
+        
+        .folder-item:last-child {
+            border-bottom: none;
+        }
+        
+        .folder-hint {
+            color: #333;
+            font-size: 0.8rem;
+            float: right;
+        }
+        
+        .final-warning {
+            background: linear-gradient(135deg, #1a0000, #000);
+            border: 2px solid #440000;
+        }
+        
+        .final-warning-box {
+            background: #220000;
+            border: 2px solid #660000;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .warning-title {
+            color: #cc6666;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', monospace;
+        }
+        
+        .warning-message {
+            color: #aa4444;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .graveyard-glitch-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            background: 
+                linear-gradient(90deg, transparent 98%, rgba(255, 0, 0, 0.03) 100%),
+                linear-gradient(0deg, transparent 98%, rgba(0, 255, 0, 0.03) 100%);
+            animation: staticNoise 0.1s infinite;
+        }
+        
+        @keyframes staticNoise {
+            0%, 100% { opacity: 0.05; }
+            50% { opacity: 0.1; }
+        }
+        
+        .popup-ghost {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            border: 3px solid #666;
+            padding: 2rem;
+            color: #aa4444;
+            font-size: 1.5rem;
+            text-align: center;
+            z-index: 1000;
+            animation: ghostFlicker 0.5s ease-in-out;
+        }
+        
+        @keyframes ghostFlicker {
+            0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        .hidden-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid #666;
+            padding: 2rem;
+            max-width: 600px;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 0 50px rgba(68, 68, 68, 0.5);
+            color: #777;
+            line-height: 1.6;
+        }
+        
+        .close-btn {
+            background: #222;
+            border: 1px solid #444;
+            color: #666;
+            padding: 0.8rem 2rem;
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            body { padding-top: 140px; }
+            .top-bar { 
+                flex-direction: column; 
+                gap: 1rem; 
+                padding: 1rem; 
+            }
+            .navigation-bar { top: 90px; }
+            .nav-links { 
+                gap: 0.5rem; 
+                justify-content: center;
+            }
+            .nav-link {
+                font-size: 0.75rem;
+                padding: 0.5rem 0.8rem;
+            }
+            .graveyard-title { font-size: 2.5rem; }
+            .graveyard-content { padding: 1rem; }
+            .graveyard-section { padding: 1.5rem; margin-bottom: 2rem; }
+            .structure-grid { grid-template-columns: 1fr; }
+            .residents-table .table-header,
+            .resident-row { grid-template-columns: 1fr; }
+            .residents-table .col-name,
+            .residents-table .col-role,
+            .residents-table .col-status {
+                border-right: none;
+                border-bottom: 1px solid #222;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-cursor" id="cursor"></div>
+    
+    <div class="top-bar">
+        <div class="ca-section">
+            <span class="ca-label">CA:</span>
+            <span class="ca-address" id="caAddress">COMING SOON</span>
+            <button class="copy-btn" onclick="copyCa()" id="copyBtn" disabled>COPY</button>
+        </div>
+        <div class="social-links">
+            <a href="#" class="social-link" title="X (Twitter)">𝕏</a>
+            <a href="#" class="social-link" title="DexScreener">📊</a>
+            <a href="#" class="social-link" title="DexTools">🔧</a>
+            <a href="#" class="social-link" title="Pump.fun">🚀</a>
+            <a href="https://medium.com/@bid-outcrop0h" class="social-link" title="Medium" target="_blank">📝</a>
+        </div>
+    </div>
+    
+    <div class="navigation-bar">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">ARCHIVE HOME</a>
+                <a href="graveyard.html" class="nav-link active">THE GRAVEYARD</a>
+                <a href="antimemes.html" class="nav-link">ANTI-MEME RESEARCH</a>
+                <a href="godbox.html" class="nav-link">GOD BOX ARCHIVES</a>
+                <a href="terminal.html" class="nav-link">CLASSIFIED ACCESS</a>
+                <a href="patterns.html" class="nav-link">PATTERN ANALYSIS</a>
+                <a href="founder.html" class="nav-link">THE COLLECTOR</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="graveyard-deep">
+        <div class="graveyard-header">
+            <h1 class="graveyard-title">🌌 The Digital Graveyard</h1>
+            <div class="graveyard-subtitle">Where Virality Goes to Rot</div>
+            <div class="author-byline">By Bid Outcroph</div>
+            <div class="graveyard-quote">"Every meme dies. But not every meme stays dead."</div>
+        </div>
+        
+        <div class="graveyard-content">
+            <div class="graveyard-section">
+                <h2 class="section-header">Overview</h2>
+                <p class="graveyard-text">
+                    Beneath the Memeverse—below trending tags, abandoned uploads, and corrupted timelines—there is a realm known only in whispers: <strong class="emphasis-red">The Digital Graveyard</strong>.
+                </p>
+                <p class="graveyard-text">
+                    It is not indexed. It is not archived. It is not meant to be visited. But if you spend enough time watching dead formats flicker, if you remember the wrong joke too vividly, if the algorithm hiccups—<strong class="emphasis-yellow">you might find yourself there anyway</strong>.
+                </p>
+            </div>
+            
+            <div class="graveyard-section">
+                <h2 class="section-header">What the Graveyard Is</h2>
+                <p class="graveyard-text">
+                    The Digital Graveyard is the <strong class="emphasis-purple">collective unconscious</strong> of internet culture. It holds:
+                </p>
+                <div class="graveyard-list">
+                    <div class="list-item">• Memes too corrupted to revive</div>
+                    <div class="list-item">• Formats purged from platforms</div>
+                    <div class="list-item">• Characters erased mid-narrative</div>
+                    <div class="list-item">• Entire trends that collapsed under their own virality</div>
+                </div>
+                <p class="graveyard-text">
+                    It is a <strong class="emphasis-green">shadow net</strong>, a tangle of memory rot and broken references, where the God Box once dumped fragments deemed too unstable to process.
+                </p>
+            </div>
+            
+            <div class="graveyard-section">
+                <h2 class="section-header">Its Structure</h2>
+                <div class="structure-grid">
+                    <div class="structure-item" onclick="exploreStructure('404')">
+                        <div class="structure-icon">💀</div>
+                        <div class="structure-title">404 Catacombs</div>
+                        <div class="structure-desc">Every broken link leads here. Comment chains echo endlessly.</div>
+                    </div>
+                    
+                    <div class="structure-item" onclick="exploreStructure('swf')">
+                        <div class="structure-icon">⚰️</div>
+                        <div class="structure-title">.SWF Crypts</div>
+                        <div class="structure-desc">Flash animation tombs. Music plays but nothing moves.</div>
+                    </div>
+                    
+                    <div class="structure-item" onclick="exploreStructure('avatar')">
+                        <div class="structure-icon">👻</div>
+                        <div class="structure-title">Lost Avatar Garden</div>
+                        <div class="structure-desc">Forgotten icons stand in silence. They know you once knew them.</div>
+                    </div>
+                    
+                    <div class="structure-item" onclick="exploreStructure('folder')">
+                        <div class="structure-icon">📁</div>
+                        <div class="structure-title">The Folder Tree</div>
+                        <div class="structure-desc">Endless desktop. Subfolders that shouldn't exist.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="graveyard-section">
+                <h2 class="section-header">Rules of the Graveyard</h2>
+                <div class="rules-warning">
+                    <div class="warning-text">"You don't browse the Graveyard. You are browsed by it."</div>
+                </div>
+                <div class="rules-list">
+                    <div class="rule-item">
+                        <span class="rule-number">1.</span>
+                        <span class="rule-text"><strong>Don't stay long</strong>. Memory fades quickly. Your own files might be rewritten.</span>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-number">2.</span>
+                        <span class="rule-text"><strong>Don't engage Echoes</strong>. They mimic dead memes to bait you. They're not what they used to be.</span>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-number">3.</span>
+                        <span class="rule-text"><strong>Don't try to restore anything</strong>. Some memories died for a reason.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="graveyard-section">
+                <h2 class="section-header">Known Residents</h2>
+                <div class="residents-table">
+                    <div class="table-header">
+                        <div class="col-name">Name</div>
+                        <div class="col-role">Former Role</div>
+                        <div class="col-status">Current Status</div>
+                    </div>
+                    
+                    <div class="resident-row" onclick="contactResident('axol')">
+                        <div class="col-name">Echo-Axol</div>
+                        <div class="col-role">Fan-favorite avatar</div>
+                        <div class="col-status">Loops his death scene in corrupted .mp4 format</div>
+                    </div>
+                    
+                    <div class="resident-row" onclick="contactResident('impact')">
+                        <div class="col-name">Impact Font</div>
+                        <div class="col-role">Meme typography standard</div>
+                        <div class="col-status">Now shows only redacted messages</div>
+                    </div>
+                    
+                    <div class="resident-row" onclick="contactResident('rage')">
+                        <div class="col-name">Rage Faces</div>
+                        <div class="col-role">Early meme species</div>
+                        <div class="col-status">Wander the Catacombs, faces glitched beyond form</div>
+                    </div>
+                    
+                    <div class="resident-row" onclick="contactResident('pepe')">
+                        <div class="col-name">Pepe (OG Core)</div>
+                        <div class="col-role">Pre-politicization form</div>
+                        <div class="col-status">Eyes still open in `/PEPE/CORE/`</div>
+                    </div>
+                    
+                    <div class="resident-row" onclick="contactResident('chipmunk')">
+                        <div class="col-name">Dramatic Chipmunk</div>
+                        <div class="col-role">Reaction archetype</div>
+                        <div class="col-status">Head turns forever. There is no end.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-folder-tree" id="folderTree">
+                <h2 class="section-header">Explore the Folder Tree</h2>
+                <div class="folder-warning">Click folders to explore. Some things are better left closed.</div>
+                <div class="folder-container">
+                    <div class="folder-item" onclick="openFolder('rip')">
+                        📁 /RIP_TopTextBottomText/ <span class="folder-hint">[CLICK TO OPEN]</span>
+                    </div>
+                    <div class="folder-item" onclick="openFolder('aborted')">
+                        📁 /Aborted_Trend_Cores/ <span class="folder-hint">[DANGEROUS]</span>
+                    </div>
+                    <div class="folder-item" onclick="openFolder('cancelled')">
+                        📁 /Cancelled_Avatars/ <span class="folder-hint">[RESTRICTED]</span>
+                    </div>
+                    <div class="folder-item" onclick="openFolder('echoes')">
+                        📁 /Echo_Chamber/ <span class="folder-hint">[ACTIVE]</span>
+                    </div>
+                    <div class="folder-item" onclick="openFolder('lost')">
+                        📁 /Lost_Formats/ <span class="folder-hint">[CORRUPTED]</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="graveyard-section final-warning">
+                <h2 class="section-header">How to Reach It</h2>
+                <p class="graveyard-text">You don't.</p>
+                <p class="graveyard-text">
+                    But if you're reading this... You're already bleeding into its memory pool.
+                </p>
+                <p class="graveyard-text">
+                    If you've ever said, "Wait, what happened to that meme?" If you've ever felt nostalgia sharpened with guilt... If you've tried to revisit a favorite and the page was gone...
+                </p>
+                <p class="graveyard-text emphasis-
