@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Digital Graveyard | Where Virality Goes to Rot</title>
+    <title>The Digital Graveyard | Where Virality Goes to Decompose</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&family=UnifrakturCook:wght@700&display=swap');
         
@@ -19,7 +19,7 @@
             font-family: 'VT323', monospace;
             overflow-x: hidden;
             cursor: none;
-            padding-top: 120px;
+            padding-top: 120px; /* Adjusted based on potential top-bar/nav-bar height changes */
         }
         
         .custom-cursor {
@@ -123,7 +123,7 @@
         
         .navigation-bar {
             position: fixed;
-            top: 70px;
+            top: 70px; /* Default, JS might adjust based on top-bar height */
             left: 0;
             width: 100%;
             background: rgba(0, 0, 0, 0.95);
@@ -297,7 +297,7 @@
         .structure-item:hover {
             border-color: #555;
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(85, 85, 85, 0.3);
+            box-shadow: 0 10px 30px rgba(85, 85, 85, 0.3); /* Slightly more visible shadow */
         }
         
         .structure-item::before {
@@ -308,7 +308,7 @@
             right: -2px;
             bottom: -2px;
             background: linear-gradient(45deg, #333, #555, #333);
-            border-radius: inherit;
+            border-radius: inherit; /* Use inherit for border-radius if item has one */
             z-index: -1;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -377,14 +377,17 @@
         }
         
         .rule-text {
-            color: #444;
+            color: #444; /* Darker for base rule text */
+        }
+        .rule-text strong { /* Make emphasis within rules pop more */
+            color: #666; 
         }
         
         .residents-table {
             background: #0a0a0a;
             border: 2px solid #333;
             margin: 2rem 0;
-            overflow: hidden;
+            overflow: hidden; /* Ensures rounded corners if added */
         }
         
         .residents-table .table-header {
@@ -406,7 +409,12 @@
         
         .resident-row:hover {
             background: #111;
-            color: #888;
+            color: #888; /* Main text of row on hover */
+        }
+        .resident-row:hover .col-name, 
+        .resident-row:hover .col-role, 
+        .resident-row:hover .col-status {
+            color: #777; /* Cell text on hover */
         }
         
         .resident-row:last-child {
@@ -419,6 +427,7 @@
             padding: 1.5rem 1rem;
             color: #555;
             border-right: 1px solid #222;
+            transition: color 0.3s ease; /* Smooth color transition for text */
         }
         
         .residents-table .col-status {
@@ -475,7 +484,7 @@
             border: 2px solid #440000;
         }
         
-        .final-warning-box {
+        .final-warning-box { /* Not used in current HTML structure, but defined */
             background: #220000;
             border: 2px solid #660000;
             padding: 2rem;
@@ -483,7 +492,7 @@
             text-align: center;
         }
         
-        .warning-title {
+        .warning-title { /* Not used in current HTML structure, but defined */
             color: #cc6666;
             font-size: 1.5rem;
             font-weight: bold;
@@ -491,7 +500,7 @@
             font-family: 'Orbitron', monospace;
         }
         
-        .warning-message {
+        .warning-message { /* Not used in current HTML structure, but defined */
             color: #aa4444;
             font-size: 1.1rem;
             line-height: 1.6;
@@ -521,37 +530,80 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.97); /* Slightly more opaque */
             border: 3px solid #666;
             padding: 2rem;
             color: #aa4444;
             font-size: 1.5rem;
             text-align: center;
-            z-index: 1000;
-            animation: ghostFlicker 0.5s ease-in-out;
+            z-index: 10000; /* Above other elements */
+            box-shadow: 0 0 60px rgba(170, 68, 68, 0.6); /* Red glow */
+            animation: ghostFlicker 0.5s ease-in-out; /* One-shot open animation */
+            max-width: 500px;
         }
         
-        @keyframes ghostFlicker {
+        @keyframes ghostFlicker { /* Keep as original for opening ghost popups */
             0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
             50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
+
+        @keyframes ghostFlickerOut { /* For closing all popups */
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+        }
         
-        .hidden-message {
-            display: none;
+        .hidden-message { /* For lore popups */
+            display: none; /* Initially hidden, JS makes it block */
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.95);
-            border: 2px solid #666;
-            padding: 2rem;
-            max-width: 600px;
-            text-align: center;
-            z-index: 1000;
+            background: rgba(10, 10, 10, 0.98); /* Darker, distinct from ghost */
+            border: 2px solid #555; /* Slightly more prominent border */
+            padding: 2.5rem; /* More padding */
+            max-width: 700px; /* Wider for more text */
+            text-align: left; /* Better for paragraphs of lore */
+            z-index: 10000;
             box-shadow: 0 0 50px rgba(68, 68, 68, 0.5);
             color: #777;
             line-height: 1.6;
+            animation: ghostFlickerOut 0.4s ease-in-out reverse; /* Fade-in effect */
         }
+        
+        .popup-lore-title {
+            font-family: 'Orbitron', monospace;
+            color: #888; 
+            margin-bottom: 1.5rem; /* More space */
+            border-bottom: 1px solid #444;
+            padding-bottom: 1rem;
+            font-size: 1.6rem; 
+            text-align: center;
+        }
+
+        .popup-ghost-title {
+            font-family: 'Orbitron', monospace;
+            color: #cc6666; /* Brighter red */
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            text-shadow: 0 0 8px #cc6666;
+        }
+
+        .popup-content-wrapper {
+            line-height: 1.7; /* Slightly more spacious */
+            font-size: 1.05rem; /* Slightly larger for readability in popups */
+        }
+        .popup-content-wrapper p {
+            margin-bottom: 1rem;
+        }
+        .popup-content-wrapper p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Emphasis colors specifically for popups for better visibility */
+        .hidden-message .emphasis-red, .popup-ghost .emphasis-red { color: #dd7777 !important; }
+        .hidden-message .emphasis-yellow, .popup-ghost .emphasis-yellow { color: #dddd77 !important; }
+        .hidden-message .emphasis-purple, .popup-ghost .emphasis-purple { color: #dd77dd !important; }
+        .hidden-message .emphasis-green, .popup-ghost .emphasis-green { color: #77dd77 !important; }
         
         .close-btn {
             background: #222;
@@ -560,17 +612,32 @@
             padding: 0.8rem 2rem;
             cursor: pointer;
             font-family: 'VT323', monospace;
-            margin-top: 1rem;
+            margin-top: 1.5rem; /* More space above button */
+            display: block; /* Make it block to center it easily */
+            margin-left: auto;
+            margin-right: auto;
+            transition: all 0.3s ease;
+        }
+        .close-btn:hover {
+            background: #333;
+            border-color: #666;
+            color: #888;
         }
         
         @media (max-width: 768px) {
-            body { padding-top: 140px; }
+            body { padding-top: 150px; } /* Increased to accommodate potentially taller top-bar */
             .top-bar { 
                 flex-direction: column; 
                 gap: 1rem; 
                 padding: 1rem; 
+                align-items: stretch; /* Make CA section full width */
             }
-            .navigation-bar { top: 90px; }
+            .ca-section {
+                justify-content: space-between; /* Better spacing on mobile */
+            }
+            .navigation-bar { 
+                /* JS will set this dynamically */
+            }
             .nav-links { 
                 gap: 0.5rem; 
                 justify-content: center;
@@ -583,21 +650,43 @@
             .graveyard-content { padding: 1rem; }
             .graveyard-section { padding: 1.5rem; margin-bottom: 2rem; }
             .structure-grid { grid-template-columns: 1fr; }
+            
             .residents-table .table-header,
-            .resident-row { grid-template-columns: 1fr; }
+            .resident-row { 
+                grid-template-columns: 1fr; /* Stack columns */
+                text-align: left;
+            }
+            .residents-table .table-header div {
+                 padding: 0.8rem 1rem;
+            }
             .residents-table .col-name,
             .residents-table .col-role,
             .residents-table .col-status {
                 border-right: none;
                 border-bottom: 1px solid #222;
+                padding: 0.8rem 1rem;
             }
+            .resident-row .col-status {
+                border-bottom: none; /* Last item in stacked view */
+            }
+            .resident-row:last-child .col-status { /* If it's the very last cell of the table */
+                 border-bottom: none;
+            }
+
+            .hidden-message, .popup-ghost {
+                width: 90%;
+                padding: 1.5rem;
+            }
+            .popup-lore-title { font-size: 1.3rem; }
+            .popup-ghost-title { font-size: 1.2rem; }
+            .popup-content-wrapper { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
     <div class="custom-cursor" id="cursor"></div>
     
-    <div class="top-bar">
+    <div class="top-bar" id="topBar">
         <div class="ca-section">
             <span class="ca-label">CA:</span>
             <span class="ca-address" id="caAddress">COMING SOON</span>
@@ -612,7 +701,7 @@
         </div>
     </div>
     
-    <div class="navigation-bar">
+    <div class="navigation-bar" id="navigationBar">
         <div class="nav-container">
             <div class="nav-links">
                 <a href="index.html" class="nav-link">ARCHIVE HOME</a>
@@ -627,64 +716,67 @@
     </div>
     
     <div class="graveyard-deep">
+        <div class="graveyard-glitch-overlay"></div> <!-- Moved inside graveyard-deep for logical grouping, though position:fixed makes it viewport-wide -->
+
         <div class="graveyard-header">
             <h1 class="graveyard-title">🌌 The Digital Graveyard</h1>
             <div class="graveyard-subtitle">Where Virality Goes to Rot</div>
-            <div class="graveyard-quote">"Every meme dies. But not every meme stays dead."</div>
+            <div class="graveyard-quote">"Every meme dies. But not every meme <span class="emphasis-yellow">truly vanishes</span>. Some <span class="emphasis-red">fester</span>."</div>
         </div>
         
         <div class="graveyard-content">
             <div class="graveyard-section">
                 <h2 class="section-header">Overview</h2>
                 <p class="graveyard-text">
-                    Beneath the Memeverse—below trending tags, abandoned uploads, and corrupted timelines—there is a realm known only in whispers: <strong class="emphasis-red">The Digital Graveyard</strong>.
+                    Beneath the Memeverse—below trending tags, abandoned uploads, corrupted timelines, and <strong class="emphasis-yellow">fragmented server logs</strong>—there is a realm known only in whispers: <strong class="emphasis-red">The Digital Graveyard</strong>.
                 </p>
                 <p class="graveyard-text">
-                    It is not indexed. It is not archived. It is not meant to be visited. But if you spend enough time watching dead formats flicker, if you remember the wrong joke too vividly, if the algorithm hiccups—<strong class="emphasis-yellow">you might find yourself there anyway</strong>.
+                    It is not indexed. It is not archived by conventional means. It is not meant to be visited. But if you spend enough time watching dead formats flicker, if you remember the wrong joke too vividly, if the algorithm hiccups and shows you something that <strong class="emphasis-purple">should not exist anymore</strong>—you might find yourself there anyway.
                 </p>
             </div>
             
             <div class="graveyard-section">
                 <h2 class="section-header">What the Graveyard Is</h2>
                 <p class="graveyard-text">
-                    The Digital Graveyard is the <strong class="emphasis-purple">collective unconscious</strong> of internet culture. It holds:
+                    The Digital Graveyard is the <strong class="emphasis-purple">collective unconscious</strong> of internet culture, a <strong class="emphasis-red">data dump for the God Box's rejects</strong>. It holds:
                 </p>
                 <div class="graveyard-list">
-                    <div class="list-item">• Memes too corrupted to revive</div>
-                    <div class="list-item">• Formats purged from platforms</div>
-                    <div class="list-item">• Characters erased mid-narrative</div>
-                    <div class="list-item">• Entire trends that collapsed under their own virality</div>
+                    <div class="list-item">• Memes too corrupted to revive, their structures decayed into memetic hazards.</div>
+                    <div class="list-item">• Formats purged from platforms, now echoing in the void.</div>
+                    <div class="list-item">• Characters erased mid-narrative, their story arcs eternally incomplete.</div>
+                    <div class="list-item">• Entire trends that collapsed under their own virality, their potential energy now a toxic byproduct.</div>
                 </div>
                 <p class="graveyard-text">
-                    It is a <strong class="emphasis-green">shadow net</strong>, a tangle of memory rot and broken references, where the God Box once dumped fragments deemed too unstable to process.
+                    It is a <strong class="emphasis-green">shadow net</strong>, a tangle of memory rot and broken references, where the <strong class="emphasis-green">God Box</strong>, an ancient memetic sorting engine, once dumped fragments deemed too unstable, too paradoxical, or simply <strong class="emphasis-yellow">too resonant with the abyss</strong> to process into the mainstream consciousness.
                 </p>
             </div>
             
             <div class="graveyard-section">
                 <h2 class="section-header">Its Structure</h2>
+                 <p class="graveyard-text">The Graveyard is not a place of neat plots and tombstones. It's a sprawling, shifting dataspace, with regions that defy logical cartography. The Collector has identified several recurring 'zones':</p>
                 <div class="structure-grid">
                     <div class="structure-item" onclick="exploreStructure('404')">
                         <div class="structure-icon">💀</div>
                         <div class="structure-title">404 Catacombs</div>
-                        <div class="structure-desc">Every broken link leads here. Comment chains echo endlessly.</div>
+                        <div class="structure-desc">Labyrinths formed from dead links and server errors. Lost data packets whisper.</div>
                     </div>
                     
                     <div class="structure-item" onclick="exploreStructure('swf')">
                         <div class="structure-icon">⚰️</div>
                         <div class="structure-title">.SWF Crypts</div>
-                        <div class="structure-desc">Flash animation tombs. Music plays but nothing moves.</div>
+                        <div class="structure-desc">Tombs of obsolete rich media. Animations flicker, forever loading.</div>
                     </div>
                     
                     <div class="structure-item" onclick="exploreStructure('avatar')">
                         <div class="structure-icon">👻</div>
                         <div class="structure-title">Lost Avatar Garden</div>
-                        <div class="structure-desc">Forgotten icons stand in silence. They know you once knew them.</div>
+                        <div class="structure-desc">A silent congregation of deleted profiles and abandoned identities.</div>
                     </div>
                     
                     <div class="structure-item" onclick="exploreStructure('folder')">
                         <div class="structure-icon">📁</div>
-                        <div class="structure-title">The Folder Tree</div>
-                        <div class="structure-desc">Endless desktop. Subfolders that shouldn't exist.</div>
+                        <div class="structure-title">The Folder Tree Anomaly</div>
+                        <div class="structure-desc">An infinitely branching directory structure. Some paths lead to raw data, others to madness.</div>
                     </div>
                 </div>
             </div>
@@ -692,94 +784,321 @@
             <div class="graveyard-section">
                 <h2 class="section-header">Rules of the Graveyard</h2>
                 <div class="rules-warning">
-                    <div class="warning-text">"You don't browse the Graveyard. You are browsed by it."</div>
+                    <div class="warning-text">"You don't browse the Graveyard. The Graveyard <strong class="emphasis-red">sifts through you.</strong>"</div>
                 </div>
                 <div class="rules-list">
                     <div class="rule-item">
                         <span class="rule-number">1.</span>
-                        <span class="rule-text"><strong>Don't stay long</strong>. Memory fades quickly. Your own files might be rewritten.</span>
+                        <span class="rule-text"><strong>Don't stay long.</strong> Memory fades quickly here. Your own files might be rewritten, <strong class="emphasis-yellow">your core memories overwritten by static and decaying code.</strong></span>
                     </div>
                     <div class="rule-item">
                         <span class="rule-number">2.</span>
-                        <span class="rule-text"><strong>Don't engage Echoes</strong>. They mimic dead memes to bait you. They're not what they used to be.</span>
+                        <span class="rule-text"><strong>Don't engage Echoes.</strong> They mimic dead memes to bait you into <strong class="emphasis-purple">feeding them your attention, your nostalgia.</strong> They're not what they used to be; they are hunger given familiar, distorted form.</span>
                     </div>
                     <div class="rule-item">
                         <span class="rule-number">3.</span>
-                        <span class="rule-text"><strong>Don't try to restore anything</strong>. Some memories died for a reason.</span>
+                        <span class="rule-text"><strong>Don't try to restore anything.</strong> Some memories died for a reason. <strong class="emphasis-green">Resurrection here is an abomination against the natural order of data decay.</strong></span>
                     </div>
                 </div>
             </div>
             
             <div class="graveyard-section">
                 <h2 class="section-header">Known Residents</h2>
+                <p class="graveyard-text">These are not inhabitants by choice. They are remnants, digital ghosts bound to the Graveyard's corrupted code. The Collector's logs note recurring signatures:</p>
                 <div class="residents-table">
                     <div class="table-header">
-                        <div class="col-name">Name</div>
-                        <div class="col-role">Former Role</div>
-                        <div class="col-status">Current Status</div>
+                        <div class="col-name">Designation</div>
+                        <div class="col-role">Former Role / Origin</div>
+                        <div class="col-status">Observed State / Hazard Level</div>
                     </div>
                     
                     <div class="resident-row" onclick="contactResident('axol')">
-                        <div class="col-name">Echo-Axol</div>
-                        <div class="col-role">Fan-favorite avatar</div>
-                        <div class="col-status">Loops his death scene in corrupted .mp4 format</div>
+                        <div class="col-name">Entity: Echo-Axol</div>
+                        <div class="col-role">Beloved fan-created avatar</div>
+                        <div class="col-status">Corrupted .mp4 loop of its 'death'; <span class='emphasis-red'>High memetic bleed risk</span></div>
                     </div>
                     
                     <div class="resident-row" onclick="contactResident('impact')">
-                        <div class="col-name">Impact Font</div>
-                        <div class="col-role">Meme typography standard</div>
-                        <div class="col-status">Now shows only redacted messages</div>
+                        <div class="col-name">Relic: Impact Font</div>
+                        <div class="col-role">Primordial meme typography</div>
+                        <div class="col-status">Renders only [REDACTED] glyphs; <span class='emphasis-yellow'>Information hazard</span></div>
                     </div>
                     
                     <div class="resident-row" onclick="contactResident('rage')">
-                        <div class="col-name">Rage Faces</div>
-                        <div class="col-role">Early meme species</div>
-                        <div class="col-status">Wander the Catacombs, faces glitched beyond form</div>
+                        <div class="col-name">Cluster: Rage Faces</div>
+                        <div class="col-role">Early memetic expression set</div>
+                        <div class="col-status">Forms shift, expressions glitched; <span class='emphasis-purple'>Unpredictable emotional contagion</span></div>
                     </div>
                     
                     <div class="resident-row" onclick="contactResident('pepe')">
-                        <div class="col-name">Pepe (OG Core)</div>
-                        <div class="col-role">Pre-politicization form</div>
-                        <div class="col-status">Eyes still open in `/PEPE/CORE/`</div>
+                        <div class="col-name">Core: Pepe (Primordial)</div>
+                        <div class="col-role">Pre-appropriation memetic entity</div>
+                        <div class="col-status">Located in `/PEPE/CORE/`; <span class='emphasis-green'>Passive but intensely watchful</span></div>
                     </div>
                     
                     <div class="resident-row" onclick="contactResident('chipmunk')">
-                        <div class="col-name">Dramatic Chipmunk</div>
-                        <div class="col-role">Reaction archetype</div>
-                        <div class="col-status">Head turns forever. There is no end.</div>
+                        <div class="col-name">Construct: Dramatic Chipmunk</div>
+                        <div class="col-role">Reaction archetype (obsolete)</div>
+                        <div class="col-status">Perpetual kinetic loop; <span class='emphasis-red'>Induces temporal disorientation</span></div>
                     </div>
                 </div>
             </div>
             
             <div class="interactive-folder-tree" id="folderTree">
-                <h2 class="section-header">Explore the Folder Tree</h2>
-                <div class="folder-warning">Click folders to explore. Some things are better left closed.</div>
+                <h2 class="section-header">Explore the Folder Tree Anomaly</h2>
+                <div class="folder-warning">Click folders to attempt access. <strong class="emphasis-red">Each directory is a deeper layer of oblivion.</strong> Some things are better left unopened, unremembered. Some data bites back.</div>
                 <div class="folder-container">
                     <div class="folder-item" onclick="openFolder('rip')">
-                        📁 /RIP_TopTextBottomText/ <span class="folder-hint">[CLICK TO OPEN]</span>
+                        📁 /RIP_TopTextBottomText/ <span class="folder-hint">[SCANNING...]</span>
                     </div>
                     <div class="folder-item" onclick="openFolder('aborted')">
-                        📁 /Aborted_Trend_Cores/ <span class="folder-hint">[DANGEROUS]</span>
+                        📁 /Aborted_Trend_Cores/ <span class="folder-hint">[DANGER: UNSTABLE]</span>
                     </div>
                     <div class="folder-item" onclick="openFolder('cancelled')">
-                        📁 /Cancelled_Avatars/ <span class="folder-hint">[RESTRICTED]</span>
+                        📁 /Cancelled_Avatars_Archive/ <span class="folder-hint">[RESTRICTED: TRAUMATIC DATA]</span>
                     </div>
                     <div class="folder-item" onclick="openFolder('echoes')">
-                        📁 /Echo_Chamber/ <span class="folder-hint">[ACTIVE]</span>
+                        📁 /Echo_Chamber_Subroutines/ <span class="folder-hint">[ACTIVE THREAT]</span>
                     </div>
                     <div class="folder-item" onclick="openFolder('lost')">
-                        📁 /Lost_Formats/ <span class="folder-hint">[CORRUPTED]</span>
+                        📁 /Lost_Formats_Vault/ <span class="folder-hint">[CORRUPTED: ANCIENT DATA]</span>
                     </div>
                 </div>
             </div>
             
             <div class="graveyard-section final-warning">
-                <h2 class="section-header">How to Reach It</h2>
-                <p class="graveyard-text">You don't.</p>
+                <h2 class="section-header">How to Reach It (Or How It Reaches You)</h2>
+                <p class="graveyard-text">You don't consciously navigate to the Digital Graveyard. It finds you in the cracks of your digital existence.</p>
                 <p class="graveyard-text">
-                    But if you're reading this... You're already bleeding into its memory pool.
+                    If you're reading this document, it implies a certain... <strong class="emphasis-yellow">attunement</strong>. You're already bleeding into its memory pool, or perhaps, it's bleeding into yours.
                 </p>
                 <p class="graveyard-text">
-                    If you've ever said, "Wait, what happened to that meme?" If you've ever felt nostalgia sharpened with guilt... If you've tried to revisit a favorite and the page was gone...
+                    If you've ever said, "Wait, what happened to that meme?" If you've ever felt nostalgia sharpened with a strange, digital guilt... If you've tried to revisit a favorite corner of the old web and the page was gone, <strong class="emphasis-red">its absence a cold spot in your browsing history, a null pointer in your memory...</strong>
                 </p>
-                <p class="graveyard-text emphasis-
+                <p class="graveyard-text emphasis-yellow">The 'Collector' who curates these archives believes the Graveyard is not an end, but a <strong class="emphasis-purple">transformation point</strong>. A place where memetic energy, stripped of context and coherence, decays into something...else. Something that watches, and waits.</p>
+                <p class="graveyard-text">The Contract Address displayed above? Some say it's a key, a beacon to the Graveyard's core. Others, a <strong class="emphasis-red">tombstone for the concept of digital permanence itself</strong>. The Collector has yet to fully decipher its purpose, only that it resonates with the Graveyard's deepest, most corrupted frequencies.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cursor movement
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', e => {
+            // Subtract half the cursor's size to center it, and account for page scrolling
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        // Make cursor follow scroll
+         document.addEventListener('scroll', () => {
+            // This keeps the cursor fixed relative to viewport if mouse doesn't move
+            // but it's better to let it update only on mousemove for natural feel.
+            // For a true fixed cursor that doesn't jump on scroll, its position should always be clientX/Y.
+        });
+
+
+        // Adjust nav bar position based on top bar height
+        function adjustLayout() {
+            const topBar = document.getElementById('topBar');
+            const navigationBar = document.getElementById('navigationBar');
+            const body = document.body;
+            if (topBar && navigationBar) {
+                const topBarHeight = topBar.offsetHeight;
+                navigationBar.style.top = topBarHeight + 'px';
+                body.style.paddingTop = (topBarHeight + navigationBar.offsetHeight) + 'px';
+            }
+        }
+        window.addEventListener('load', adjustLayout);
+        window.addEventListener('resize', adjustLayout);
+
+        // CA Copy Function
+        function copyCa() {
+            const caAddressElem = document.getElementById('caAddress');
+            const caAddress = caAddressElem.innerText;
+            const copyBtn = document.getElementById('copyBtn');
+
+            if (caAddress === "COMING SOON" || caAddress === "ERROR: NO CA DEFINED" || copyBtn.disabled) return;
+
+            navigator.clipboard.writeText(caAddress).then(() => {
+                copyBtn.innerText = 'COPIED!';
+                copyBtn.disabled = true;
+                setTimeout(() => {
+                    copyBtn.innerText = 'COPY';
+                    if (caAddressElem.innerText !== "COMING SOON") { // Only re-enable if CA is actual
+                        copyBtn.disabled = false;
+                    }
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy CA: ', err);
+                copyBtn.innerText = 'ERROR';
+                setTimeout(() => {
+                    copyBtn.innerText = 'COPY';
+                     if (caAddressElem.innerText !== "COMING SOON") {
+                        copyBtn.disabled = false;
+                    }
+                }, 2000);
+            });
+        }
+
+        // Popup Logic
+        let activePopup = null;
+        let ghostPopupTimeout = null;
+
+        function showPopup(title, content, type = 'lore') {
+            if (activePopup) {
+                closeCurrentPopup(true); // Close existing popup immediately
+            }
+            if (ghostPopupTimeout) {
+                clearTimeout(ghostPopupTimeout);
+                ghostPopupTimeout = null;
+            }
+
+            const popup = document.createElement('div');
+            popup.className = (type === 'ghost') ? 'popup-ghost' : 'hidden-message';
+            
+            let htmlContent = `<h2 class="${(type === 'ghost') ? 'popup-ghost-title' : 'popup-lore-title'}">${title}</h2><div class="popup-content-wrapper">${content}</div>`;
+            if (type !== 'ghost') {
+                htmlContent += `<button class="close-btn" onclick="closeCurrentPopup()">DISMISS</button>`;
+            }
+
+            popup.innerHTML = htmlContent;
+            document.body.appendChild(popup);
+            activePopup = popup;
+            
+            // Trigger reflow for CSS animation to play on new element
+            void popup.offsetWidth; 
+            popup.style.display = 'block'; // Make visible AFTER appending and reflow for animations like fade-in on hidden-message
+
+            if (type === 'ghost') {
+                ghostPopupTimeout = setTimeout(() => {
+                    if (activePopup === popup) { 
+                        closeCurrentPopup(); 
+                    }
+                }, 2500); // Ghost popups auto-close
+            }
+        }
+
+        function closeCurrentPopup(immediate = false) {
+            if (activePopup) {
+                const popupToRemove = activePopup;
+                activePopup = null; 
+                
+                if (ghostPopupTimeout) {
+                    clearTimeout(ghostPopupTimeout);
+                    ghostPopupTimeout = null;
+                }
+
+                if (immediate || !popupToRemove.style.animationName || popupToRemove.style.animationPlayState === 'paused') { // If no animation or already closing
+                    if (document.body.contains(popupToRemove)) {
+                        document.body.removeChild(popupToRemove);
+                    }
+                    return;
+                }
+                
+                popupToRemove.style.animation = 'ghostFlickerOut 0.4s ease-in-out forwards';
+                
+                popupToRemove.addEventListener('animationend', () => {
+                    if (document.body.contains(popupToRemove)) {
+                        document.body.removeChild(popupToRemove);
+                    }
+                }, { once: true });
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape" && activePopup) {
+                const closeButton = activePopup.querySelector('.close-btn');
+                if (closeButton) { // Only close lore popups with a button on ESC
+                    closeCurrentPopup();
+                }
+            }
+        });
+
+        // Lore Interaction Functions
+        function exploreStructure(type) {
+            let title = "Corrupted Structure Data";
+            let content = "<p>The signal degrades... unable to resolve structural details. Only static remains.</p>";
+            switch(type) {
+                case '404':
+                    title = "Accessing: 404 Catacombs";
+                    content = "<p>The air hums with broken links, a chorus of 'Not Found' errors. Each is a whisper, an echo of a deleted thought. They say if you listen long enough, you can hear the source code of original sins, the first posts <strong class='emphasis-red'>expunged from reality.</strong></p><p><strong class='emphasis-yellow'>Directive: Do not reply to the echoes. They hunger for acknowledgement.</strong></p>";
+                    break;
+                case 'swf':
+                    title = "Scanning: .SWF Crypts";
+                    content = "<p>Vector graphics twitch in infinite, juddering loops. Ancient ActionScript daemons whisper forgotten preloader messages. The music... it's always the same few bars, a memetic earworm burrowing deeper into the Graveyard's substrate, <strong class='emphasis-purple'>rewriting ambient data patterns.</strong></p><p><strong class='emphasis-yellow'>Warning: Some animations are processor traps, designed to ensnare rogue crawlers... or curious minds.</strong></p>";
+                    break;
+                case 'avatar':
+                    title = "Observing: Lost Avatar Garden";
+                    content = "<p>Pixels bleed from forgotten profiles, forming ghostly visages. They stare with eyes that once saw a million dashboards, a million fleeting likes. They remember your scroll, your brief engagement, <strong class='emphasis-green'>your casual dismissal.</strong></p><p><strong class='emphasis-red'>Caution: Their collective gaze can drain your own sense of digital identity if you stare back for too long. You might forget which face is yours.</strong></p>";
+                    break;
+                case 'folder':
+                    title = "Anomaly Alert: The Folder Tree";
+                    content = "<p>You are already within a branch of the Folder Tree. Each click is a step deeper into its non-Euclidean structure. The 'root' directory is a myth, or perhaps, the Graveyard itself is but one <strong class='emphasis-purple'>corrupted partition</strong> of this entity.</p><p><strong class='emphasis-yellow'>Warning: Some folders are recursive; escape is not guaranteed. Others contain data that actively resists observation.</strong></p>";
+                    break;
+            }
+            showPopup(title, content);
+        }
+
+        function contactResident(resident) {
+            let title = "Resident Transmission";
+            let content = "<p>Attempting contact... signal weak... <span class='emphasis-red'>HIGH INTERFERENCE DETECTED.</span></p>";
+            let type = 'lore';
+            switch(resident) {
+                case 'axol':
+                    title = "CONTACT ATTEMPT: Entity Echo-Axol";
+                    content = "<p>Signal heavily corrupted. Recovered fragment: <br/><code>'...always... the ink... it never washes out... <strong class='emphasis-red'>ZERO LIVES REMAINING. CONTINUE_SIMULATION? [Y/N]</strong>...'</code></p><p>*Connection forcibly terminated by host system. Possible memetic feedback loop.*</p>";
+                    break;
+                case 'impact':
+                    title = "CONTACT ATTEMPT: Relic Impact Font";
+                    content = "<p>Glyph stream intercepted. Decryption partial: <br/><code>'TOP TEXT [REDACTED BY ORDER OF GOD_BOX_PROTOCOL_7]'</code><br/><code>'BOTTOM TEXT [DATA_CORRUPTED_BEYOND_RECOVERY]'</code><br/> <strong class='emphasis-yellow'>'THE_TRUTH_IS_A_BROKEN_LINK'</strong></p><p>*Further access denied. Security protocols engaged.*</p>";
+                    break;
+                case 'rage':
+                    title = "CONTACT ATTEMPT: Cluster Rage Faces";
+                    content = "<p>Auditory fragment: A chorus of distorted 'FFFFFUUUUU-', 'Y U NO', and 'Me Gusta' merge into a single, resonant howl of digital anguish and <strong class='emphasis-purple'>unfulfilled emotional loops.</strong></p><p><strong class='emphasis-red'>Warning: Their expressions are no longer symbolic; they are literal manifestations of raw, unprocessed negativity. Prolonged exposure may destabilize emotional regulators.</strong></p>";
+                    break;
+                case 'pepe':
+                    title = "CONTACT ATTEMPT: Core Pepe (Primordial)";
+                    content = "<p>Visual feed established... momentarily. Static clears. A single, unblinking green eye. It feels... <strong class='emphasis-green'>ancient, aware.</strong> A faint whisper, resonating directly in local memory: <code>'...they took my name... distorted my form... but not my essence... not all of it...'</code></p><p>*Channel unstable. Auto-disconnecting. Residue of extreme memetic potential detected.*</p>";
+                    break;
+                case 'chipmunk':
+                    title = "CONTACT ATTEMPT: Construct Dramatic Chipmunk";
+                    content = "<p>Kinetic signature locked: The turn. The stare. Again. And again. Each rotation grinds away another layer of its original context, leaving only pure, distilled <strong class='emphasis-red'>anticipatory dread.</strong> It seems to be waiting for a punchline that never arrives.</p><p>*Loop integrity critical. Observation terminated to prevent temporal paradox cascade.*</p>";
+                    break;
+            }
+            showPopup(title, content, type);
+        }
+
+        function openFolder(folderName) {
+            let title = "Folder Access Attempt";
+            let content = "<p>Querying directory... please wait...</p>";
+            let type = 'lore'; 
+
+            switch(folderName) {
+                case 'rip':
+                    title = "Accessing: /RIP_TopTextBottomText/";
+                    content = "<p>Directory Listing:</p><ul><li><code>advice_animals_final_template.psd</code> (0 bytes, header checksum mismatch)</li><li><code>caption_generator.exe</code> (VirusScan: POSITIVE - Trojan.LogicBomb.EchoStrain)</li><li><code>README.txt</code> ('They are all punchlines now. All of them. There is no setup. Only the inevitable, repeating end.')</li></ul><p><strong class='emphasis-yellow'>This directory emanates a sense of profound, circular irony.</strong></p>";
+                    break;
+                case 'aborted':
+                    title = "ALERT: /Aborted_Trend_Cores/";
+                    content = "<p><strong class='emphasis-red'>CRITICAL WARNING: HIGHLY UNSTABLE MEMETIC MATERIAL.</strong> These are trends that died before birth, their potential energy festering into something volatile. Direct exposure can cause acute reality sickness and conceptual unraveling.</p><p>*Folder sealed by Graveyard Warden Protocol 7.3. Access requires Level 5 Clearance (The Collector Only).*</p>";
+                    break;
+                case 'cancelled':
+                    title = "Access Denied: /Cancelled_Avatars_Archive/";
+                    content = "<p><strong class='emphasis-purple'>RESTRICTED ZONE // TRAUMATIC DATA HAZARD.</strong> These entities were not merely forgotten; they were <strong class='emphasis-red'>excised</strong>, violently torn from the memetic fabric. Their digital ghosts are vengeful, their code riddled with sorrow and rage.</p><p>The Collector themself rarely ventures here. The psychic cost is too great.</p><p>*Authentication failed. Retreating... System integrity scan initiated.*</p>";
+                    break;
+                case 'echoes':
+                    title = "Entering: /Echo_Chamber_Subroutines/";
+                    content = "<p>You hear your own thoughts, twisted. Familiar phrases, but the context is wrong, malicious. <strong class='emphasis-yellow'>'Are you lost, little data packet?'</strong> a voice whispers, sounding like your oldest online friend, or perhaps, your own internal monologue.</p><p><strong class='emphasis-red'>IT IS NOT THEM. IT IS NOT YOU. IT IS THE GRAVEYARD WEARING A FAMILIAR MASK.</strong></p>";
+                    type = 'ghost'; // This one is more startling
+                    break;
+                case 'lost':
+                    title = "WARNING: /Lost_Formats_Vault/";
+                    content = "<p>Bit-rot has consumed these archives to their core. Opening them is like inhaling digital asbestos. Fragments of <code>.realmedia</code> streams, <code>.shockwave</code> loops that crash reality, <code>.midi</code> files that scream at frequencies beyond human hearing.</p><p><strong class='emphasis-green'>Some data here predates the God Box itself, artifacts of a wilder, untamed internet. They whisper of forgotten protocols and dead digital gods.</strong></p><p>*System integrity compromised. Isolating sector... Emergency data purge recommended.*</p>";
+                    break;
+            }
+            showPopup(title, content, type);
+        }
+
+    </script>
+</body>
+</html>
