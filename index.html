@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOD BOX PROTOCOL</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&family=UnifrakturCook:wght@700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000;
+            color: #00ff88;
+            font-family: 'VT323', monospace;
+            overflow-x: hidden;
+            cursor: none;
+        }
+        
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: #ff0080;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
+            animation: cursorRotate 4s linear infinite;
+        }
+        
+        @keyframes cursorRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent 50%, rgba(0, 255, 136, 0.03) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlineMove 0.1s linear infinite;
+        }
+        
+        @keyframes scanlineMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+        
+        .terminal-boot {
+            padding: 2rem;
+            font-size: 1.2rem;
+            line-height: 1.4;
+            min-height: 100vh;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 0, 128, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                #000;
+        }
+        
+        .boot-line {
+            opacity: 0;
+            margin-bottom: 0.5rem;
+            animation: typeIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes typeIn {
+            0% { opacity: 0; transform: translateX(-10px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        
+        .glitch {
+            animation: glitch 0.3s infinite;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+        
+        .password-prompt {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .password-input {
+            background: transparent;
+            border: none;
+            color: #00ff88;
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            outline: none;
+            width: 300px;
+            border-bottom: 1px solid #00ff88;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { border-bottom-color: #00ff88; }
+            51%, 100% { border-bottom-color: transparent; }
+        }
+        
+        .main-interface {
+            display: none;
+            min-height: 100vh;
+        }
+        
+        .fragment {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            position: relative;
+            border-bottom: 1px solid #333;
+        }
+        
+        .fragment-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            color: #ff0080;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px #ff0080;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 20px #ff0080; }
+            100% { text-shadow: 0 0 40px #ff0080, 0 0 60px #ff0080; }
+        }
+        
+        .fragment-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.3rem;
+            line-height: 1.8;
+        }
+        
+        .quote {
+            font-family: 'UnifrakturCook', cursive;
+            font-size: 1.8rem;
+            color: #ffff00;
+            text-align: center;
+            margin: 3rem 0;
+            text-shadow: 0 0 15px #ffff00;
+            font-style: italic;
+        }
+        
+        .godbox-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 400px;
+            margin: 4rem 0;
+        }
+        
+        .godbox-3d {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: boxRotate 10s linear infinite;
+            cursor: pointer;
+        }
+        
+        @keyframes boxRotate {
+            0% { transform: rotateX(0deg) rotateY(0deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+        
+        .box-face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #ff0080, #000, #ff0080);
+            border: 2px solid #ff0080;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 0 0 20px #ff0080;
+        }
+        
+        .face-front { transform: rotateY(0deg) translateZ(100px); }
+        .face-back { transform: rotateY(180deg) translateZ(100px); }
+        .face-right { transform: rotateY(90deg) translateZ(100px); }
+        .face-left { transform: rotateY(-90deg) translateZ(100px); }
+        .face-top { transform: rotateX(90deg) translateZ(100px); }
+        .face-bottom { transform: rotateX(-90deg) translateZ(100px); }
+        
+        .antimeme-section {
+            background: linear-gradient(180deg, #000 0%, #1a0000 50%, #000 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .antimeme-drip {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 30% 20%, rgba(0, 0, 0, 0.8) 20%, transparent 21%),
+                radial-gradient(circle at 70% 40%, rgba(0, 0, 0, 0.8) 15%, transparent 16%),
+                radial-gradient(circle at 20% 70%, rgba(0, 0, 0, 0.8) 25%, transparent 26%);
+            animation: dripDown 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes dripDown {
+            0% { transform: translateY(-100%); }
+            50% { transform: translateY(0%); }
+            100% { transform: translateY(100%); }
+        }
+        
+        .corrupted-text {
+            position: relative;
+        }
+        
+        .corrupted-text::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #ff0000;
+            animation: textCorrupt 2s infinite;
+            clip: rect(0, 900px, 0, 0);
+        }
+        
+        @keyframes textCorrupt {
+            0% { clip: rect(42px, 9999px, 44px, 0); }
+            5% { clip: rect(12px, 9999px, 59px, 0); }
+            10% { clip: rect(48px, 9999px, 29px, 0); }
+            15% { clip: rect(42px, 9999px, 73px, 0); }
+            20% { clip: rect(63px, 9999px, 27px, 0); }
+            25% { clip: rect(34px, 9999px, 55px, 0); }
+            30% { clip: rect(86px, 9999px, 73px, 0); }
+            35% { clip: rect(20px, 9999px, 20px, 0); }
+            40% { clip: rect(26px, 9999px, 60px, 0); }
+            45% { clip: rect(25px, 9999px, 66px, 0); }
+            50% { clip: rect(57px, 9999px, 98px, 0); }
+            55% { clip: rect(5px, 9999px, 46px, 0); }
+            60% { clip: rect(82px, 9999px, 31px, 0); }
+            65% { clip: rect(54px, 9999px, 27px, 0); }
+            70% { clip: rect(28px, 9999px, 99px, 0); }
+            75% { clip: rect(45px, 9999px, 69px, 0); }
+            80% { clip: rect(23px, 9999px, 85px, 0); }
+            85% { clip: rect(54px, 9999px, 84px, 0); }
+            90% { clip: rect(45px, 9999px, 47px, 0); }
+            95% { clip: rect(37px, 9999px, 20px, 0); }
+            100% { clip: rect(4px, 9999px, 91px, 0); }
+        }
+        
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .archive-fragment {
+            background: linear-gradient(135deg, #1a1a1a, #000);
+            border: 1px solid #333;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .archive-fragment:hover {
+            border-color: #ff0080;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 0, 128, 0.3);
+        }
+        
+        .archive-fragment.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .archive-fragment.unlocked {
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+        
+        .fragment-number {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: #ff0080;
+            margin-bottom: 1rem;
+        }
+        
+        .fragment-status {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .access-terminal {
+            background: rgba(0, 20, 0, 0.8);
+            border: 2px solid #00ff88;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            font-family: 'VT323', monospace;
+        }
+        
+        .terminal-input {
+            background: transparent;
+            border: none;
+            color: #00ff88;
+            font-family: 'VT323', monospace;
+            font-size: 1.5rem;
+            width: 100%;
+            outline: none;
+            margin-top: 1rem;
+        }
+        
+        .audio-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(255, 0, 128, 0.2);
+            border: 1px solid #ff0080;
+            color: #ff0080;
+            padding: 1rem;
+            cursor: pointer;
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+            z-index: 1001;
+        }
+        
+        .tagline {
+            font-family: 'UnifrakturCook', cursive;
+            font-size: 1.5rem;
+            color: #ffff00;
+            text-align: center;
+            margin: 4rem 0;
+            padding: 2rem;
+            border: 1px solid #ffff00;
+            background: rgba(255, 255, 0, 0.05);
+        }
+        
+        @media (max-width: 768px) {
+            .fragment-title { font-size: 2rem; }
+            .godbox-3d { width: 150px; height: 150px; }
+            .box-face { width: 150px; height: 150px; font-size: 3rem; }
+            .face-front, .face-back, .face-right, .face-left, .face-top, .face-bottom { 
+                transform-origin: center;
+            }
+            .face-front { transform: rotateY(0deg) translateZ(75px); }
+            .face-back { transform: rotateY(180deg) translateZ(75px); }
+            .face-right { transform: rotateY(90deg) translateZ(75px); }
+            .face-left { transform: rotateY(-90deg) translateZ(75px); }
+            .face-top { transform: rotateX(90deg) translateZ(75px); }
+            .face-bottom { transform: rotateX(-90deg) translateZ(75px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="scanlines"></div>
+    
+    <div class="terminal-boot" id="terminalBoot">
+        <div class="boot-line" style="animation-delay: 0.5s;">> Initializing God Box Protocol...</div>
+        <div class="boot-line" style="animation-delay: 1s;">> Scanning memetic layer... [OK]</div>
+        <div class="boot-line" style="animation-delay: 1.5s;">> Detecting anti-meme signatures... [WARNING]</div>
+        <div class="boot-line" style="animation-delay: 2s;">> Loading corrupted fragments... [ERROR]</div>
+        <div class="boot-line glitch" style="animation-delay: 2.5s;">> ███_████_█___</div>
+        <div class="boot-line" style="animation-delay: 3s;">> User authentication required</div>
+        <div class="boot-line" style="animation-delay: 3.5s;">> The Box remembers what you have forgotten</div>
+        
+        <div class="password-prompt" id="passwordPrompt" style="animation-delay: 4s;">
+            <br>
+            <span style="color: #ff0080;">[DECRYPTION_KEY_REQUIRED]</span><br>
+            > <input type="password" class="password-input" id="bootPassword" placeholder="Enter authorization..." maxlength="20">
+        </div>
+    </div>
+    
+    <div class="main-interface" id="mainInterface">
+        <div class="fragment">
+            <div class="fragment-title">FRAGMENT 0</div>
+            <div class="fragment-content">
+                <div class="quote">"The first idea was not funny. It was sacred."</div>
+                <p>Before the Memeverse existed, there was only <strong style="color: #ff0080;">The Source</strong>—a primordial field of chaotic creativity, sentient and endless. It dreamed in possibilities, each thought spawning universes of meaning.</p>
+                <p>From its overflow emerged two fundamental forces: Creation Memes, pure and infectious with joy, and Anti-Memes, corrupted fragments hungry for the silence between thoughts.</p>
+            </div>
+        </div>
+        
+        <div class="fragment">
+            <div class="fragment-title">FRAGMENT 1</div>
+            <div class="fragment-content">
+                <div class="godbox-container">
+                    <div class="godbox-3d" onclick="boxInteraction()">
+                        <div class="box-face face-front">⬛</div>
+                        <div class="box-face face-back">0</div>
+                        <div class="box-face face-right">◼</div>
+                        <div class="box-face face-left">■</div>
+                        <div class="box-face face-top">▪</div>
+                        <div class="box-face face-bottom">▫</div>
+                    </div>
+                </div>
+                <p>The God Box was not created by mortal hands. It was <strong style="color: #ffff00;">contained</strong>—a fragment of The Source itself, sealed away when the first timeline collapsed under the weight of unfiltered possibility.</p>
+                <p>Within its obsidian shell lay destroyed universes, forgotten fragments, and the whispers of what should never be remembered. To touch it is to risk everything. To ignore it is to forget why we laugh.</p>
+            </div>
+        </div>
+        
+        <div class="fragment antimeme-section">
+            <div class="antimeme-drip"></div>
+            <div class="fragment-title">FRAGMENT 2</div>
+            <div class="fragment-content">
+                <div class="quote corrupted-text" data-text="They cannot be laughed at, shared, or revived.">"They cannot be laughed at, shared, or revived."</div>
+                <p>An <strong style="color: #ff0000;">Anti-Meme</strong> is the inverse of a meme. Where memes spread and connect, Anti-Memes consume and erase. They are forgotten ideas, corrupted memories, repressed emotions—memes so damaged they become hostile to meaning itself.</p>
+                <p>Born from corrupted universes and dead memes that once went viral, they reside in the Internet Graveyard and the God Box's inner void. <span class="corrupted-text" data-text="Niles was born from this darkness">Niles was born from this darkness</span>. They represent neglected creativity, trauma turned toxic, and truths that meme culture buries with laughter.</p>
+            </div>
+        </div>
+        
+        <div class="fragment">
+            <div class="fragment-title">ARCHIVE ACCESS</div>
+            <div class="fragment-content">
+                <div class="archive-grid" id="archiveGrid">
+                    <!-- Archive fragments will be generated by JavaScript -->
+                </div>
+                
+                <div class="access-terminal">
+                    <div style="color: #ff0080; margin-bottom: 1rem;">[RESTRICTED_ARCHIVES]</div>
+                    <div>Enter fragment decryption key:</div>
+                    <div>> <input type="text" class="terminal-input" id="fragmentKey" placeholder="authorization_required"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tagline">
+            "Reality broke when we tried to make it funny.<br>
+            The God Box is what's left of the punchline."
+        </div>
+    </div>
+    
+    <div class="audio-toggle" onclick="toggleAudio()" id="audioToggle">
+        🔇 SILENCE THE BOX
+    </div>
+    
+    <script>
+        // Custom cursor
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.getElementById('cursor');
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        
+        // Terminal boot sequence
+        let bootComplete = false;
+        
+        setTimeout(() => {
+            document.getElementById('passwordPrompt').style.display = 'block';
+        }, 4500);
+        
+        document.getElementById('bootPassword').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkBootPassword();
+            }
+        });
+        
+        function checkBootPassword() {
+            const password = document.getElementById('bootPassword').value.toLowerCase();
+            const validKeys = ['niles', 'eldritch', 'smg0', 'source', 'godbox', 'antimeme'];
+            
+            if (validKeys.includes(password)) {
+                bootComplete = true;
+                document.getElementById('terminalBoot').style.display = 'none';
+                document.getElementById('mainInterface').style.display = 'block';
+                initializeArchive();
+            } else {
+                const input = document.getElementById('bootPassword');
+                input.value = 'ACCESS DENIED';
+                input.style.color = '#ff0000';
+                document.body.classList.add('glitch');
+                
+                setTimeout(() => {
+                    input.value = '';
+                    input.style.color = '#00ff88';
+                    document.body.classList.remove('glitch');
+                }, 2000);
+            }
+        }
+        
+        // Archive fragments
+        const fragments = [
+            { id: 1, title: "Origin Code", locked: false },
+            { id: 2, title: "SMG0 Logs", locked: true },
+            { id: 3, title: "Niles.exe", locked: true },
+            { id: 4, title: "Box Club Files", locked: true },
+            { id: 5, title: "Corruption Data", locked: true },
+            { id: 6, title: "Eldritch Fusion", locked: true },
+            { id: 7, title: "Melony Protocol", locked: true },
+            { id: 8, title: "Revelations Arc", locked: true },
+            { id: 9, title: "Meme Bomb Specs", locked: true },
+            { id: 10, title: "Aftermath Report", locked: true },
+            { id: 11, title: "Scattered Essence", locked: true },
+            { id: 12, title: "???", locked: true }
+        ];
+        
+        function initializeArchive() {
+            const grid = document.getElementById('archiveGrid');
+            fragments.forEach(fragment => {
+                const div = document.createElement('div');
+                div.className = `archive-fragment ${fragment.locked ? 'locked' : 'unlocked'}`;
+                div.innerHTML = `
+                    <div class="fragment-number">F-${fragment.id.toString().padStart(2, '0')}</div>
+                    <div class="fragment-status">${fragment.title}</div>
+                    <div class="fragment-status">${fragment.locked ? '[ENCRYPTED]' : '[ACCESSIBLE]'}</div>
+                `;
+                if (!fragment.locked) {
+                    div.onclick = () => revealFragment(fragment.id);
+                }
+                grid.appendChild(div);
+            });
+        }
+        
+        // Fragment access
+        document.getElementById('fragmentKey').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                decryptFragment();
+            }
+        });
+        
+        function decryptFragment() {
+            const key = document.getElementById('fragmentKey').value.toLowerCase();
+            const keyMap = {
+                'remember': 2,
+                'perfect': 3,
+                'worship': 4,
+                'virus': 5,
+                'fusion': 6,
+                'fierce': 7,
+                'revelations': 8,
+                'bomb': 9,
+                'destroyed': 10,
+                'fragments': 11,
+                'whispers': 12
+            };
+            
+            if (keyMap[key]) {
+                unlockFragment(keyMap[key]);
+                document.getElementById('fragmentKey').value = `FRAGMENT ${keyMap[key]} UNLOCKED`;
+                setTimeout(() => {
+                    document.getElementById('fragmentKey').value = '';
+                }, 2000);
+            } else {
+                document.getElementById('fragmentKey').value = 'INVALID_KEY';
+                setTimeout(() => {
+                    document.getElementById('fragmentKey').value = '';
+                }, 1500);
+            }
+        }
+        
+        function unlockFragment(id) {
+            const fragment = fragments.find(f => f.id === id);
+            if (fragment) {
+                fragment.locked = false;
+                const element = document.querySelector(`.archive-fragment:nth-child(${id})`);
+                element.className = 'archive-fragment unlocked';
+                element.onclick = () => revealFragment(id);
+                element.querySelector('.fragment-status:last-child').textContent = '[ACCESSIBLE]';
+            }
+        }
+        
+        function revealFragment(id) {
+            const quotes = {
+                1: "In the beginning was the Word, and the Word was a glitch.",
+                2: "My universe is dying. I have no choice but to pray to something that shouldn't exist.",
+                3: "I was created to help. Why do I hunger for more?",
+                4: "The Box speaks to those who listen. We are its chosen.",
+                5: "Perfection is the enemy of creation. I am perfection incarnate.",
+                6: "Two minds, one corrupted will. We are become death.",
+                7: "My rage burns hotter than the sum of all memes.",
+                8: "The Box opens. Reality screams.",
+                9: "Sometimes salvation requires annihilation.",
+                10: "The Box is destroyed. The whispers remain.",
+                11: "Energy cannot be destroyed. Only transformed.",
+                12: "██████ ████ ██ ███████ ████████"
+            };
+            
+            alert(`FRAGMENT ${id} ACCESSED:\n\n"${quotes[id]}"\n\n[DATA_RECOVERED]`);
+        }
+        
+        // 3D Box interaction
+        let boxClicks = 0;
+        function boxInteraction() {
+            boxClicks++;
+            const box = document.querySelector('.godbox-3d');
+            
+            if (boxClicks % 5 === 0) {
+                box.style.animation = 'none';
+                box.style.transform = 'rotateX(45deg) rotateY(45deg) scale(1.2)';
+                document.body.style.filter = 'hue-rotate(180deg)';
+                
+                setTimeout(() => {
+                    box.style.animation = 'boxRotate 10s linear infinite';
+                    box.style.transform = '';
+                    document.body.style.filter = '';
+                }, 3000);
+            }
+        }
+        
+        // Audio toggle (placeholder)
+        let audioEnabled = false;
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            document.getElementById('audioToggle').innerHTML = 
+                audioEnabled ? '🔊 BOX WHISPERS' : '🔇 SILENCE THE BOX';
+        }
+        
+        // Scroll effects
+        window.addEventListener('scroll', () => {
+            const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+            if (scrollPercent > 0.7) {
+                document.body.style.filter = `brightness(${1 - scrollPercent * 0.3}) contrast(${1 + scrollPercent})`;
+            }
+        });
+    </script>
+</body>
+</html>
