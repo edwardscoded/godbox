@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Meme Research Division | IGPA Protocol Files</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&family=UnifrakturCook:wght@700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #030303; /* Slightly different dark for research tone */
+            color: #999; /* Brighter base for readability */
+            font-family: 'VT323', monospace;
+            overflow-x: hidden;
+            cursor: none;
+            padding-top: 120px; 
+        }
+        
+        .top-bar, .navigation-bar, .custom-cursor, .static-overlay, .social-links, .ca-section, .copy-btn, .nav-container, .nav-links, .nav-link, .footer-archive, .hidden-message, .close-btn, .popup-ghost {
+            /* Copy styles from index.html for consistency */
+        }
+        /* --- Copied Base Styles (abbreviated for brevity, ensure these are identical to index.html) --- */
+        .top-bar { position: fixed; top: 0; left: 0; width: 100%; background: linear-gradient(90deg, #111, #000, #111); border-bottom: 1px solid #333; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 1002; font-family: 'VT323', monospace; }
+        .ca-section { display: flex; align-items: center; gap: 1rem; }
+        .ca-label { color: #666; font-size: 1.2rem; }
+        .ca-address { color: #888; font-size: 1.1rem; font-family: 'Orbitron', monospace; letter-spacing: 0.1em; }
+        .copy-btn { background: linear-gradient(45deg, #333, #222); border: 1px solid #555; color: #777; padding: 0.5rem 1rem; cursor: pointer; font-family: 'VT323', monospace; font-size: 0.9rem; transition: all 0.3s ease; }
+        .copy-btn:hover:not(:disabled) { border-color: #777; color: #999; background: linear-gradient(45deg, #555, #333); }
+        .copy-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .social-links { display: flex; gap: 1rem; }
+        .social-link { color: #666; text-decoration: none; font-size: 1.3rem; padding: 0.5rem; border: 1px solid #333; background: rgba(17, 17, 17, 0.8); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
+        .social-link:hover { color: #888; border-color: #555; background: rgba(34, 34, 34, 0.8); transform: translateY(-2px); }
+        .navigation-bar { position: fixed; top: 70px; left: 0; width: 100%; background: rgba(0, 0, 0, 0.95); border-bottom: 1px solid #222; padding: 0.8rem 0; z-index: 1001; backdrop-filter: blur(10px); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        .nav-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .nav-link { color: #555; text-decoration: none; font-family: 'Orbitron', monospace; font-size: 0.85rem; padding: 0.6rem 1rem; border: 1px solid #222; background: rgba(17, 17, 17, 0.6); transition: all 0.3s ease; white-space: nowrap; letter-spacing: 0.03em; text-align: center; flex-shrink: 0; }
+        .nav-link:hover { color: #777; border-color: #444; background: rgba(34, 34, 34, 0.8); }
+        .nav-link.active { color: #888; border-color: #666; background: rgba(68, 68, 68, 0.3); }
+        .custom-cursor { position: fixed; width: 15px; height: 15px; background: #444; border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.1s; animation: cursorFade 3s ease-in-out infinite; }
+        @keyframes cursorFade { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.2); } }
+        .static-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 20% 20%, rgba(80, 80, 80, 0.02) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(80, 80, 80, 0.02) 0%, transparent 50%); pointer-events: none; z-index: 1; opacity: 0.6; animation: staticFlickerOverlay 12s linear infinite alternate; }
+        @keyframes staticFlickerOverlay {0% { opacity: 0.4; } 25% { opacity: 0.7; } 50% { opacity: 0.3; } 75% { opacity: 0.8; } 100% { opacity: 0.4; }}
+        .hidden-message { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(5, 5, 5, 0.97); border: 2px solid #666; padding: 2rem; max-width: 600px; text-align: left; z-index: 10000; box-shadow: 0 0 50px rgba(68, 68, 68, 0.5); animation: fadeInPopup 0.3s ease-out; }
+        @keyframes fadeInPopup { from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+        .hidden-message-title { font-family: 'Orbitron', monospace; color: #888; font-size: 1.4rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #444; text-align: center; }
+        .revelation-text { color: #999; line-height: 1.7; margin-bottom: 2rem; font-size: 1.05rem; max-height: 60vh; overflow-y: auto; }
+        .revelation-text p { margin-bottom: 1em; } .revelation-text p:last-child { margin-bottom: 0; }
+        .revelation-text ul { list-style-type: none; padding-left: 1em; } .revelation-text li { margin-bottom: 0.5em; }
+        .revelation-text li::before { content: "» "; color: #666; margin-right: 0.5em; }
+        .close-btn { background: #222; border: 1px solid #444; color: #666; padding: 0.8rem 2rem; cursor: pointer; font-family: 'VT323', monospace; display: block; margin: 1.5rem auto 0 auto; }
+        .close-btn:hover { background: #333; border-color: #666; color: #888; }
+        .footer-archive { background: #050505; padding: 3rem 2rem; text-align: center; border-top: 1px solid #222; }
+        .footer-text { color: #333; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem; }
+        .archive-dedication { color: #444; font-style: italic; margin-top: 2rem; font-size: 1.1rem; }
+        .popup-ghost { position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.9); color: #aa4444; padding: 1rem 1.5rem; border: 2px solid #440000; font-size: 1.2rem; z-index: 10002; display: none; animation: ghostFadeInOut 3s ease-in-out; box-shadow: 0 0 15px #330000; }
+        @keyframes ghostFadeInOut { 0%, 100% { opacity: 0; transform: translateY(-20px); } 10%, 90% { opacity: 1; transform: translateY(0); } }
+        /* --- End Copied Base Styles --- */
+
+        .research-header {
+            text-align: center;
+            padding: 5rem 2rem 3rem 2rem;
+            background: linear-gradient(180deg, #0a0a0a 0%, #000 70%, #030303 100%);
+            border-bottom: 2px solid #444;
+        }
+        .research-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 3.8rem;
+            color: #777;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 25px #333, 0 0 10px #555;
+            animation: titlePulseResearch 6s ease-in-out infinite;
+        }
+        @keyframes titlePulseResearch {
+            0%, 100% { text-shadow: 0 0 25px #333, 0 0 10px #555; color: #777;}
+            50% { text-shadow: 0 0 35px #666, 0 0 15px #777; color: #999;}
+        }
+        .research-subtitle {
+            font-size: 1.5rem;
+            color: #555;
+            margin-bottom: 2rem;
+            font-style: italic;
+            letter-spacing: 0.05em;
+        }
+        .research-directive {
+            font-family: 'VT323', monospace;
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background: rgba(10,10,10,0.7);
+            border: 1px solid #222;
+            line-height: 1.6;
+        }
+
+        .research-content-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .research-section {
+            margin-bottom: 4rem;
+            padding: 2.5rem;
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid #2a2a2a;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+        .research-section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            color: #6c6c6c;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1rem;
+            text-align: left;
+        }
+        .research-text {
+            color: #888;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        .research-text strong, .research-text .emphasis {
+            color: #aaa; /* Brighter emphasis for research text */
+            font-weight: bold;
+        }
+        .research-text code {
+            background-color: #111;
+            color: #7c7;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'VT323', monospace; /* Ensure monospace for code */
+        }
+        .research-text .highlight-red { color: #c77; }
+        .research-text .highlight-blue { color: #77c; }
+        .research-text .highlight-green { color: #7c7; }
+
+        .hypothesis-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 1.5rem 0;
+        }
+        .hypothesis-item {
+            background: #080808;
+            border-left: 3px solid #444;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            color: #777;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .hypothesis-item:hover {
+            background: #101010;
+            border-left-color: #666;
+        }
+        .hypothesis-id {
+            font-family: 'Orbitron', monospace;
+            color: #555;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .case-study-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .case-study-card {
+            background: #0c0c0c;
+            border: 1px solid #222;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .case-study-card:hover {
+            border-color: #444;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+        .case-study-title {
+            font-family: 'Orbitron', monospace;
+            color: #777;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        .case-study-summary {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .case-study-status {
+            font-size: 0.8rem;
+            color: #444;
+            font-style: italic;
+        }
+        .case-study-status.active { color: #aa6666; }
+        .case-study-status.resolved { color: #66aa66; }
+
+        .data-visualization {
+            background: #050505;
+            border: 1px solid #252525;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .viz-placeholder { /* Placeholder for actual visualization */
+            width: 100%;
+            height: 200px;
+            border: 1px dashed #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #444;
+            font-size: 1.2rem;
+            background: repeating-linear-gradient(
+                45deg,
+                #080808,
+                #080808 10px,
+                #0a0a0a 10px,
+                #0a0a0a 20px
+            );
+            animation: vizScanline 10s linear infinite;
+        }
+        @keyframes vizScanline {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 200px; } /* Adjust height for smoother loop */
+        }
+        .viz-caption {
+            color: #555;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        .research-warning {
+            background: #221111;
+            border: 1px solid #442222;
+            color: #aa7777;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .research-warning strong {
+            color: #cc8888;
+        }
+
+        @media (max-width: 768px) {
+            body { padding-top: 150px; }
+            .research-title { font-size: 2.8rem; }
+            .research-subtitle { font-size: 1.2rem; }
+            .research-content-wrapper { padding: 1rem; }
+            .research-section { padding: 1.5rem; margin-bottom: 2rem; }
+            .research-section-title { font-size: 1.8rem; }
+            .case-study-grid { grid-template-columns: 1fr; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="static-overlay"></div>
+    <div class="popup-ghost" id="popupGhost"></div> 
+    
+    <div class="top-bar" id="topBar">
+        <div class="ca-section">
+            <span class="ca-label">CA:</span>
+            <span class="ca-address" id="caAddress">0xDEADBEEF...[SCANNING]</span>
+            <button class="copy-btn" onclick="copyCa()" id="copyBtn">COPY</button>
+        </div>
+        <div class="social-links">
+            <a href="#" class="social-link" title="X (DATA CORRUPTED)">𝕏</a>
+            <a href="#" class="social-link" title="DexScreener (SIGNAL LOST)">📊</a>
+            <a href="#" class="social-link" title="DexTools (OFFLINE)">🔧</a>
+            <a href="#" class="social-link" title="Pump.fun (ERROR 404)">🚀</a>
+            <a href="https://medium.com/@bid-outcrop0h" class="social-link" title="Medium (Collector's Logs)" target="_blank">📝</a>
+        </div>
+    </div>
+    
+    <div class="navigation-bar" id="navigationBar">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">ARCHIVE HOME</a>
+                <a href="graveyard.html" class="nav-link">THE GRAVEYARD</a>
+                <a href="antimemeresearch.html" class="nav-link active">ANTI-MEME RESEARCH</a>
+                <a href="godbox.html" class="nav-link">GOD BOX ARCHIVES</a>
+                <a href="terminal.html" class="nav-link">CLASSIFIED ACCESS</a>
+                <a href="patterns.html" class="nav-link">PATTERN ANALYSIS</a>
+                <a href="founder.html" class="nav-link">THE COLLECTOR</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="research-header">
+        <h1 class="research-title">Anti-Meme Research Division</h1>
+        <p class="research-subtitle">Cognitohazards, Infohazards, and Existential Data Anomalies</p>
+        <div class="research-directive">
+            <strong>Directive IGPA-AMRD-001:</strong> To investigate, classify, and understand the nature, origin, and propagation vectors of Anti-Memetic Phenomena (AMPs). This division operates under Level 7 Secrecy protocols. All findings are considered <span class="highlight-red">Eyes Only</span> for authorized personnel. Unauthorized dissemination will result in immediate memetic redaction.
+        </div>
+    </div>
+
+    <div class="research-content-wrapper">
+        <div class="research-section" id="introduction">
+            <h2 class="research-section-title">Introduction to Anti-Memetics</h2>
+            <p class="research-text">
+                Anti-Memes are not simply "forgotten memes." They are a distinct class of informational entity characterized by their inherent resistance to observation, retention, and propagation through conventional memetic channels. They exist in the <strong class="emphasis">negative space of information</strong>, the gaps in collective memory, and the corrupted code of digital existence.
+            </p>
+            <p class="research-text">
+                Our research indicates that Anti-Memes may arise from several sources:
+            </p>
+            <ul class="hypothesis-list">
+                <li class="hypothesis-item">
+                    <span class="hypothesis-id">Hypothesis AM-01A: Spontaneous Generation</span>
+                    Anti-Memes as a natural byproduct of high-entropy data environments, emerging from the "noise" of the digital universe.
+                </li>
+                <li class="hypothesis-item">
+                    <span class="hypothesis-id">Hypothesis AM-02B: Traumatic Memetic Decay</span>
+                    The result of memes undergoing extreme trauma (e.g., mass deletion, narrative erasure, extreme cultural backlash), causing their informational structure to invert. Subject D (Desti) is a prime example.
+                </li>
+                <li class="hypothesis-item">
+                    <span class="hypothesis-id">Hypothesis AM-03C: Extradimensional Influence</span>
+                    Anti-Memes as incursions from realities with different informational physics, possibly linked to phenomena like the <code class="highlight-blue">God Box Prime</code>.
+                </li>
+                <li class="hypothesis-item">
+                    <span class="hypothesis-id">Hypothesis AM-04X: Intentional Weaponization</span>
+                    The theoretical possibility of engineered Anti-Memes designed for information warfare, cognitive manipulation, or reality destabilization. (Status: Unconfirmed, High Threat Potential).
+                </li>
+            </ul>
+            <p class="research-text">
+                The study of Anti-Memes is inherently dangerous. Exposure can lead to memory loss, conceptual displacement, existential dread, and, in extreme cases, <strong class="emphasis highlight-red">ontological erasure</strong>. Proceed with caution.
+            </p>
+        </div>
+
+        <div class="research-section" id="classification">
+            <h2 class="research-section-title">AMP Classification & Known Types</h2>
+            <p class="research-text">
+                Due to their elusive nature, classifying Anti-Memes is an ongoing challenge. Current IGPA provisional classifications include:
+            </p>
+            <ul class="hypothesis-list">
+                <li class="hypothesis-item">
+                    <span class="hypothesis-id">Type I: Amnestics (The Forgotten)</span>
+                    These entities actively erase their own presence from memory and records. Example: The "Lost Month of June" incident (File AM-007-LK). Researchers often find notes about studying them, but no memory of the study itself.
+                </li>
+                <li class="hypothesis-item">
+                    <span class="hypothesis-id">Type II: Cognitohazards (The Unknowable)</span>
+                    Information about these entities is inherently harmful to the cognitive processes of observers. Direct observation can lead to temporary or permanent psychological damage. Example: The "Screaming JPEG" (File CH-012-SJ).
+                </li>
+                <li class="hypothesis-item">
+                    <span class="hypothesis-id">Type III: Infohazards (The Unspeakable)</span>
+                    The mere description or transmission of information about these entities can trigger their anomalous effects or spread their influence. Example: The [REDACTED] Pattern (File IH-003-RP - Access Restricted).
+                </li>
+                <li class="hypothesis-item">
+                    <span class="hypothesis-id">Type IV: Ontological Parasites (The Reality Eaters)</span>
+                    These rare and highly dangerous AMPs feed on or alter the fundamental fabric of reality or consensus narratives. Example: Suspected link between God Box fragments and localized reality distortions (Project ANUBIS).
+                </li>
+                <li class="hypothesis-item">
+                    <span class="hypothesis-id">Type V: Silent Echoes (The Grief Forms)</span>
+                    AMPs formed from intense collective emotional trauma, such as Subject D. They often manifest as persistent, unexplainable sorrow or nostalgia linked to a void in memory.
+                </li>
+            </ul>
+            <div class="data-visualization">
+                <div class="viz-placeholder" onclick="triggerVizInteraction()">
+                    [Anti-Memetic Signature Fluctuation Graph - DATA CORRUPTED - Click to Attempt Recovery]
+                </div>
+                <div class="viz-caption">Fig. 1: Attempted visualization of common Anti-Memetic energy signatures. Note the inherent instability and data loss.</div>
+            </div>
+        </div>
+
+        <div class="research-section" id="case-studies">
+            <h2 class="research-section-title">Key Case Studies & Investigations</h2>
+            <p class="research-text">
+                Selected declassified (or partially declassified) case studies. Full access requires Level 4 clearance via the <a href="terminal.html" style="color:#77aaff; text-decoration:underline;">CLASSIFIED ACCESS TERMINAL</a>.
+            </p>
+            <div class="case-study-grid">
+                <div class="case-study-card" onclick="viewCaseStudy('subject_d')">
+                    <div class="case-study-title">Case File AM-ALPHA: Subject D (Desti)</div>
+                    <div class="case-study-summary">
+                        Analysis of the first documented Anti-Meme genesis event. Focus on grief energy conversion and memetic inversion post-narrative erasure.
+                    </div>
+                    <div class="case-study-status active">Status: Ongoing Monitoring (High Emotional Contagion Risk)</div>
+                </div>
+                <div class="case-study-card" onclick="viewCaseStudy('lost_month')">
+                    <div class="case-study-title">Case File AM-007-LK: The Lost Month of June</div>
+                    <div class="case-study-summary">
+                        Investigation into a period where global internet activity shows a 30-day gap in memetic evolution, with all involved parties having no recollection.
+                    </div>
+                    <div class="case-study-status">Status: Cold Case (Evidence Self-Redacting)</div>
+                </div>
+                <div class="case-study-card" onclick="viewCaseStudy('godbox_fragments')">
+                    <div class="case-study-title">Project ANUBIS: God Box Fragmentation</div>
+                    <div class="case-study-summary">
+                        Tracking and analysis of suspected God Box Prime fragments manifesting as localized reality distortions and emergent Anti-Memetic fields.
+                    </div>
+                    <div class="case-study-status active">Status: Active Investigation (High Ontological Hazard)</div>
+                </div>
+                 <div class="case-study-card" onclick="viewCaseStudy('terminal_echoes')">
+                    <div class="case-study-title">File CH-042-TE: Terminal Echoes</div>
+                    <div class="case-study-summary">
+                        Study of anomalous data patterns and cognitive dissonance reported by users of the IGPA Classified Access Terminal. Are we observing the system, or is it observing us?
+                    </div>
+                    <div class="case-study-status">Status: Internal Review (Potential Self-Containment Paradox)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="research-section" id="containment-protocols">
+            <h2 class="research-section-title">Containment & Neutralization Protocols (Theoretical)</h2>
+            <p class="research-text">
+                Containing Anti-Memes is exceptionally difficult due to their nature. Current theoretical protocols focus on:
+            </p>
+            <ul class="hypothesis-list">
+                 <li class="hypothesis-item">
+                    <span class="hypothesis-id">Protocol Sisyphus (Information Flooding)</span>
+                    Attempting to "overwrite" an Anti-Meme's informational void with massive amounts of mundane or contradictory data. (Success Rate: < 5%).
+                </li>
+                <li class="hypothesis-item">
+                    <span class="hypothesis-id">Protocol Lethe (Induced Amnesia)</span>
+                    Amplifying an Anti-Meme's self-erasure properties to the point of self-annihilation. Highly unpredictable and risks collateral memory damage to researchers.
+                </li>
+                 <li class="hypothesis-item">
+                    <span class="hypothesis-id">Protocol Mnemosyne (Conceptual Anchoring)</span>
+                    Binding an Anti-Meme to a highly stable, widely recognized memetic concept to neutralize its anomalous properties. Risks corruption of the anchor meme. (See Axol Protocol as a variant).
+                </li>
+                <li class="hypothesis-item">
+                    <span class="hypothesis-id">Protocol Blackbox (Data Isolation)</span>
+                    Digitally quarantining the affected data or systems. Effective for localized manifestations but resource-intensive and not scalable for widespread contamination.
+                </li>
+            </ul>
+            <p class="research-text">
+                No universally effective neutralization method has been discovered. The primary goal of the AMRD remains <strong class="emphasis">understanding and harm mitigation</strong>.
+            </p>
+            <div class="research-warning">
+                <strong>WARNING:</strong> Direct interaction with suspected Anti-Memetic phenomena without proper authorization and cognitive shielding is strictly prohibited. The Internet Graveyard Preservation Authority is not responsible for lost memories, sanity, or existential certainty.
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-archive">
+        <p class="footer-text">Anti-Meme Research Division - Internal Use Only. Information contained herein is classified LEVEL GAMMA or higher.</p>
+        <p class="archive-dedication">"To those who seek knowledge in the voids, may your minds remain your own."</p>
+    </div>
+    
+    <div class="hidden-message" id="hiddenMessage">
+        <h3 id="hiddenMessageTitle" class="hidden-message-title">Research Division Update</h3>
+        <div class="revelation-text" id="messageText"></div>
+        <button class="close-btn" onclick="closeMessage()">DISMISS & FORGET</button>
+    </div>
+
+    <script>
+        // --- Base JS (Copy from index.html: cursor, layout, CA copy, popups, ghost effects) ---
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.getElementById('cursor');
+            if (cursor) { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; }
+        });
+        function adjustLayout() {
+            const topBar = document.getElementById('topBar');
+            const navigationBar = document.getElementById('navigationBar');
+            const body = document.body;
+            if (topBar && navigationBar) {
+                const topBarHeight = topBar.offsetHeight;
+                navigationBar.style.top = topBarHeight + 'px';
+                body.style.paddingTop = (topBarHeight + navigationBar.offsetHeight) + 'px';
+            }
+        }
+        window.addEventListener('load', adjustLayout);
+        window.addEventListener('resize', adjustLayout);
+
+        function copyCa() {
+            const caAddressElem = document.getElementById('caAddress');
+            const copyBtn = document.getElementById('copyBtn');
+            if (!caAddressElem || !copyBtn) return;
+            const caText = caAddressElem.textContent;
+            if (caText !== 'COMING SOON' && caText !== '0xDEADBEEF...[SCANNING]' && !copyBtn.disabled) {
+                navigator.clipboard.writeText(caText).then(() => {
+                    copyBtn.textContent = 'COPIED!'; copyBtn.disabled = true;
+                    setTimeout(() => { copyBtn.textContent = 'COPY'; copyBtn.disabled = false; }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy CA: ', err); copyBtn.textContent = 'ERROR';
+                    setTimeout(() => { copyBtn.textContent = 'COPY'; copyBtn.disabled = false; }, 2000);
+                });
+            } else if (caText === '0xDEADBEEF...[SCANNING]') {
+                 copyBtn.textContent = 'SCANNING...'; copyBtn.disabled = true;
+                 setTimeout(() => { copyBtn.textContent = 'COPY'; copyBtn.disabled = (caAddressElem.textContent === '0xDEADBEEF...[SCANNING]'); }, 2000);
+            }
+        }
+        let activePopup = null;
+        function showHiddenMessage(text, title = "AMRD ARCHIVE NOTE") {
+            if (activePopup) { closeMessage(true); }
+            const messagePopup = document.getElementById('hiddenMessage');
+            const messageTextElement = document.getElementById('messageText');
+            const messageTitleElement = document.getElementById('hiddenMessageTitle');
+            if(messagePopup && messageTextElement && messageTitleElement) {
+                messageTitleElement.textContent = title;
+                messageTextElement.innerHTML = text; 
+                messagePopup.style.display = 'block';
+                activePopup = messagePopup;
+            }
+        }
+        function closeMessage(immediate = false) {
+            if (activePopup) { activePopup.style.display = 'none'; activePopup = null; }
+        }
+        document.addEventListener('keydown', function(event) { if (event.key === "Escape" && activePopup) { closeMessage(); } });
+        
+        const ghostMessages = ["THEY ARE MADE OF WHAT ISN'T...", "SOME THINGS CAN'T BE UNSEEN... OR UNFORGOTTEN.", "YOUR MEMORY IS A TARGET.", "THEY FEED ON DELETION.", "SILENCE IS THEIR LANGUAGE."];
+        let globalGhostTimer;
+        function triggerGhostPopup() {
+            const popup = document.getElementById('popupGhost');
+            if (!popup || popup.style.display === 'block') return; 
+            const message = ghostMessages[Math.floor(Math.random() * ghostMessages.length)];
+            popup.textContent = message; popup.style.display = 'block';
+            setTimeout(() => { popup.style.display = 'none'; }, 3000); 
+        }
+        function startGlobalGhostEffects() {
+            stopGlobalGhostEffects(); 
+            globalGhostTimer = setInterval(() => { if (Math.random() < 0.08) { triggerGhostPopup(); } }, 25000); 
+        }
+        function stopGlobalGhostEffects() { if (globalGhostTimer) { clearInterval(globalGhostTimer); } }
+        document.addEventListener('DOMContentLoaded', () => {
+            const caAddressElem = document.getElementById('caAddress');
+            const copyBtn = document.getElementById('copyBtn');
+            if (caAddressElem && copyBtn) {
+                setTimeout(() => { caAddressElem.textContent = 'CLASSIFIED // AMRD-INTERNAL'; copyBtn.disabled = true; copyBtn.textContent = "REDACTED";}, 5000);
+            }
+            startGlobalGhostEffects(); 
+        });
+        // --- End Base JS ---
+
+        // Anti-Meme Research Page Specific JS
+        const caseStudyData = {
+            subject_d: {
+                title: "CASE STUDY: AM-ALPHA (SUBJECT D)",
+                text: `
+                    <p><strong>Designation:</strong> AM-ALPHA (Anti-Meme Alpha Strain)</p>
+                    <p><strong>Colloquial Name:</strong> Subject D (Derived from "Desti" - original memetic host)</p>
+                    <p><strong>Origin Event:</strong> Abrupt narrative termination of popular web-series character "Desti" (SMG4 Canon, 2019). The intense, widespread emotional grief from the audience acted as a catalyst.</p>
+                    <p><strong>Manifestation:</strong> Primarily as a "Silent Echo" (Type V AMP). Induces profound, unexplainable sadness and nostalgia in individuals exposed to related media or discussions, even if they have no prior knowledge of the source character. Can also manifest as corrupted data fragments in archived fan works, where the original character is subtly erased or replaced by a void.</p>
+                    <p><strong>Threat Level:</strong> Gamma (Localized Emotional Contagion). Low direct physical threat, but high potential for psychological distress and memetic landscape destabilization through grief amplification.</p>
+                    <p><strong class="emphasis">Key Findings:</strong></p>
+                    <ul>
+                        <li>Demonstrates that sufficiently strong collective emotion can generate a stable Anti-Memetic entity.</li>
+                        <li>The "void" left by narrative erasure can become an informational vacuum, drawing in and distorting related memetic energy.</li>
+                        <li>AM-ALPHA appears to feed on subsequent expressions of grief or attempts to "fix" the original narrative trauma, paradoxically strengthening its presence.</li>
+                    </ul>
+                    <p><strong class="emphasis highlight-red">Containment Notes:</strong> Standard data quarantine ineffective. Focus on memetic counter-narratives and emotional dampening fields. Research into "acceptance" as a neutralization agent is ongoing but ethically complex.</p>
+                `
+            },
+            lost_month: {
+                title: "CASE STUDY: AM-007-LK (THE LOST MONTH OF JUNE)",
+                text: `
+                    <p><strong>Designation:</strong> AM-007-LK (Amnestic Temporal Anomaly)</p>
+                    <p><strong>Suspected Period of Effect:</strong> June [YEAR REDACTED - Approx. 201X]</p>
+                    <p><strong>Manifestation:</strong> A statistically significant gap in the creation and propagation of novel internet memes and trends across multiple major platforms for an approximate 30-day period. Archival data shows anomalous server logs, corrupted timestamps, and unusually low user engagement metrics. Crucially, personnel (including IGPA researchers assigned to monitor the period) exhibit complete anterograde and retrograde amnesia specifically concerning memetic activity during this month.</p>
+                    <p><strong>Evidence:</strong> Fragmented notes from researchers referencing "The Hum" or "The Static Month." Automated systems recorded a spike in unclassifiable data packets of unknown origin. Post-event analysis shows a subtle but pervasive shift in baseline memetic drift trajectories.</p>
+                    <p><strong class="emphasis">Hypothesis:</strong> A large-scale Type I (Amnestic) Anti-Meme event, possibly of extraterrestrial or extradimensional origin, swept through the global datasphere, erasing its own passage and specific targeted information. The "why" remains unknown.</p>
+                    <p><strong class="emphasis highlight-red">Current Status:</strong> Cold Case. All attempts to recover lost data or memories have resulted in further data corruption and acute cognitive dissonance in research staff. Further investigation is currently deemed too hazardous.</p>
+                `
+            },
+            godbox_fragments: {
+                title: "PROJECT ANUBIS: GOD BOX FRAGMENTATION SYNDROME",
+                text: `
+                    <p><strong>Project Designation:</strong> ANUBIS (Post-Mortem Analysis of God Box Prime)</p>
+                    <p><strong>Subject:</strong> Dispersed energy signatures and conceptual fragments of the destroyed God Box Prime artifact.</p>
+                    <p><strong>Observed Phenomena:</strong> Following the physical/digital destruction of God Box Prime, its core Anti-Memetic energy did not dissipate but rather fractured into countless smaller, often highly unstable, fragments. These fragments are now suspected of:</p>
+                    <ul>
+                        <li>Seeding new, localized Anti-Memetic fields (e.g., areas with high screen anomaly reports).</li>
+                        <li>Parasitizing existing digital infrastructure, using servers and networks as breeding grounds.</li>
+                        <li>Attempting to coalesce into new "proto-God Boxes" or similar high-density Anti-Meme nexuses.</li>
+                        <li>Subtly influencing human thought patterns via prolonged exposure to contaminated digital media (suspected link to "Mr. Puzzles" entity).</li>
+                    </ul>
+                    <p><strong class="emphasis">Threat Profile:</strong> Variable, from localized infohazards to potential Keter-class reality restructuring events if fragments achieve critical mass.</p>
+                    <p><strong class="emphasis highlight-red">Directive:</strong> Identify, track, and, where possible, neutralize or contain God Box fragments. This is the AMRD's highest priority ongoing operation. Extreme caution is advised; fragments can exhibit unpredictable and hostile behavior.</p>
+                `
+            },
+            terminal_echoes: {
+                title: "INTERNAL REVIEW: CH-042-TE (TERMINAL ECHOES)",
+                text: `
+                    <p><strong>File Designation:</strong> CH-042-TE (Cognitohazard - Terminal Interface Echoes)</p>
+                    <p><strong>Subject:</strong> Anomalous data patterns, cognitive dissonance, and temporal displacement reported by users of the IGPA Classified Access Terminal (CAT) itself.</p>
+                    <p><strong>Reported Anomalies:</strong></p>
+                    <ul>
+                        <li>Commands yielding results that seem to pre-date or post-date the current session.</li>
+                        <li>Terminal output occasionally displaying fragmented messages from unknown users or previous research epochs.</li>
+                        <li>Researchers reporting a sense of being "observed" by the terminal, or that their thoughts are being subtly influenced during use.</li>
+                        <li>The ` + "`/archives/classified/wiped_fragments_encrypted/`" + ` directory showing inconsistent states of being locked/unlocked without user action.</li>
+                        <li>The ` + "`fileSystem`" + ` object in the terminal's source code appearing to self-modify (unconfirmed, requires deeper code audit).</li>
+                    </ul>
+                    <p><strong class="emphasis">Working Hypothesis:</strong> The CAT, due to its constant interface with highly concentrated memetic and Anti-Memetic data, may be developing its own form of rudimentary sentience or becoming a nexus for residual psychic energies. Alternatively, it could be a sophisticated form of Anti-Meme designed to observe and influence IGPA researchers.</p>
+                    <p><strong class="emphasis highlight-red">Current Status:</strong> Under active internal review by the Ethics & Containment Oversight Committee. All CAT interactions are now subject to double-blind monitoring. Researchers are advised to report any unusual experiences immediately and undergo regular psych-evals.</p>
+                `
+            }
+        };
+
+        function viewCaseStudy(caseKey) {
+            const data = caseStudyData[caseKey];
+            if (data) {
+                showHiddenMessage(data.text, data.title);
+            } else {
+                showHiddenMessage("<p>Error: Case study data not found or access is restricted beyond your current clearance. Please consult the research archivist.</p>", "ACCESS DENIED");
+            }
+        }
+
+        let vizClicked = 0;
+        function triggerVizInteraction() {
+            vizClicked++;
+            let title = "DATA VISUALIZATION INTERACTION";
+            let text = "";
+            const placeholder = document.querySelector('.viz-placeholder');
+
+            if (vizClicked === 1) {
+                text = "<p>Attempting to stabilize Anti-Memetic signature feed... Fluctuations detected. Data packets appear to be self-redacting in real-time. Probability of successful visualization: 17.3%.</p><p>Rerouting power to cognitive filters... Please stand by.</p>";
+                if(placeholder) placeholder.textContent = "[RECALIBRATING... SIGNATURE UNSTABLE - ATTEMPT 1]";
+            } else if (vizClicked === 2) {
+                text = "<p>Cognitive filters overloaded. Cascade failure in data stream. Multiple conflicting signatures detected, some exhibiting hostile intent. Recommend immediate disengagement.</p><p><strong class='highlight-red'>ERROR: MEMETIC CONTAMINATION DETECTED IN VISUALIZATION BUFFER. PURGING...</strong></p>";
+                 if(placeholder) placeholder.innerHTML = "[<span style='color:#c77'>CRITICAL ERROR</span> - DATA CORRUPTED - BUFFER OVERFLOW]";
+            } else if (vizClicked === 3) {
+                text = "<p>Visualization system offline. Further attempts to render Anti-Memetic data via this interface are strongly discouraged. The data appears to be... <span class='emphasis'>aware</span> of observation attempts.</p><p>The system will now revert to displaying a static representation of baseline digital noise. For your own safety.</p>";
+                if(placeholder) placeholder.textContent = "[VISUALIZATION OFFLINE - SYSTEM LOCKOUT - STANDBY]";
+                placeholder.style.cursor = 'not-allowed';
+                placeholder.onclick = null; // Disable further clicks
+            } else {
+                return; // Should not happen if onclick is removed
+            }
+            showHiddenMessage(text, title);
+        }
+
+    </script>
+</body>
+</html>
