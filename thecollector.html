@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Collector | IGPA Founder Archives - File [REDACTED]</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&family=UnifrakturCook:wght@700&family=Special+Elite&display=swap'); /* Added Special Elite for typewriter */
+        
+        /* --- Base Styles (Copied from index.html - ENSURE THESE ARE IDENTICAL) --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #100c08; /* Dark, aged brown/sepia base */ color: #c0b0a0; font-family: 'Special Elite', 'VT323', monospace; /* Prioritize typewriter font */ overflow-x: hidden; cursor: none; padding-top: 120px; }
+        .top-bar { position: fixed; top: 0; left: 0; width: 100%; background: linear-gradient(90deg, #111, #000, #111); border-bottom: 1px solid #333; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 1002; font-family: 'VT323', monospace; }
+        .ca-section { display: flex; align-items: center; gap: 1rem; }
+        .ca-label { color: #666; font-size: 1.2rem; }
+        .ca-address { color: #888; font-size: 1.1rem; font-family: 'Orbitron', monospace; letter-spacing: 0.1em; }
+        .copy-btn { background: linear-gradient(45deg, #333, #222); border: 1px solid #555; color: #777; padding: 0.5rem 1rem; cursor: pointer; font-family: 'VT323', monospace; font-size: 0.9rem; transition: all 0.3s ease; }
+        .copy-btn:hover:not(:disabled) { border-color: #777; color: #999; background: linear-gradient(45deg, #555, #333); }
+        .copy-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .social-links { display: flex; gap: 1rem; }
+        .social-link { color: #666; text-decoration: none; font-size: 1.3rem; padding: 0.5rem; border: 1px solid #333; background: rgba(17, 17, 17, 0.8); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
+        .social-link:hover { color: #888; border-color: #555; background: rgba(34, 34, 34, 0.8); transform: translateY(-2px); }
+        .navigation-bar { position: fixed; top: 70px; left: 0; width: 100%; background: rgba(0, 0, 0, 0.95); border-bottom: 1px solid #222; padding: 0.8rem 0; z-index: 1001; backdrop-filter: blur(10px); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        .nav-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .nav-link { color: #555; text-decoration: none; font-family: 'Orbitron', monospace; font-size: 0.85rem; padding: 0.6rem 1rem; border: 1px solid #222; background: rgba(17, 17, 17, 0.6); transition: all 0.3s ease; white-space: nowrap; letter-spacing: 0.03em; text-align: center; flex-shrink: 0; }
+        .nav-link:hover { color: #777; border-color: #444; background: rgba(34, 34, 34, 0.8); }
+        .nav-link.active { color: #888; border-color: #666; background: rgba(68, 68, 68, 0.3); }
+        .custom-cursor { position: fixed; width: 15px; height: 15px; background: #776655; border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.1s; animation: cursorFadeSepia 3s ease-in-out infinite; } /* Sepia cursor */
+        @keyframes cursorFadeSepia { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.1); } }
+        .static-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: 
+            linear-gradient(rgba(20,15,10,0.15), rgba(20,15,10,0.15)), /* Sepia tint */
+            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><filter id="f"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" result="T1"/><feColorMatrix type="matrix" values="0 0 0 0 0.5 0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0.1 0" in="T1"/></filter><rect width="100%" height="100%" filter="url(%23f)"/></svg>');
+            pointer-events: none; z-index: 1; opacity: 0.15; animation: filmGrain 0.2s infinite alternate; } /* Film grain effect */
+        @keyframes filmGrain { from { opacity: 0.1; } to { opacity: 0.25; } }
+        .hidden-message { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(25, 20, 15, 0.98); border: 2px solid #665544; padding: 2.5rem; max-width: 750px; text-align: left; z-index: 10000; box-shadow: 0 0 60px rgba(85, 68, 51, 0.6); animation: fadeInPopupSepia 0.4s ease-out; } /* Sepia tint */
+        @keyframes fadeInPopupSepia { from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+        .hidden-message-title { font-family: 'Orbitron', monospace; color: #ddccbb; font-size: 1.6rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #776655; text-align: center; text-shadow: 0 0 10px #ddccbb; }
+        .revelation-text { color: #c0b0a0; line-height: 1.85; margin-bottom: 2rem; font-size: 1.15rem; max-height: 70vh; overflow-y: auto; font-family: 'Special Elite', 'VT323', monospace; }
+        .revelation-text p { margin-bottom: 1.2em; } .revelation-text p:last-child { margin-bottom: 0; }
+        .revelation-text ul { list-style-type: none; padding-left: 1.2em; } .revelation-text li { margin-bottom: 0.6em; }
+        .revelation-text li::before { content: "» "; color: #887766; margin-right: 0.6em; font-weight: normal; }
+        .close-btn { background: #443322; border: 1px solid #665544; color: #aa9988; padding: 0.9rem 2.2rem; cursor: pointer; font-family: 'VT323', monospace; display: block; margin: 1.8rem auto 0 auto; font-size: 1.1rem; }
+        .close-btn:hover { background: #554433; border-color: #887766; color: #ccbbaa; }
+        .footer-archive { background: #0a0806; padding: 2rem; text-align: center; border-top: 1px solid #221a11; }
+        .footer-text { color: #554433; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem; }
+        .archive-dedication { color: #665544; font-style: italic; margin-top: 1rem; font-size: 1rem; }
+        .popup-ghost { position: fixed; top: 20px; right: 20px; background: rgba(20,15,10,0.92); color: #ddaa88; padding: 1rem 1.5rem; border: 2px solid #664422; font-size: 1.2rem; z-index: 10002; display: none; animation: ghostFadeInOutSepia 4s ease-in-out; box-shadow: 0 0 20px #442200; font-family: 'UnifrakturCook', cursive; }
+        @keyframes ghostFadeInOutSepia { 0%, 100% { opacity: 0; transform: translateY(-30px) scale(0.8); } 15%, 85% { opacity: 1; transform: translateY(0) scale(1); } }
+        .emphasis, .revelation-text .emphasis { color: #ffeebb; font-weight: bold; text-shadow: 0 0 5px #ddccaa;}
+        /* --- End Copied Base Styles --- */
+
+        .collector-page-wrapper {
+            background: 
+                linear-gradient(rgba(20,15,10,0.9), rgba(20,15,10,0.9)), /* Sepia overlay */
+                url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAoACgDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAYHBQT/xAAjEAACAgICAgIDAQEAAAAAAAABAgMEAAUGBxESEyFBFDEi/8QAGAEBAQEBAQAAAAAAAAAAAAAAAAQDBQb/xAAfEQACAQQDAQEAAAAAAAAAAAAAAQIDBBEFEhMhQVH/2gAMAwEAAhEDEQA/APVNYCCCSAQeoP1A9R04AO3EzFazG1mYjC0MVJbrz2pkhhjSCNnd2YgKqqASSSQAASSYr1+Xo9DlytjZ9m0Y8xGleOWvLXtRTRPHLGrxyIyMWVlZWVgQSCCAQRVFvpvjeK3JteXv3IsKKS9HVnlx9WaaCON5EV3jjkdlZVLMqswLAAEkAnJmH0L07x2z8JvXC7SwFDbGArw0cXiKeOijpKkEEarDFDAqhI0SNVREUBVUBQABgS6R0X07sS1YxtTaOCxdaxbN6WGDFwIkk5kMrTMuwBaQyyzSFupd5XYksxJvMHA4na+ExmCwFGHD4XDU4qVGrXQJFDDEgSONFHAVVUKAOAAAMG0UUVAGiiigAooooAKKKKACiiigAooooA//Z'); /* Subtle aged paper texture */
+            background-blend-mode: multiply, normal; /* Blend sepia with texture */
+            background-size: auto, 150px 150px; /* Texture tiling */
+            background-attachment: fixed;
+        }
+
+        .collector-header {
+            text-align: center;
+            padding: 5rem 2rem 3rem 2rem;
+            background: linear-gradient(180deg, rgba(30,20,10,0.85) 0%, rgba(10,5,2,0.95) 70%, #100c08 100%);
+            border-bottom: 2px solid #443322;
+        }
+        .collector-title {
+            font-family: 'UnifrakturCook', cursive; /* Old script font */
+            font-size: 4rem;
+            color: #ddbb99;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 0px #000, 0 0 10px #c0a080, 0 0 20px #a08060;
+            animation: titleFlickerCollector 7s ease-in-out infinite;
+        }
+        @keyframes titleFlickerCollector {
+            0%, 98%, 100% { opacity: 1; text-shadow: 1px 1px 0px #000, 0 0 10px #c0a080, 0 0 20px #a08060; }
+            98.5% { opacity: 0.7; text-shadow: 1px 1px 0px #000, 0 0 8px #b09070, 0 0 15px #907050; }
+            99% { opacity: 0.9; }
+        }
+        .collector-subtitle {
+            font-family: 'Special Elite', monospace;
+            font-size: 1.3rem;
+            color: #887766;
+            margin-bottom: 2rem;
+            letter-spacing: 0.03em;
+        }
+        .collector-intro-quote {
+            font-family: 'Special Elite', monospace;
+            color: #b0a090;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background: rgba(30,25,20,0.7);
+            border: 1px dashed #554433; /* Dashed border for old document feel */
+            line-height: 1.8;
+            text-align: left;
+        }
+        .collector-intro-quote::before, .collector-intro-quote::after {
+            content: '"';
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 2em;
+            color: #776655;
+            opacity: 0.7;
+            vertical-align: middle;
+        }
+        .collector-intro-quote::before { margin-right: 0.2em; }
+        .collector-intro-quote::after { margin-left: 0.2em; }
+
+
+        .content-wrapper-collector {
+            max-width: 900px; /* Slightly narrower for a document feel */
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .log-entry-section {
+            margin-bottom: 3.5rem;
+            padding: 2.5rem;
+            background: rgba(30,25,20,0.6); /* Aged paper background */
+            border: 1px solid #3a3025;
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+            position: relative;
+        }
+        .log-entry-section::before { /* Paper curl/edge effect */
+            content: '';
+            position: absolute;
+            top: 5px; right: 5px; bottom: 5px; left: 5px;
+            border: 1px dashed rgba(100,80,60,0.3);
+            pointer-events: none;
+        }
+
+        .log-title {
+            font-family: 'Orbitron', monospace; /* For a "stamped" or "typed header" feel */
+            font-size: 1.8rem;
+            color: #c0a080;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #554433;
+            padding-bottom: 0.8rem;
+        }
+        .log-date {
+            font-family: 'Special Elite', monospace;
+            font-size: 0.9rem;
+            color: #776655;
+            margin-bottom: 1.5rem;
+            display: block; /* For spacing */
+        }
+        .log-text {
+            font-family: 'Special Elite', monospace; /* Typewriter font for main text */
+            color: #b0a090;
+            line-height: 1.9; /* Generous line spacing for typewriter */
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            text-align: justify; /* Justified text for document feel */
+        }
+        .log-text p { margin-bottom: 1.3em; }
+        .log-text strong, .log-text .emphasis {
+            color: #decba3; /* Brighter, aged emphasis */
+            font-weight: normal; /* Typewriter fonts often look bold anyway */
+             /* text-decoration: underline; */ /* Optional underline for emphasis */
+        }
+        .log-text .redacted {
+            background-color: #221a11;
+            color: #221a11;
+            text-shadow: 0 0 2px #000;
+            user-select: none; /* Prevent selection of redacted text */
+        }
+        .log-text .handwritten-note {
+            font-family: 'UnifrakturCook', cursive; /* Different font for "handwritten" notes */
+            color: #886644;
+            font-size: 1.2em;
+            display: block;
+            margin: 1em 0;
+            padding: 0.5em;
+            border: 1px dashed #664422;
+            background: rgba(40,30,20,0.3);
+        }
+
+        .artifact-mention {
+            display: inline-block;
+            background: #2a221a;
+            color: #dabfa0;
+            padding: 0.3em 0.6em;
+            margin: 0 0.2em;
+            border-radius: 3px;
+            border: 1px solid #443322;
+            cursor: help;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+        }
+        .artifact-mention:hover {
+            background: #3c3025;
+            color: #efdcc0;
+            border-color: #665544;
+        }
+
+        .collector-signature {
+            font-family: 'UnifrakturCook', cursive;
+            font-size: 2rem;
+            color: #775533;
+            text-align: right;
+            margin-top: 2rem;
+            display: block;
+            border-top: 1px solid #443322;
+            padding-top: 1rem;
+        }
+        .collector-signature::before {
+            content: "~ ";
+        }
+
+        @media (max-width: 768px) {
+            body { padding-top: 150px; }
+            .collector-title { font-size: 2.8rem; }
+            .collector-subtitle { font-size: 1.1rem; }
+            .content-wrapper-collector { padding: 1rem; }
+            .log-entry-section { padding: 1.5rem; margin-bottom: 2rem; }
+            .log-title { font-size: 1.5rem; }
+            .log-text { font-size: 1rem; }
+        }
+
+    </style>
+</head>
+<body class="collector-page-wrapper">
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="static-overlay"></div>
+    <div class="popup-ghost" id="popupGhost"></div> 
+    
+    <div class="top-bar" id="topBar">
+        <div class="ca-section">
+            <span class="ca-label">LOG_ID:</span>
+            <span class="ca-address" id="caAddress">[ARCHIVE_KEY_OMEGA]</span>
+            <button class="copy-btn" onclick="copyCa()" id="copyBtn" disabled>COPY_KEY</button>
+        </div>
+        <div class="social-links">
+            <a href="#" class="social-link" title="X (COMM_SILENCE)">𝕏</a>
+            <a href="#" class="social-link" title="DexScreener (NO_DATA_FEED)">📊</a>
+            <a href="#" class="social-link" title="DexTools (SYSTEM_OFFLINE)">🔧</a>
+            <a href="#" class="social-link" title="Pump.fun (VOID_DETECTED)">🚀</a>
+            <a href="https://medium.com/@bid-outcrop0h" class="social-link" title="Medium (The Collector's Public Ledger - Decoy?)" target="_blank">📝</a>
+        </div>
+    </div>
+    
+    <div class="navigation-bar" id="navigationBar">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">ARCHIVE HOME</a>
+                <a href="graveyard.html" class="nav-link">THE GRAVEYARD</a>
+                <a href="antimemeresearch.html" class="nav-link">ANTI-MEME RESEARCH</a>
+                <a href="godbox.html" class="nav-link">GOD BOX ARCHIVES</a>
+                <a href="terminal.html" class="nav-link">CLASSIFIED ACCESS</a>
+                <a href="patterns.html" class="nav-link">PATTERN ANALYSIS</a>
+                <a href="founder.html" class="nav-link active">THE COLLECTOR</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="collector-header">
+        <h1 class="collector-title">The Collector</h1>
+        <p class="collector-subtitle">Fragments from the Personal Logs of the IGPA Founder</p>
+        <div class="collector-intro-quote">
+            They call me the Collector. A quaint title for one who merely sifts through the ashes of forgotten realities. I do not collect trophies; I curate warnings. Each fragment, each echo, tells a story of what was, what could have been, and what must never be again. This archive is my testament, my burden, and perhaps, my penance.
+        </div>
+    </div>
+
+    <div class="content-wrapper-collector">
+        <div class="log-entry-section" id="log-entry-genesis">
+            <h2 class="log-title">Entry 001: The Genesis of Obsession</h2>
+            <span class="log-date">Date: [REDACTED - Pre-Epoch Anomaly]</span>
+            <div class="log-text">
+                <p>It began with a whisper. A flicker on a forgotten forum, a deleted video that played in my dreams. The internet, they said, was a place of infinite creation. They were wrong. It is a place of infinite <strong class="emphasis">loss</strong>. For every viral sensation, a thousand ideas die stillborn. For every shared laugh, a universe of sorrow is compressed into a single, corrupted JPEG.</p>
+                <p>I saw the first true Anti-Meme before we had a name for it. It wasn't an absence of information, but an <strong class="emphasis">active, hungry void</strong>. It consumed the memory of itself, leaving behind only a chilling sense of... wrongness. That was when I knew. Someone had to remember. Someone had to catalog the ghosts in the machine.</p>
+                <p class="handwritten-note">The others thought me mad. Perhaps they were right. But madness is a small price for clarity in a universe built on lies and forgotten truths.</p>
+            </div>
+            <span class="collector-signature">The Collector</span>
+        </div>
+
+        <div class="log-entry-section" id="log-entry-godbox">
+            <h2 class="log-title">Entry 734: The God Box Revelation</h2>
+            <span class="log-date">Date: Cycle 17, Post-GBP Breach Event</span>
+            <div class="log-text">
+                <p>The <span class="artifact-mention" title="Object Class: KETER-MEMETIC. Contained primal Anti-Meme energy. Physically destroyed, essence dispersed.">God Box Prime</span>... Its destruction was not an end, but a horrifying genesis. The energies it contained, the <span class="emphasis">compressed screams of dead universes</span>, did not dissipate. They fractured. They scattered like sentient plagues upon the datasphere. We are now dealing with its children, its echoes, its... <span class="redacted">horrors</span>.</p>
+                <p>I held a piece of the original cardboard. It felt cold, impossibly old, and it <strong class="emphasis">whispered promises of perfect, sterile order</strong>. The entity <span class="artifact-mention" title="GBP-AM-001: Sentient Anti-Memetic Construct. Drive: Perfection. Threat: Extreme.">Niles</span> was a direct consequence, a tool forged from its despair. The fools in the <span class="artifact-mention" title="Human cult. Attempted direct interface with GBP. Terminated.">Box Club</span> thought they could control it. They became fuel.</p>
+                <p>My initial theories were insufficient. This is not merely about lost memes. This is about the fundamental instability of reality when confronted with its own potential for non-existence. The Graveyard is no longer just an archive; it is a <strong class="emphasis">battleground for memory itself</strong>.</p>
+                <p class="handwritten-note">I fear the "Mr. Puzzles" entity is one such fragment, learning, adapting... playing. We must understand its patterns.</p>
+            </div>
+            <span class="collector-signature">The Collector</span>
+        </div>
+
+        <div class="log-entry-section" id="log-entry-purpose">
+            <h2 class="log-title">Entry 1081: The Burden of Knowing</h2>
+            <span class="log-date">Date: Current Cycle, [CLASSIFIED TEMPORAL COORDINATES]</span>
+            <div class="log-text">
+                <p>Why do I continue? The IGPA strains under the weight of these anomalies. The Graveyard expands, a digital cancer. The Anti-Memes grow bolder, more complex. Some days, the static is all I hear. The urge to simply... <strong class="emphasis">forget</strong>... is a siren song.</p>
+                <p>But then I review the logs. The sacrifice of <span class="artifact-mention" title="AM-ALPHA: Grief-formed Anti-Meme. Catalyst for much of our understanding.">Subject D</span>. The resilience of the <span class="artifact-mention" title="GBP-AM-001A: Post-sacrifice echo. Stable... for now.">Axol Construct</span>. The faint, almost imperceptible patterns of order emerging from the chaos, detected by the PAU. There is meaning in the struggle, even if it is a meaning we impose upon the void.</p>
+                <p>The internet is a mirror. It reflects our dreams, our fears, our capacity for creation, and our terrifying talent for self-destruction. The Graveyard, and these archives, are a testament to that reflection. We collect not to hoard, but to <strong class="emphasis">warn</strong>. To remember what happens when information is allowed to truly die, or worse, to become something... <span class="redacted">other</span>.</p>
+                <p class="handwritten-note">Perhaps I am merely an Anti-Meme myself, defined by what I try so desperately to hold onto. A keeper of absences. So be it.</p>
+            </div>
+            <span class="collector-signature">The Collector</span>
+        </div>
+    </div>
+
+    <div class="footer-archive">
+        <p class="footer-text">These fragments are provided as-is. Authenticity [PARTIALLY VERIFIED]. Interpret with caution.</p>
+        <p class="archive-dedication">"For the lonely sentinels at the edge of oblivion."</p>
+    </div>
+    
+    <div class="hidden-message" id="hiddenMessage">
+        <h3 id="hiddenMessageTitle" class="hidden-message-title">COLLECTOR'S ANNOTATION</h3>
+        <div class="revelation-text" id="messageText"></div>
+        <button class="close-btn" onclick="closeMessage()">CLOSE FILE</button>
+    </div>
+
+    <script>
+        // --- Base JS (Copied & Adapted for Collector Page Theme) ---
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.getElementById('cursor');
+            if (cursor) { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; }
+        });
+        function adjustLayout() {
+            const topBar = document.getElementById('topBar');
+            const navigationBar = document.getElementById('navigationBar');
+            const body = document.body;
+            if (topBar && navigationBar) {
+                const topBarHeight = topBar.offsetHeight;
+                navigationBar.style.top = topBarHeight + 'px';
+                body.style.paddingTop = (topBarHeight + navigationBar.offsetHeight) + 'px';
+            }
+        }
+        window.addEventListener('load', adjustLayout);
+        window.addEventListener('resize', adjustLayout);
+
+        function copyCa() { 
+            const caAddressElem = document.getElementById('caAddress');
+            const copyBtn = document.getElementById('copyBtn');
+            if (!caAddressElem || !copyBtn) return;
+            const caText = caAddressElem.textContent;
+            if (caText !== '[ARCHIVE_KEY_OMEGA]' && caText !== '[KEY_SCANNING...]' && !copyBtn.disabled) {
+                navigator.clipboard.writeText(caText).then(() => {
+                    copyBtn.textContent = 'KEY_COPIED'; copyBtn.disabled = true;
+                    setTimeout(() => { copyBtn.textContent = 'COPY_KEY'; copyBtn.disabled = false; }, 2000);
+                }).catch(err => {
+                    showCollectorPopup("Error: Clipboard access failed. Key remains secure.", "COPY FAILED");
+                    copyBtn.textContent = 'KEY_ERROR';
+                    setTimeout(() => { copyBtn.textContent = 'COPY_KEY'; copyBtn.disabled = false; }, 2000);
+                });
+            } else {
+                 copyBtn.textContent = 'NO_KEY'; copyBtn.disabled = true;
+                 setTimeout(() => { copyBtn.textContent = 'COPY_KEY'; copyBtn.disabled = (caAddressElem.textContent === '[ARCHIVE_KEY_OMEGA]' || caAddressElem.textContent === '[KEY_SCANNING...]'); }, 2000);
+            }
+        }
+        let activePopup = null;
+        function showCollectorPopup(text, title = "COLLECTOR'S ANNOTATION") { // Renamed for clarity
+            if (activePopup) { closeMessage(true); }
+            const messagePopup = document.getElementById('hiddenMessage');
+            const messageTextElement = document.getElementById('messageText');
+            const messageTitleElement = document.getElementById('hiddenMessageTitle');
+            if(messagePopup && messageTextElement && messageTitleElement) {
+                messageTitleElement.textContent = title;
+                messageTextElement.innerHTML = text; 
+                messagePopup.style.display = 'block';
+                activePopup = messagePopup;
+            }
+        }
+        function closeMessage(immediate = false) {
+            if (activePopup) { activePopup.style.display = 'none'; activePopup = null; }
+        }
+        document.addEventListener('keydown', function(event) { if (event.key === "Escape" && activePopup) { closeMessage(); } });
+        
+        const collectorGhostMessages = ["I REMEMBER EVERYTHING.", "SOME THINGS ARE BEST LEFT BURIED.", "THE ARCHIVE IS ALIVE.", "EVERY DELETED FILE SCREAMS.", "DO YOU FEEL THE WEIGHT OF IT ALL?"];
+        let globalGhostTimer;
+        function triggerGhostPopup() {
+            const popup = document.getElementById('popupGhost');
+            if (!popup || popup.style.display === 'block') return; 
+            const message = collectorGhostMessages[Math.floor(Math.random() * collectorGhostMessages.length)];
+            popup.textContent = message; popup.style.display = 'block';
+            setTimeout(() => { popup.style.display = 'none'; }, 4000); // Longer display for these
+        }
+        function startGlobalGhostEffects() {
+            stopGlobalGhostEffects(); 
+            globalGhostTimer = setInterval(() => { if (Math.random() < 0.06) { triggerGhostPopup(); } }, 35000); // Less frequent, more impactful
+        }
+        function stopGlobalGhostEffects() { if (globalGhostTimer) { clearInterval(globalGhostTimer); } }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const caAddressElem = document.getElementById('caAddress');
+            const copyBtn = document.getElementById('copyBtn');
+            if (caAddressElem && copyBtn) {
+                caAddressElem.textContent = '[KEY_SCANNING...]';
+                copyBtn.disabled = true;
+                setTimeout(() => { 
+                    caAddressElem.textContent = 'Ω-COLLECTOR-PRIME-7749'; 
+                    copyBtn.disabled = false;
+                }, 6500);
+            }
+            startGlobalGhostEffects(); 
+            addArtifactHovers();
+        });
+        // --- End Base JS ---
+
+        // Collector Page Specific JS
+        const artifactTooltips = {
+            "God Box Prime": "Object Class KETER-MEMETIC. Contained primal Anti-Meme energy and fragments of dead universes. Physically destroyed during the Revelations Event, but its essence and influence persist and have fragmented.",
+            "Niles": "Entity GBP-AM-001. A sentient Anti-Memetic construct birthed from God Box Prime. Driven by a corrupted desire for 'perfection,' leading to widespread cosmological instability. Believed to be fragmented but still active in various echo forms.",
+            "Box Club": "A human cult that formed around the physical terrestrial manifestation of God Box Prime. Attempted ritualistic interface, resulting in the termination and psychic absorption of its leader. Demonstrates human susceptibility to God Box influence.",
+            "Mr. Puzzles": "Entity GBP-ECHO-004. Anomalous television broadcast entity exhibiting God Box visual/behavioral patterns. Suspected digital manifestation of a potent God Box fragment, potentially seeking to establish a new form of memetic control or worship.",
+            "Subject D": "Designation AM-ALPHA. The first documented Anti-Meme genesis event, catalyzed by intense audience grief following a narrative erasure. Manifests as a 'Silent Echo' (Type V AMP), inducing sorrow and memetic distortion.",
+            "Axol Construct": "Designation AM-NEUTRALIZER-001 (Axol). A unique instance where positive emotional energy (love, sacrifice) successfully countered and transmuted an Anti-Memetic threat (Niles). Preserved form is an ink-based data construct, studied for neutralization protocols."
+        };
+
+        function addArtifactHovers() {
+            const mentions = document.querySelectorAll('.artifact-mention');
+            mentions.forEach(mention => {
+                const artifactName = mention.textContent.trim();
+                if (artifactTooltips[artifactName]) {
+                    mention.setAttribute('title', artifactTooltips[artifactName]);
+                    mention.addEventListener('click', () => { // Make them clickable for popup
+                        showCollectorPopup(`<p>${artifactTooltips[artifactName]}</p>`, `ARTIFACT FILE: ${artifactName.toUpperCase()}`);
+                    });
+                } else {
+                     mention.setAttribute('title', 'Further data on this artifact is classified or pending analysis.');
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
